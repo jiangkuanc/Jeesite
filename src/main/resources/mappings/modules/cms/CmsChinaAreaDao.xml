@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsChinaAreaDao">
+
+    <sql id="cmsChinaAreaColumns">
+        a.id AS "id",
+        a.areaname AS "areaname"
+    </sql>
+
+    <sql id="cmsChinaAreaJoins">
+    </sql>
+
+    <select id="get" resultType="CmsChinaArea">
+        SELECT
+        <include refid="cmsChinaAreaColumns"/>
+        FROM cms_china_area a
+        <include refid="cmsChinaAreaJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsChinaArea">
+        SELECT
+        <include refid="cmsChinaAreaColumns"/>
+        FROM cms_china_area a
+        <where>
+
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="areaname != null and areaname != ''">
+                AND a.areaname = #{areaname}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsChinaArea">
+        SELECT
+        <include refid="cmsChinaAreaColumns"/>
+        FROM cms_china_area a
+        <include refid="cmsChinaAreaJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllChinaAreaList" resultType="CmsChinaArea">
+        SELECT
+        <include refid="cmsChinaAreaColumns"/>
+        FROM cms_china_area a
+        <include refid="cmsChinaAreaJoins"/>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_china_area(
+        id,
+        areaname
+        ) VALUES (
+        #{id},
+        #{areaname}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_china_area SET
+        areaname = #{areaname}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_china_area
+        WHERE id = #{id}
+    </update>
+
+</mapper>

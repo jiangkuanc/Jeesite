@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.SysErrorLoginLogDao">
+
+    <select id="findList" resultType="SysErrorLoginLog">
+        SELECT
+        a.id AS "id",
+        a.login_name AS "loginName",
+        a.error_pwd AS "errorPwd",
+        a.log_ip AS "logIp",
+        a.pc_mac AS "pcMac",
+        a.login_time AS "loginTime",
+        a.user_role AS "userRole"
+
+        FROM sys_error_login_log a
+        WHERE a.login_time BETWEEN #{beginDate} AND #{endDate}
+        <if test="loginName != null and loginName != ''">
+            AND a.login_name LIKE
+            CONCAT('%', #{loginName}, '%')
+        </if>
+        ORDER BY a.login_time DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_error_login_log(
+        id,
+        login_name,
+        error_pwd,
+        log_ip,
+        pc_mac,
+        login_time,
+        user_role
+        ) VALUES (
+        #{id},
+        #{loginName},
+        #{errorPwd},
+        #{logIp},
+        #{pcMac},
+        #{loginTime},
+        #{userRole}
+
+        )
+    </insert>
+
+</mapper>

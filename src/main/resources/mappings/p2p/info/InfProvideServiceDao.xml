@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.info.dao.InfProvideServiceDao">
+
+    <sql id="infProvideServiceColumns">
+        a.id AS "id",
+        a.product_service_name AS "productServiceName",
+        a.term_of_validity AS "termOfValidity",
+        a.product_unit_price AS "productUnitPrice",
+        a.set_num AS "setNum",
+        a.enterprise_name AS "enterpriseName",
+        a.contacts_person AS "contactsPerson",
+        a.position_person AS "positionPerson",
+        a.telphone AS "telphone",
+        a.tax AS "tax",
+        a.product_picture AS "productPicture",
+        a.product_service_introduction AS "productServiceIntroduction",
+        a.publish_time AS "publishTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="infProvideServiceJoins">
+    </sql>
+
+    <select id="get" resultType="InfProvideService">
+        SELECT
+        <include refid="infProvideServiceColumns"/>
+        FROM inf_provide_service a
+        <include refid="infProvideServiceJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="InfProvideService">
+        SELECT
+        <include refid="infProvideServiceColumns"/>
+        FROM inf_provide_service a
+        <include refid="infProvideServiceJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="productServiceName != null and productServiceName != ''">
+                AND a.product_service_name = #{productServiceName}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="InfProvideService">
+        SELECT
+        <include refid="infProvideServiceColumns"/>
+        FROM inf_provide_service a
+        <include refid="infProvideServiceJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO inf_provide_service(
+        id,
+        product_service_name,
+        term_of_validity,
+        product_unit_price,
+        set_num,
+        enterprise_name,
+        contacts_person,
+        position_person,
+        telphone,
+        tax,
+        product_picture,
+        product_service_introduction,
+        publish_time,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{productServiceName},
+        #{termOfValidity},
+        #{productUnitPrice},
+        #{setNum},
+        #{enterpriseName},
+        #{contactsPerson},
+        #{positionPerson},
+        #{telphone},
+        #{tax},
+        #{productPicture},
+        #{productServiceIntroduction},
+        #{publishTime},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE inf_provide_service SET
+        product_service_name = #{productServiceName},
+        term_of_validity = #{termOfValidity},
+        product_unit_price = #{productUnitPrice},
+        set_num = #{setNum},
+        enterprise_name = #{enterpriseName},
+        contacts_person = #{contactsPerson},
+        position_person = #{positionPerson},
+        telphone = #{telphone},
+        tax = #{tax},
+        product_picture = #{productPicture},
+        product_service_introduction = #{productServiceIntroduction},
+        publish_time = #{publishTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE inf_provide_service SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

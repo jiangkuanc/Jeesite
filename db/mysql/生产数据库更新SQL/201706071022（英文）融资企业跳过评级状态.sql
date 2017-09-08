@@ -1,0 +1,2 @@
+#融资企业跳过评级
+INSERT INTO p2p_financing_rating_info(id,financing_information_id,main_credit_grade,rating_level,recommended_amount,recommended_rate,commit_report,commit_report_name,credit_report,credit_report_name,publish_time,rate_expectation,is_finalized)VALUES('DG2017060701','DG6201706050001','A','A','400000','0.075','group1/M00/00/C7/Zcl7AFkmpnqAfaLTAAF5qK9eD64398.pdf','评级报告.pdf','group1/M00/00/C7/Zcl7AFkmpnqAfaLTAAF5qK9eD64398.pdf','评级报告.pdf','2017-06-05','2','1');

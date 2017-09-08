@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pGivingOutLoansDao">
+
+    <sql id="p2pGivingOutLoansColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.investment_information_id AS "investmentInformationId",
+        a.investor_account AS "investorAccount",
+        a.giving_out_person AS "givingOutPerson",
+        a.giving_out_amount AS "givingOutAmount",
+        a.giving_out_time AS "givingOutTime",
+        a.financier_account AS "financierAccount",
+        a.receive_amout_person AS "receiveAmoutPerson",
+        a.receive_amount AS "receiveAmount",
+        a.receive_amount_time AS "receiveAmountTime",
+        a.create_by AS "createBy.id",
+        a.tripartite_agreement AS "tripartiteAgreement",
+        a.contract_sign_time AS "contractSignTime",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="p2pGivingOutLoansJoins">
+    </sql>
+
+    <select id="get" resultType="P2pGivingOutLoans">
+        SELECT
+        <include refid="p2pGivingOutLoansColumns"/>
+        FROM p2p_giving_out_loans a
+        <include refid="p2pGivingOutLoansJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pGivingOutLoans">
+        SELECT
+        <include refid="p2pGivingOutLoansColumns"/>
+        FROM p2p_giving_out_loans a
+        <include refid="p2pGivingOutLoansJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id = #{financingInformationId}
+            </if>
+            <if test="investmentInformationId != null and investmentInformationId != ''">
+                AND a.investment_information_id = #{investmentInformationId}
+            </if>
+            <if test="investorAccount != null and investorAccount != ''">
+                AND a.investor_account = #{investorAccount}
+            </if>
+            <if test="givingOutPerson != null and givingOutPerson != ''">
+                AND a.giving_out_person = #{givingOutPerson}
+            </if>
+            <if test="givingOutAmount != null and givingOutAmount != ''">
+                AND a.giving_out_amount = #{givingOutAmount}
+            </if>
+            <if test="givingOutTime != null and givingOutTime != ''">
+                AND a.giving_out_time = #{givingOutTime}
+            </if>
+            <if test="financierAccount != null and financierAccount != ''">
+                AND a.financier_account = #{financierAccount}
+            </if>
+            <if test="receiveAmoutPerson != null and receiveAmoutPerson != ''">
+                AND a.receive_amout_person = #{receiveAmoutPerson}
+            </if>
+            <if test="receiveAmount != null and receiveAmount != ''">
+                AND a.receive_amount = #{receiveAmount}
+            </if>
+            <if test="receiveAmountTime != null and receiveAmountTime != ''">
+                AND a.receive_amount_time = #{receiveAmountTime}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pGivingOutLoans">
+        SELECT
+        <include refid="p2pGivingOutLoansColumns"/>
+        FROM p2p_giving_out_loans a
+        <include refid="p2pGivingOutLoansJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_giving_out_loans(
+        id,
+        financing_information_id,
+        investment_information_id,
+        investor_account,
+        giving_out_person,
+        giving_out_amount,
+        giving_out_time,
+        financier_account,
+        receive_amout_person,
+        receive_amount,
+        receive_amount_time,
+        create_by,
+        tripartite_agreement,
+        contract_sign_time,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{investmentInformationId},
+        #{investorAccount},
+        #{givingOutPerson},
+        #{givingOutAmount},
+        #{givingOutTime},
+        #{financierAccount},
+        #{receiveAmoutPerson},
+        #{receiveAmount},
+        #{receiveAmountTime},
+        #{createBy.id},
+        #{tripartiteAgreement},
+        #{contractSignTime},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_giving_out_loans SET
+        financing_information_id = #{financingInformationId},
+        investment_information_id = #{investmentInformationId},
+        investor_account = #{investorAccount},
+        giving_out_person = #{givingOutPerson},
+        giving_out_amount = #{givingOutAmount},
+        giving_out_time = #{givingOutTime},
+        financier_account = #{financierAccount},
+        receive_amout_person = #{receiveAmoutPerson},
+        receive_amount = #{receiveAmount},
+        receive_amount_time = #{receiveAmountTime},
+        tripartite_agreement = #{tripartiteAgreement},
+        contract_sign_time = #{contractSignTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_giving_out_loans SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据申请人ID查询放款信息 -->
+    <select id="findP2pGivingOutLoansByUser" parameterType="User" resultType="P2pGivingOutLoans">
+        SELECT
+        a.giving_out_amount AS "givingOutAmount",
+        a.giving_out_time AS "givingOutTime",
+        b.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM
+        p2p_giving_out_loans a,p2p_financing_information b
+        <where>
+            a.financing_information_id = b.id
+            AND
+            b.applicants_id = #{id}
+            <if test="beginDate != '' and beginDate != null and endDate != '' and endDate != null">
+                AND a.giving_out_time <![CDATA[   >=  ]]> #{beginDate} AND a.giving_out_time <![CDATA[   <=  ]]>
+                #{endDate}
+            </if>
+        </where>
+    </select>
+</mapper>

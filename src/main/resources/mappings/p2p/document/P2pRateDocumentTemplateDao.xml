@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.document.dao.P2pRateDocumentTemplateDao">
+
+    <sql id="p2pRateDocumentTemplateColumns">
+        a.id AS "id",
+        a.temp_type AS "tempType",
+        a.temp_name AS "tempName",
+        a.en_name AS "enName"<!-- ,
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag" -->
+    </sql>
+
+    <sql id="p2pRateDocumentTemplateJoins">
+    </sql>
+
+    <select id="findAll" resultType="P2pRateDocumentTemplate">
+        SELECT
+        <include refid="p2pRateDocumentTemplateColumns"/>
+        FROM p2p_rate_document_template a
+        <include refid="p2pRateDocumentTemplateJoins"/>
+        Where a.temp_type != 4
+        ORDER BY CAST(a.id AS DECIMAL)
+    </select>
+
+    <select id="get" resultType="P2pRateDocumentTemplate">
+        SELECT
+        <include refid="p2pRateDocumentTemplateColumns"/>
+        FROM p2p_rate_document_template a
+        <include refid="p2pRateDocumentTemplateJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findByName" resultType="P2pRateDocumentTemplate">
+        SELECT
+        <include refid="p2pRateDocumentTemplateColumns"/>
+        FROM p2p_rate_document_template a
+        <include refid="p2pRateDocumentTemplateJoins"/>
+        WHERE a.temp_name=#{tempName}
+    </select>
+
+    <select id="findList" resultType="P2pRateDocumentTemplate">
+        SELECT
+        <include refid="p2pRateDocumentTemplateColumns"/>
+        FROM p2p_rate_document_template a
+        <include refid="p2pRateDocumentTemplateJoins"/>
+        <where>
+            <!-- a.del_flag = #{DEL_FLAG_NORMAL} -->
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="tempType != null and tempType != ''">
+                AND a.temp_type = #{tempType}
+            </if>
+            <if test="tempName != null and tempName != ''">
+                AND a.tempName LIKE
+                <if test="dbName == 'oracle'">'%'||#{tempName}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{tempName}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{tempName},'%')</if>
+            </if>
+            <if test="enName != null and enName != ''">
+                AND a.en_name = #{enName}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRateDocumentTemplate">
+        SELECT
+        <include refid="p2pRateDocumentTemplateColumns"/>
+        FROM p2p_rate_document_template a
+        <include refid="p2pRateDocumentTemplateJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>	 -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_rate_document_template(
+        id,
+        temp_type,
+        temp_name,
+        en_name<!-- ,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag -->
+        ) VALUES (
+        #{id},
+        #{tempType},
+        #{tempName},
+        #{enName}<!-- ,
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag} -->
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_rate_document_template SET
+        temp_type = #{tempType},
+        tempName = #{tempName},
+        enName = #{enName}<!-- ,
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks} -->
+        WHERE id = #{id}
+    </update>
+
+    <!-- <update id="delete">
+        UPDATE p2p_rate_document_template SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update> -->
+
+    <select id="findNameById" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT name
+        FROM p2p_rate_document_template
+        WHERE id = #{_parameter}
+    </select>
+    <!-- Chace 根据id查询tempName -->
+    <select id="getTempNameById" resultType="java.lang.String" parameterType="P2pRateDocumentTemplate">
+        SELECT a.temp_name AS "tempName"
+        FROM p2p_rate_document_template a
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据材料类型和行业查询材料模板 -->
+    <select id="findListByTypeAndIndustry" parameterType="P2pRateDocumentTemplate" resultType="P2pRateDocumentTemplate">
+        SELECT
+        id AS "id",
+        temp_name AS "tempName",
+        temp_explain AS "tempExplain",
+        temp_address AS "tempAddress",
+        is_required AS "isRequired"
+        FROM p2p_rate_document_template
+        WHERE industryNum = #{industryNum}
+        AND temp_type = #{tempType}
+        ORDER BY temp_sort
+    </select>
+
+    <select id="findSupplyListByIndustry" parameterType="P2pRateDocumentTemplate" resultType="P2pRateDocumentTemplate">
+        SELECT
+        id AS "id",
+        temp_name AS "tempName",
+        temp_explain AS "tempExplain",
+        temp_address AS "tempAddress"
+        FROM p2p_rate_document_template
+        WHERE industryNum = #{industryNum}
+        AND (temp_type = 1 OR temp_type = 2)
+        OR temp_type = 4
+        ORDER BY temp_sort
+    </select>
+
+    <select id="findSupplyIndustryByProjectId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT Industry_id FROM rate_project_basic_info WHERE id = #{_parameter}
+    </select>
+
+    <select id="findEnterpriseShareholders" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT id FROM p2p_rate_document_template WHERE industryNum = #{0} AND temp_name = #{1}
+    </select>
+</mapper>

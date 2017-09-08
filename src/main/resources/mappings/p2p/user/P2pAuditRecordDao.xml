@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pAuditRecordDao">
+
+    <sql id="p2pAuditRecordColumns">
+        a.id AS "id",
+        a.audit_type AS "auditType",
+        a.reference_id AS "referenceId",
+        a.audit_person_id AS "auditPersonId",
+        a.audit_time AS "auditTime",
+        a.audit_result AS "auditResult",
+        a.audit_opinion AS "auditOpinion",
+        a.id_card_inhand AS "idCardInhand",
+        a.create_by AS "createBy.id",
+        a.inhand_is_reject AS "inhandIsReject",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.inhand_reject_reason AS "inhandRejectReason",
+        a.id_card_front AS "idCardFront",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.front_is_reject AS "frontIsReject",
+        a.del_flag AS "delFlag",
+        a.front_reject_reason AS "frontRejectReason",
+        a.id_card_back AS "idCardBack",
+        a.back_is_reject AS "backIsReject",
+        a.back_reject_reason AS "backRejectReason",
+        a.is_ent_legal_rep AS "isEntLegalRep",
+        a.license_is_reject AS "licenseIsReject",
+        a.license_reject_reason AS "licenseRejectReason",
+        a.business_license AS "businessLicense",
+        a.power_of_attorney AS "powerOfAttorney",
+        a.attorney_is_reject AS "attorneyIsReject",
+        a.attorney_reject_reason AS "attorneyRejectReason",
+        a.submit_time AS "submitTime",
+        u.name AS "user.name"
+    </sql>
+
+    <sql id="p2pAuditRecordJoins">
+        LEFT JOIN sys_user u ON u.id = a.audit_person_id
+    </sql>
+
+    <select id="get" resultType="P2pAuditRecord">
+        SELECT
+        <include refid="p2pAuditRecordColumns"/>
+        FROM p2p_audit_record a
+        <include refid="p2pAuditRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findById" resultType="P2pAuditRecord">
+        SELECT
+        <include refid="p2pAuditRecordColumns"/>
+        FROM p2p_audit_record a
+        <include refid="p2pAuditRecordJoins"/>
+        WHERE a.reference_id=#{referenceId}
+    </select>
+
+    <select id="findList" resultType="P2pAuditRecord">
+        SELECT
+        <include refid="p2pAuditRecordColumns"/>
+        FROM p2p_audit_record a
+        <include refid="p2pAuditRecordJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="auditType != null and auditType != ''">
+                AND a.audit_type = #{auditType}
+            </if>
+            <if test="referenceId != null and referenceId != ''">
+                AND a.reference_id = #{referenceId}
+            </if>
+            <if test="auditPersonId != null and auditPersonId != ''">
+                AND a.audit_person_id = #{auditPersonId}
+            </if>
+            <if test="auditTime != null and auditTime != ''">
+                AND a.audit_time = #{auditTime}
+            </if>
+            <if test="auditResult != null and auditResult != ''">
+                AND a.audit_result = #{auditResult}
+            </if>
+            <if test="auditOpinion != null and auditOpinion != ''">
+                AND a.audit_opinion = #{auditOpinion}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAuditRecord">
+        SELECT
+        <include refid="p2pAuditRecordColumns"/>
+        FROM p2p_audit_record a
+        <include refid="p2pAuditRecordJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_audit_record(
+        id,
+        audit_type,
+        reference_id,
+        audit_person_id,
+        audit_time,
+        audit_result,
+        audit_opinion,
+        id_card_inhand,
+        create_by,
+        inhand_is_reject,
+        create_date,
+        update_by,
+        inhand_reject_reason,
+        id_card_front,
+        update_date,
+        remarks,
+        front_is_reject,
+        del_flag,
+        front_reject_reason,
+        id_card_back,
+        back_is_reject,
+        back_reject_reason,
+        is_ent_legal_rep,
+        license_is_reject,
+        license_reject_reason,
+        business_license,
+        power_of_attorney,
+        attorney_is_reject,
+        attorney_reject_reason,
+        submit_time
+        ) VALUES (
+        #{id},
+        #{auditType},
+        #{referenceId},
+        #{auditPersonId},
+        #{auditTime},
+        #{auditResult},
+        #{auditOpinion},
+        #{idCardInhand},
+        #{createBy.id},
+        #{inhandIsReject},
+        #{createDate},
+        #{updateBy.id},
+        #{inhandRejectReason},
+        #{idCardFront},
+        #{updateDate},
+        #{remarks},
+        #{frontIsReject},
+        #{delFlag},
+        #{frontRejectReason},
+        #{idCardBack},
+        #{backIsReject},
+        #{backRejectReason},
+        #{isEntLegalRep},
+        #{licenseIsReject},
+        #{licenseRejectReason},
+        #{businessLicense},
+        #{powerOfAttorney},
+        #{attorneyIsReject},
+        #{attorneyRejectReason},
+        #{submitTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_audit_record SET
+        audit_type = #{auditType},
+        reference_id = #{referenceId},
+        audit_person_id = #{auditPersonId},
+        audit_time = #{auditTime},
+        audit_result = #{auditResult},
+        audit_opinion = #{auditOpinion},
+        id_card_inhand = #{idCardInhand},
+        inhand_is_reject = #{inhandIsReject},
+        inhand_reject_reason = #{inhandRejectReason},
+        id_card_front = #{idCardFront},
+        front_is_reject = #{frontIsReject},
+        front_reject_reason = #{frontRejectReason},
+        id_card_back = #{idCardBack},
+        back_is_reject = #{backIsReject},
+        back_reject_reason = #{backRejectReason},
+        is_ent_legal_rep = #{isEntLegalRep},
+        license_is_reject = #{licenseIsReject},
+        license_reject_reason = #{licenseRejectReason},
+        business_license = #{businessLicense},
+        power_of_attorney = #{powerOfAttorney},
+        attorney_is_reject = #{attorneyIsReject},
+        attorney_reject_reason = #{attorneyRejectReason},
+        submit_time = #{submitTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_audit_record SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+    <!-- 根据userid和audit_type查询认证记录 -->
+    <select id="findAuditRecordListByIdAndType" resultType="P2pAuditRecord" parameterType="P2pAuditRecord">
+        SELECT
+        <include refid="p2pAuditRecordColumns"/>
+        FROM p2p_audit_record a
+        <include refid="p2pAuditRecordJoins"/>
+        where
+        a.reference_id = #{referenceId}
+        AND a.audit_type = #{auditType}
+        ORDER by a.audit_time
+    </select>
+
+</mapper>

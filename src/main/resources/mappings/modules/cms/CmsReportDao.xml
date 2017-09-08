@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsReportDao">
+
+    <sql id="cmsReportColumns">
+        a.id AS "id",
+        a.article_id AS "articleId",
+        c.title AS "productName",
+        a.product_content AS "productContent",
+        a.product_display AS "productDisplay",
+        a.phone AS "phone",
+        a.fax AS "fax",
+        a.mailbox AS "mailbox"
+    </sql>
+
+    <sql id="cmsReportJoins">
+        JOIN cms_article c ON c.id = a.article_id
+    </sql>
+
+    <select id="get" resultType="CmsReport">
+        SELECT
+        <include refid="cmsReportColumns"/>
+        FROM cms_report a
+        <include refid="cmsReportJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+
+    <!-- 查询当前报告 -->
+    <select id="selectCurrentReport" resultType="CmsReport">
+        SELECT
+        <include refid="cmsReportColumns"/>
+        FROM cms_report a
+        <include refid="cmsReportJoins"/>
+        WHERE a.article_id = #{id}
+    </select>
+
+    <!-- 查询当前投资指南详情 -->
+    <select id="selectCurrentInvestmentGuide" resultType="CmsReport">
+        SELECT
+        <include refid="cmsReportColumns"/>
+        FROM cms_report a
+        <include refid="cmsReportJoins"/>
+        WHERE a.article_id = #{id}
+    </select>
+
+    <!-- 查询当丝绸战略研究详情 -->
+    <select id="selectCurrentstrategicResearch" resultType="CmsReport">
+        SELECT
+        <include refid="cmsReportColumns"/>
+        FROM cms_report a
+        <include refid="cmsReportJoins"/>
+        WHERE a.article_id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsReport">
+        SELECT
+        <include refid="cmsReportColumns"/>
+        FROM cms_report a
+        <include refid="cmsReportJoins"/>
+        <where>
+            <if test="productName != null and productName != ''">
+                AND c.title LIKE CONCAT('%', #{productName}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsReport">
+        SELECT
+        <include refid="cmsReportColumns"/>
+        FROM cms_report a
+        <include refid="cmsReportJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_report(
+        id,
+        article_id,
+        product_name,
+        product_content,
+        product_display,
+        phone,
+        fax,
+        mailbox
+        ) VALUES (
+        #{id},
+        #{articleId},
+        #{productName},
+        #{productContent},
+        #{productDisplay},
+        #{phone},
+        #{fax},
+        #{mailbox}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_report SET
+        article_id = #{articleId},
+        product_name = #{productName},
+        product_content = #{productContent},
+        product_display = #{productDisplay},
+        phone = #{phone},
+        fax = #{fax},
+        mailbox = #{mailbox}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_report
+        WHERE id = #{id}
+    </update>
+
+</mapper>

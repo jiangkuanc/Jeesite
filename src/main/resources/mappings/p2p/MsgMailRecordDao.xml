@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.utils.dao.MsgMailRecordDao">
+
+    <sql id="msgMailRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.msg_id AS "msgId",
+        a.title AS "title",
+        a.mail_content AS "mailContent",
+        a.rec_address AS "recAddress",
+        a.send_address AS "sendAddress",
+        a.send_date AS "sendDate",
+        a.send_state AS "sendState",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="msgMailRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="MsgMailRecord">
+        SELECT
+        <include refid="msgMailRecordColumns"/>
+        FROM msg_mail_record a
+        <include refid="msgMailRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="MsgMailRecord">
+        SELECT
+        <include refid="msgMailRecordColumns"/>
+        FROM msg_mail_record a
+        <include refid="msgMailRecordJoins"/>
+        <where>
+
+            <if test="title != null and title != ''">
+                AND a.title LIKE
+                <if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{title},'%')</if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="MsgMailRecord">
+        SELECT
+        <include refid="msgMailRecordColumns"/>
+        FROM msg_mail_record a
+        <include refid="msgMailRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert" parameterType="MsgMailRecord">
+        INSERT INTO msg_mail_record(
+        id,
+        user_id,
+        msg_id,
+        title,
+        mail_content,
+        rec_address,
+        send_address,
+        send_date,
+        send_state
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{msgId},
+        #{title},
+        #{mailContent},
+        #{recAddress},
+        #{sendAddress},
+        #{sendDate},
+        #{sendState}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE msg_mail_record SET
+        user_id = #{user.id},
+        msg_id = #{msgId},
+        title = #{title},
+        mail_content = #{mailContent},
+        rec_address = #{recAddress},
+        send_address = #{sendAddress},
+        send_date = #{sendDate},
+        send_state = #{sendState}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM msg_mail_record
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,6 @@
+update sys_config set constant_value='http://source.silkroaditfin.com/M00/00/D0/Zcl7AFk5KrqAcnYEAARCbtCT5Ec224.png' WHERE sys_id='dagongp2p' and constant_key='FIND1';
+update sys_config set constant_value='http://source.silkroaditfin.com/M00/00/D0/Zcl7AFk5K16AOiqdAAOA1tOyDL8322.png' WHERE sys_id='dagongp2p' and constant_key='FIND2';
+update sys_config set constant_value='http://source.silkroaditfin.com/M00/00/D0/Zcl7AFk5K4SAMvhUAAR-8EVadcg024.png' WHERE sys_id='dagongp2p' and constant_key='FIND3';
+update sys_config set constant_value='http://source.silkroaditfin.com/M00/00/43/Zcl7AFkDIFiAeV_CAAFGLStHsFE667.jpg' WHERE sys_id='dagongp2p' and constant_key='HOME1';
+update sys_config set constant_value='http://source.silkroaditfin.com/M00/00/D0/Zcl7AFk5K8mAdnsoAAHcASCD5lk489.jpg' WHERE sys_id='dagongp2p' and constant_key='HOME2';
+update sys_config set constant_value='http://source.silkroaditfin.com/M00/00/D0/Zcl7AFk5K6OAXGUXAARw3pkg_tM612.jpg' WHERE sys_id='dagongp2p' and constant_key='HOME3';

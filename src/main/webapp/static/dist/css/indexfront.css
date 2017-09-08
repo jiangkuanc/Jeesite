@@ -1,0 +1,378 @@
+/*reset-css*/
+.container-fluid, .row, .col-md-12, .col-md-6, .col-md-9, .col-md-3, .col-md-4 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.container a:hover {
+    text-decoration: none;
+}
+
+.container {
+    min-width: 1200px;
+}
+
+/*lunbotu*/
+.lunbotu {
+    height: 340px;
+    width: 100%;
+}
+
+.lunbotu .carousel-inner .item img {
+    height: 340px;
+    width: 100%;
+}
+
+.lunbotu a.carousel-control span.glyphicon {
+    font-size: 56px;
+    font-weight: 100;
+    top: 46%;
+    color: #e9e9e9;
+}
+
+.lunbotu ol.carousel-indicators li {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #cccccc;
+}
+
+.lunbotu ol.carousel-indicators li.active {
+    background: #ffffff;
+}
+
+/*轮播图下方内容样式*/
+.title-nav {
+    margin-bottom: 20px;
+}
+
+.title-nav h4 {
+    font-weight: 600;
+    width: 50%;
+    margin: 0;
+    border-left: 5px solid #be191f;
+    padding-left: 6px;
+}
+
+.title-nav a {
+    color: #cccccc;
+}
+
+/*企业借贷评级 企业主体评级*/
+.tw-1 {
+    border-right: 2px dashed #be191f;
+    padding-right: 15px;
+}
+
+.tw div.pull-left {
+    height: 180px;
+    width: 36%;
+}
+
+.tw div.pull-left img {
+    height: 100%;
+    width: 100%;
+}
+
+.tw div.pull-right {
+    height: 180px;
+    width: 60%;
+}
+
+.tw div.pull-right ul li.list-group-item {
+    padding: 2px 0;
+    border: 0;
+}
+
+.tw div.pull-right ul li a {
+    width: 81%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #585858;
+    padding: 0 0 7px 0;
+    border-bottom: 1px dashed #cccccc;
+}
+
+.tw div.pull-right ul li p {
+    width: 17%;
+    text-align: center;
+    border-radius: 4px;
+    color: #FFFFFF;
+    background: #be191f;
+    padding: 2px 0;
+}
+
+.tw div.pull-right ul.zt li p {
+    width: 30%;
+}
+
+.tw div.pull-right ul.zt li a {
+    width: 67%;
+}
+
+/*投资专区*/
+.tzzq {
+    border: 1px solid #cccccc;
+}
+
+.tzzq .col-md-6 {
+    margin: 0 0 10px 0;
+    padding: 15px;
+}
+
+.tzzq .col-md-6 div.pull-left {
+    width: 79%;
+}
+
+.tzzq .col-md-6 div.pull-left div.tzzq-div div.tzzq-div-div {
+    width: 33%;
+    margin: 0 1%;
+    float: left;
+    height: 50px;
+}
+
+.tzzq .col-md-6 div.pull-left div.tzzq-div div.tzzq-div-div:nth-child(1) {
+    width: 25%;
+}
+
+.tzzq .col-md-6 div.pull-left div.tzzq-div div.tzzq-div-div:nth-child(1) img {
+    margin: 0 5px;
+}
+
+.tzzq .col-md-6 div.pull-left div.tzzq-div div.tzzq-div-div:nth-child(3) div.progress {
+    margin: 0;
+    border-radius: 0;
+}
+
+.tzzq .col-md-6 div.pull-left div.tzzq-div div.tzzq-div-div:nth-child(3) div.progress-bar {
+    background: #be191f;
+}
+
+.tzzq .col-md-6 div.pull-left div.tzzq-div div.tzzq-div-div span:first-child {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.tzzq .col-md-6 div.pull-right {
+    padding-top: 10px;
+}
+
+.tzzq .col-md-6 div.pull-right p {
+    color: #d9793d;
+    text-align: center;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.tzzq .col-md-6 div.pull-right button.btn-danger {
+    background: #be191f;
+    margin-top: 30px;
+}
+
+.tzzq .col-md-6 div.pull-left h4 {
+    margin-bottom: 20px;
+    width: 104%;
+}
+
+.tzzq .col-md-6 div.pull-left h4 a {
+    color: #000000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    margin-bottom: -4px;
+    width: 60%;
+}
+
+.tzzq .col-md-6 div.pull-left h4 span {
+    font-size: 16px;
+    display: inline-block;
+    margin-left: 7px;
+}
+
+/*投资专区-快速投资*/
+.kt h3 {
+    color: #be191f;
+    text-align: center;
+}
+
+.kt button.center-block {
+    background: #be191f;
+    width: 70%;
+    margin: 26px auto;
+    font-size: 18px;
+}
+
+.kt .kt-div {
+    margin: 20px 0;
+}
+
+.kt .kt-div .dropdown-toggle {
+    border: 1px solid #be191f;
+    border-radius: 2px;
+    color: #909090;
+    padding-top: 12px;
+    height: 32px;
+}
+
+.kt .kt-div .dropdown-toggle .caret {
+    border-top: 10px dashed;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    color: #be191f;
+    float: right;
+    margin-top: -5px;
+}
+
+.kt .kt-div span.pull-left {
+    display: inline-block;
+    width: 33%;
+    text-align: right;
+    font-size: 18px;
+    color: #be191f;
+    padding-top: 5px;
+    margin-right: 5px;
+}
+
+.kt .kt-div .dropdown {
+    width: 49%;
+    text-align: left;
+}
+
+.kt .kt-div .dropdown .dropdown-menu {
+    margin-left: 15px;
+    min-width: 150px;
+}
+
+.kt .kt-div .dropdown .dropdown-menu li {
+    text-align: center;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.kt .kt-div .dropdown .dropdown-menu li:hover {
+    background: #cccccc;
+    cursor: pointer;
+}
+
+/*信用建设*/
+.xyjs h3 {
+    text-align: center;
+}
+
+.xyjs .container-fluid .col-md-6 a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.xyjs .container-fluid .col-md-6 a span.pull-left {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 72%;
+}
+
+.xyjs .col-md-6:nth-child(1) {
+    padding: 0 15px 0 0;
+}
+
+.xyjs .col-md-6:nth-child(2) {
+    padding: 0 0 0 15px;
+}
+
+.xyjs .col-md-6 a {
+    display: block;
+    width: 100%;
+    border-bottom: 1px dashed #cccccc;
+    line-height: 38px;
+    font-size: 16px;
+    color: #323232;
+}
+
+/*信用建设成果*/
+.xyjscg {
+    padding: 0 0 0 15px;
+}
+
+.xyjscg a.xyjscg-a img {
+    width: 100%;
+    height: 200px;
+}
+
+/*平台简介*/
+.ptjj {
+    padding: 0 15px 0 0;
+}
+
+.ptjj img {
+    border: 1px solid #cccccc;
+    width: 100%;
+    height: 180px;
+}
+
+/*评级方法介绍*/
+.pjffjs {
+    width: 32%;
+}
+
+.pjffjs-div {
+    text-indent: 2em;
+    line-height: 26px;
+}
+
+/*平台公告*/
+.ptgg {
+    padding: 0 0 0 16px;
+    margin-left: 14px;
+}
+
+.ptgg .ptgg-div a {
+    display: block;
+    line-height: 35px;
+    font-size: 16px;
+    color: #323232;
+    border-bottom: 1px dashed #cccccc;
+}
+
+.ptgg .ptgg-div a span.pull-left {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 72%;
+}
+
+/*合作伙伴*/
+.hzhb {
+    background: #f1f1f1;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.hzhb a {
+    display: inline-block;
+    margin: 10px;
+    width: 140px;
+    height: 50px;
+}
+
+.hzhb a img {
+    width: 100%;
+    height: 100%;
+}
+
+.hzhb .hzhb-div {
+    width: 684px;
+    margin: 0 auto;
+    padding-left: 30px;
+}
+
+
+
+

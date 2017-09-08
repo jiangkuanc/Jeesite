@@ -1,0 +1,591 @@
+/*账户总览-消息中心*/
+.zh-left {
+    border-right: 1px solid #DFDEDD;
+}
+
+p, ul, label, h4 {
+    margin: 0;
+}
+
+ul, li, ol {
+    list-style: none;
+    padding: 0;
+}
+
+.zh-left ul.zhzl .zhzllevel1 .zhzllevel2 .tz-active a {
+    color: #C1181D;
+}
+
+.index-nva ul li.wdzh-active > a {
+    color: #C1181D;
+    border-bottom: 4px solid #cc484d;
+    padding-bottom: 10px;
+}
+
+/*.zh-left p,.zhzllevel2 li {
+    border-right: 1px solid #EAEAEC;
+}*/
+.zhzllevel1 .zhzllevel2 .tz-active {
+    background: #eaeaea;
+    border-top: 1px solid #DFDEDD;
+    border-bottom: 1px solid #DFDEDD;
+}
+
+.zh-right {
+    width: 74.55%;
+    padding-left: 3.6%;
+    min-height: 500px;
+    border-left: 1px solid #DFDEDD;
+    margin-left: -1px;
+}
+
+.zhzl_xxzx h3 {
+    font-size: 20px;
+    line-height: 42px;
+    color: #bf1a20;
+    font-weight: 700;
+    margin: 0;
+}
+
+.xxList li {
+    padding-right: 20px;
+    line-height: 36px;
+    color: #343434;
+    font-size: 16px;
+}
+
+.xxList li > span {
+    color: #2481e0;
+}
+
+.zhzl_xxzx_table thead tr {
+    background: #ebeaea;
+    border-top: 1px solid #d6d7dc;
+    color: #6d6d6d;
+    border-radius: 3px;
+}
+
+.zhzl_xxzx_table > thead > tr > th {
+    border-bottom: none;
+    text-align: center;
+    padding: 0;
+    line-height: 48px;
+}
+
+.zhzl_xxzx_table > thead > tr > th:first-of-type {
+    width: 15%;
+    text-align: left;
+    padding-left: 3.8%;
+}
+
+.zhzl_xxzx_table > thead > tr > th:nth-of-type(2) {
+    width: 40%;
+}
+
+.zhzl_xxzx_table > tbody > tr > td {
+    border-top: none;
+    text-align: center;
+    padding: 14px 0;
+    color: #999999;
+}
+
+.zhzl_xxzx_table > tbody > tr > td:nth-of-type(2) {
+    text-align: left;
+}
+
+.zhzl_xxzx_table > tbody > tr > td:nth-of-type(1) {
+    text-align: left;
+    padding-left: 3.8%;
+}
+
+.zhzl_xxzx_table > thead > tr > th input {
+    margin-right: 20px;
+}
+
+.zhzl_xxzx_bot {
+    width: 100%;
+    height: 40px;
+    border-radius: 3px;
+    line-height: 40px;
+    background: #ebeaea;
+    margin-bottom: 150px;
+    padding: 0 15px 0 3.8%;
+}
+
+.xxzx_bot_lf span {
+    color: #666666;
+    cursor: pointer;
+}
+
+.xxzx_bot_lf span:not(:first-child) {
+    margin-left: 25px;
+}
+
+#scsx {
+    color: #c5363b;
+}
+
+.zhzl_xxzx_table label {
+    margin-bottom: 0;
+}
+
+.xxzx_bot_lf label {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/*我的消息*/
+.xxBox {
+    min-height: 500px;
+    color: #666666;
+    font-size: 16px;
+}
+
+.xxBox .xxHd {
+    border-top: 1px solid #d9d9db;
+    line-height: 48px;
+    background: #eaeaea;
+    padding-left: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.xxCont {
+    padding: 25px 22px;
+}
+
+.xxCont p:first-of-type {
+    text-align: center;
+    color: #2481e0;
+    margin-bottom: 50px;
+}
+
+.xxCont p:nth-of-type(3) span {
+    color: #c5363b;;
+}
+
+.xxCont p:nth-of-type(4) {
+    text-align: right;
+    padding-right: 70px;
+    margin-top: 120px;
+}
+
+.xxCont p:nth-of-type(5) {
+    text-align: right;
+    padding-right: 100px;
+}
+
+#sccxx {
+    color: #c5363b;
+    margin-left: 3.8%;
+    cursor: default;
+}
+
+/*我的还款*/
+.zhzl_wdhk {
+    color: #666666;
+}
+
+.yhkxq_h {
+    padding-top: 14px;
+    border-bottom: 1px solid #d6d7dc;
+}
+
+.yhkxq_h p {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.yhkxq_h .zxmc {
+    font-size: 24px;
+    color: #ff6235;
+}
+
+.yhkxq_info ul {
+    padding: 9px 0;
+    margin: 0;
+}
+
+.yhkxq_info ul > li {
+    font-size: 18px;
+    color: #666666;
+    width: 33%;
+    padding: 8px 0;
+}
+
+.yhkxq_info ul > li span {
+    color: #333333;
+}
+
+.yhkxq_info ul > li:nth-of-type(1) span, .yhkxq_info ul > li:nth-of-type(2) span {
+    color: #ff6235;
+}
+
+.yhkxq_info table {
+    margin-bottom: 50px;
+}
+
+.wdhk_table > thead, .skfjl_table > thead {
+    border: 1px solid #ddd;
+    background: #ebeaea;
+    color: #666666;
+}
+
+.wdhk_table > thead > tr > th, .skfjl_table > thead > tr > th {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 14px 0;
+}
+
+.wdhk_table > tbody > tr > td, .skfjl_table > tbody > tr > td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.wdhk_table > tbody > tr > td:nth-of-type(1) {
+    text-align: left;
+    padding-left: 5px;
+    color: #333333;
+}
+
+.skfjl_box {
+    border-top: 2px solid #d6d7dc;
+    padding-bottom: 50px;
+}
+
+.skfjl_box p {
+    padding: 10px 0;
+}
+
+.skfjl_box .skfjl {
+    font-size: 18px;
+    margin-right: 15px;
+}
+
+.skfjl_box .skfjl_num {
+    font-size: 20px;
+    color: #ff6235;
+    font-weight: 700;
+}
+
+/*计算器*/
+.zhzl_jsq h3 {
+    font-size: 20px;
+    line-height: 42px;
+    color: #bf1a20;
+    font-weight: 700;
+    margin: 0;
+}
+
+.syjsq_top > ul > li {
+    width: 50%;
+    font-size: 18px;
+    color: #111111;
+    margin-top: 10px;
+}
+
+.syjsq_top > ul > li > label {
+    font-weight: normal;
+}
+
+.syjsq_top > ul > li > input {
+    text-align: center;
+    width: 143px;
+    border: 1px solid #cccccc;
+    line-height: 28px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.syjsq_top > ul > li > .mh_date {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.dropdown {
+    display: inline-block;
+    /*width: 36%;*/
+    width: 143px;
+}
+
+.btn-group {
+    width: 100%;
+}
+
+.dropdownMenu_jkqx {
+    height: 30px;
+    line-height: 16px;
+    width: 100%;
+}
+
+#dropdown_hkfs {
+    /*width: 41.5%;*/
+    width: 163px;
+}
+
+.dropdown-menu {
+    min-width: 100%;
+}
+
+#dropdown_jkqx .dropdown-menu li, #dropdown_hkfs .dropdown-menu li {
+    width: 100%;
+    font-size: 14px;
+}
+
+#dropdown_jkqx .dropdown-menu li > a, #dropdown_hkfs .dropdown-menu li > a {
+    padding: 0 10px;
+}
+
+.dropdown .placeholder {
+    color: #111111;
+}
+
+.syjsq_top .btn-js {
+    height: 36px;
+    width: 78px;
+    background-color: #2481e0;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.syjsq_top > ul > li:last-child {
+    padding-left: 200px;
+    margin-top: 20px;
+}
+
+.lookXs {
+    font-size: 12px;
+    color: #1f80d9;
+}
+
+.syjsq_top > ul {
+    margin-bottom: 20px;
+}
+
+.syjsq_bom {
+    border-top: 2px solid #d6d7dc;
+}
+
+.syjsq_bom > p {
+    font-size: 18px;
+    line-height: 68px;
+}
+
+.syjsq_bom .totalAmount, .syjsq_bom .periodNumber {
+    font-size: 22px;
+    color: #ff6235;
+    font-weight: 700;
+}
+
+.syjsq_bom .jsq_table {
+    margin: 0;
+    border-bottom: 2px solid #d6d7dc;
+}
+
+.jsq_table thead tr {
+    background: #ebeaea;
+    border-top: 1px solid #d6d7dc;
+    color: #6d6d6d;
+    border-radius: 3px;
+}
+
+.jsq_table > thead > tr > th {
+    border-bottom: none;
+    text-align: center;
+    padding: 0;
+    line-height: 48px;
+}
+
+.jsq_table > tbody > tr > td {
+    border-top: none;
+    text-align: center;
+    padding: 14px 0;
+    color: #666666;
+}
+
+.syjsq_bom > div {
+    text-align: right;
+    padding: 25px 60px 0 0;
+}
+
+.syjsq_bom .btn-wytz {
+    background-color: #2481e0;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.dropdownMenu_jkqx {
+    padding-left: 0px;
+}
+
+.dropdownMenu_jkqx .caret1 {
+    width: 13px;
+    height: 8px;
+    position: absolute;
+    right: 8px;
+    top: 10px;
+    background: url("../images/icn_xx.png");
+}
+
+/*分页*/
+.xxzx_bot_rt .holder {
+    margin: 0;
+}
+
+.holder a {
+    padding: 5px;
+    background: #ffffff;
+    border: 1px solid #ebeaea;
+}
+
+.holder a.jp-previous {
+    background: #ffffff;
+    margin: 0;
+}
+
+/*非财务材料提交*/
+.zh {
+    border-bottom: 1px solid #d6d7dc;
+}
+
+.rzsq_con {
+    padding: 0 10px;
+}
+
+.rzsq_con .back_box {
+    padding: 12px 0;
+}
+
+.back_box a {
+    line-height: 26px;
+}
+
+.rzsq_con .back_btn {
+    width: 56px;
+    height: 26px;
+    background: #f2434a;
+    color: #ffffff;
+    padding: 0px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.renzheng .rzsq_pjcl {
+    font-size: 22px;
+    color: #bf1a20;
+    line-height: 58px;
+}
+
+.renzheng .rz-h4 {
+    line-height: 50px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.rzsq_con {
+    width: 76.39%;
+    margin: 0 auto;
+}
+
+.cltj_scList > li {
+    margin-bottom: 30px;
+}
+
+.cltj_scList .scsm > p:first-of-type {
+    color: #bf1a20;
+    font-weight: 700;
+}
+
+.clsc {
+    width: 490px;
+    text-align: right;
+    position: relative;
+}
+
+.clsc label {
+    font-size: 16px;
+}
+
+.clsc label > span {
+    color: #bf1a20;
+    font-weight: 700;
+}
+
+.clsc .scwjm-inp {
+    height: 20px;
+    width: 220px;
+}
+
+/*diyUploader样式自定义*/
+.clsc .as {
+    display: inline-block;
+    top: 6px;
+}
+
+.clsc .as .webuploader-pick, .shc {
+    padding: 3px 10px;
+    background: #f2434a;
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.shc {
+    margin: 5px 0 0 4px;
+}
+
+.parentFileBox {
+    position: static;
+    margin-left: 200px;
+}
+
+.parentFileBox > .diyButton > a {
+    background: #f2434a;
+    padding: 3px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.parentFileBox > .fileBoxUl > li, .parentFileBox > .fileBoxUl > li > .viewThumb, .parentFileBox > .fileBoxUl > li > .diyBar, .parentFileBox > .fileBoxUl > li > .diyBar > .diyProgressText {
+    width: 60px;
+    height: 80px;
+}
+
+.parentFileBox .diyStart {
+    position: absolute;
+    right: -80px;
+    top: 5px;
+}
+
+.mbxz {
+    color: #1f80d9;
+    padding: 6px 10px;
+}
+
+.parentFileBox > .fileBoxUl > li > .diyBar {
+    line-height: 80px;
+}
+
+.parentFileBox > .diyButton {
+    text-align: left;
+}
+
+/******/
+.btn-box {
+    text-align: center;
+    margin: 140px 0;
+}
+
+.btn_pbox a {
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background: #f2434a;
+    font-size: 16px;
+    color: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+    margin: 0 30px;
+}

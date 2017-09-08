@@ -1,0 +1,182 @@
+
+.holder, .holder1, .holder2, .holder3, .holder4,
+.holder5, .holder6, .holder7, .holder8 {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.audit_next .holder a, .audit_next .holder1 a, .audit_next .holder2 a,
+.audit_next .holder3 a.audit_next .holder4 a, .holder5 a, .audit_next .holder6 a,
+.audit_next .holder7 a.audit_next .holder8 a {
+    font-size: 12px;
+    cursor: pointer;
+    margin: 0 5px;
+    color: #333;
+    text-decoration: none;
+}
+
+.holder a:hover, .holder1 a:hover, .holder2 a:hover, .holder3 a:hover, .holder4 a:hover,
+.holder5 a:hover, .holder6 a:hover, .holder7 a:hover, .holder8 a:hover {
+    background-color: #222;
+    color: #fff;
+    cursor: pointer;
+}
+
+.holder {
+    margin-top: 35px;
+}
+
+.holder a, .holder1 a, .holder2 a, .holder3 a, .holder4 a,
+.holder5 a, .holder6 a, .holder7 a, .holder8 a {
+    padding: 0px 5px;
+}
+
+.holder a.jp-previous, .holder1 a.jp-previous, .holder2 a.jp-previous, .holder3 a.jp-previous, .holder4 a.jp-previous,
+.holder5 a.jp-previous, .holder6 a.jp-previous, .holder7 a.jp-previous, .holder8 a.jp-previous {
+    margin-right: 15px;
+}
+
+.holder a.jp-next, .holder1 a.jp-next, .holder2 a.jp-next, .holder3 a.jp-next, .holder4 a.jp-next,
+.holder5 a.jp-next, .holder6 a.jp-next, .holder7 a.jp-next, .holder8 a.jp-next {
+    margin-left: 15px;
+}
+
+.holder a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder1 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder2 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder3 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder4 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder5 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder6 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder7 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder8 a.jp-current, a.jp-current:hover {
+    color: #2F84D7;
+    /*font-weight: bold;*/
+}
+
+.holder a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder1 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder2 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder3 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder4 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder5 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder6 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder7 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder8 a.jp-disabled, a.jp-disabled:hover {
+    color: #bbb;
+}
+
+.holder a.jp-current, a.jp-current:hover,
+.holder a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder1 a.jp-current, a.jp-current:hover,
+.holder1 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder2 a.jp-current, a.jp-current:hover,
+.holder2 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder3 a.jp-current, a.jp-current:hover,
+.holder3 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder4 a.jp-current, a.jp-current:hover,
+.holder4 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder5 a.jp-current, a.jp-current:hover,
+.holder5 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder6 a.jp-current, a.jp-current:hover,
+.holder6 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder7 a.jp-current, a.jp-current:hover,
+.holder7 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder8 a.jp-current, a.jp-current:hover,
+.holder8 a.jp-disabled, a.jp-disabled:hover {
+    cursor: default;
+    background: none;
+}
+
+.holder span, .holder1 span, .holder2 span, .holder3 span, .holder4 span,
+.holder5 span, .holder6 span, .holder7 span, .holder8 span {
+    margin: 0 5px;
+}

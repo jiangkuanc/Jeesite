@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsRequirementInformationDao">
+
+    <sql id="cmsRequirementInformationColumns">
+        a.id AS "id",
+        a.product_name AS "productName",
+        a.demand_enterprise AS "demandEnterprise",
+        a.product_price AS "productPrice",
+        a.demand_quantity AS "demandQuantity",
+        a.period_for_delivery AS "periodForDelivery",
+        a.create_Date AS "createDate"
+    </sql>
+
+    <sql id="cmsRequirementInformationJoins">
+    </sql>
+
+    <select id="get" resultType="CmsRequirementInformation">
+        SELECT
+        <include refid="cmsRequirementInformationColumns"/>
+        FROM cms_requirement_information a
+        <include refid="cmsRequirementInformationJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="selectRequirementInformation" resultType="CmsRequirementInformation">
+        SELECT
+        <include refid="cmsRequirementInformationColumns"/>
+        FROM cms_requirement_information a
+        <include refid="cmsRequirementInformationJoins"/>
+    </select>
+
+    <select id="findList" resultType="CmsRequirementInformation">
+        SELECT
+        <include refid="cmsRequirementInformationColumns"/>
+        FROM cms_requirement_information a
+        <include refid="cmsRequirementInformationJoins"/>
+        <where>
+            <if test="productName != null and productName != ''">
+                AND a.product_name LIKE CONCAT('%', #{productName}, '%')
+            </if>
+            <if test="demandEnterprise != null and demandEnterprise != ''">
+                AND a.demand_enterprise LIKE CONCAT('%', #{demandEnterprise}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <!-- 不重复的id工下拉框调用-->
+
+    <select id="findFromList" resultType="CmsRequirementInformation">
+        SELECT
+        <include refid="cmsRequirementInformationColumns"/>
+        FROM cms_requirement_information a
+        <include refid="cmsRequirementInformationJoins"/>
+        <where>
+            a.id NOT IN(SELECT b.requirement_id FROM cms_demand_information b where b.requirement_id is not null)
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsRequirementInformation">
+        SELECT
+        <include refid="cmsRequirementInformationColumns"/>
+        FROM cms_requirement_information a
+        <include refid="cmsRequirementInformationJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_requirement_information(
+        id,
+        product_name,
+        demand_enterprise,
+        product_price,
+        demand_quantity,
+        period_for_delivery
+        ) VALUES (
+        #{id},
+        #{productName},
+        #{demandEnterprise},
+        #{productPrice},
+        #{demandQuantity},
+        #{periodForDelivery}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_requirement_information SET
+        product_name = #{productName},
+        demand_enterprise = #{demandEnterprise},
+        product_price = #{productPrice},
+        demand_quantity = #{demandQuantity},
+        period_for_delivery = #{periodForDelivery}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_requirement_information
+        WHERE id = #{id}
+    </update>
+</mapper>

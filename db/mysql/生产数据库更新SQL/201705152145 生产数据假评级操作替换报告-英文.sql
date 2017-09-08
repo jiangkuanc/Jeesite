@@ -1,0 +1,11 @@
+
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG6201705130007';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG6201705130004';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG6201705130001';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG6201705130005';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG6201705130008';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG7201705130004';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG7201705130003';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG7201705130005';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG7201705130006';
+update p2p_financing_rating_info set commit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf', credit_report = 'group1/M00/00/BE/Zcl7AFkZtt6ADnl9AAb_BxiveQ8346.pdf'  where financing_information_id = 'DG7201705130007';

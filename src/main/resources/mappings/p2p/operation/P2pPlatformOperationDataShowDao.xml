@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.operation.dao.P2pPlatformOperationDataShowDao">
+
+    <sql id="p2pPlatformOperationDataShowColumns">
+        a.id AS "id",
+        a.history_date AS "historyDate",
+        a.trade_total_amount AS "tradeTotalAmount",
+        a.trade_total_number AS "tradeTotalNumber",
+        a.financing_total_people AS "financingTotalPeople",
+        a.investment_total_people AS "investmentTotalPeople",
+        a.compensatory_amount AS "compensatoryAmount",
+        a.overdue_amount AS "overdueAmount",
+        a.project_total_number AS "projectTotalNumber",
+        a.project_overdue_rate AS "projectOverdueRate",
+        a.amount_overdue_rate AS "amountOverdueRate",
+        a.overdue_project_number AS "overdueProjectNumber",
+        a.renjun_financing_amount AS "renjunFinancingAmount",
+        a.renjun_investment_amount AS "renjunInvestmentAmount",
+        a.bijun_financing_amount AS "bijunFinancingAmount",
+        a.max_single_rzye AS "maxSingleRzye",
+        a.max_ten_rzye AS "maxTenRzye",
+        a.max_single_rzyezb AS "maxSingleRzyezb",
+        a.max_ten_rzyezb AS "maxTenRzyezb",
+        a.financing_earn AS "financingEarn",
+        a.historical_annual_yield AS "historicalAnnualYield",
+        a.register_count AS "registerCount"
+    </sql>
+
+    <sql id="p2pPlatformOperationDataShowJoins">
+    </sql>
+
+    <select id="get" resultType="P2pPlatformOperationDataShow">
+        SELECT
+        <include refid="p2pPlatformOperationDataShowColumns"/>
+        FROM p2p_platform_operation_data_show a
+        <include refid="p2pPlatformOperationDataShowJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pPlatformOperationDataShow">
+        SELECT
+        <include refid="p2pPlatformOperationDataShowColumns"/>
+        FROM p2p_platform_operation_data_show a
+        <include refid="p2pPlatformOperationDataShowJoins"/>
+        <where>
+
+            <if test="historyDate != null and historyDate != ''">
+                AND a.history_date = #{historyDate}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pPlatformOperationDataShow">
+        SELECT
+        <include refid="p2pPlatformOperationDataShowColumns"/>
+        FROM p2p_platform_operation_data_show a
+        <include refid="p2pPlatformOperationDataShowJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_platform_operation_data_show(
+        id,
+        history_date,
+        trade_total_amount,
+        trade_total_number,
+        financing_total_people,
+        investment_total_people,
+        compensatory_amount,
+        overdue_amount,
+        project_total_number,
+        project_overdue_rate,
+        amount_overdue_rate,
+        overdue_project_number,
+        renjun_financing_amount,
+        renjun_investment_amount,
+        bijun_financing_amount,
+        max_single_rzye,
+        max_ten_rzye,
+        max_single_rzyezb,
+        max_ten_rzyezb,
+        financing_earn,
+        historical_annual_yield,
+        register_count
+        ) VALUES (
+        #{id},
+        #{historyDate},
+        #{tradeTotalAmount},
+        #{tradeTotalNumber},
+        #{financingTotalPeople},
+        #{investmentTotalPeople},
+        #{compensatoryAmount},
+        #{overdueAmount},
+        #{projectTotalNumber},
+        #{projectOverdueRate},
+        #{amountOverdueRate},
+        #{overdueProjectNumber},
+        #{renjunFinancingAmount},
+        #{renjunInvestmentAmount},
+        #{bijunFinancingAmount},
+        #{maxSingleRzye},
+        #{maxTenRzye},
+        #{maxSingleRzyezb},
+        #{maxTenRzyezb},
+        #{financingEarn},
+        #{historicalAnnualYield},
+        #{registerCount}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_platform_operation_data_show SET
+        history_date = #{historyDate},
+        trade_total_amount = #{tradeTotalAmount},
+        trade_total_number = #{tradeTotalNumber},
+        financing_total_people = #{financingTotalPeople},
+        investment_total_people = #{investmentTotalPeople},
+        compensatory_amount = #{compensatoryAmount},
+        overdue_amount = #{overdueAmount},
+        project_total_number = #{projectTotalNumber},
+        project_overdue_rate = #{projectOverdueRate},
+        amount_overdue_rate = #{amountOverdueRate},
+        overdue_project_number = #{overdueProjectNumber},
+        renjun_financing_amount = #{renjunFinancingAmount},
+        renjun_investment_amount = #{renjunInvestmentAmount},
+        bijun_financing_amount = #{bijunFinancingAmount},
+        max_single_rzye = #{maxSingleRzye},
+        max_ten_rzye = #{maxTenRzye},
+        max_single_rzyezb = #{maxSingleRzyezb},
+        max_ten_rzyezb = #{maxTenRzyezb},
+        financing_earn = #{financingEarn},
+        historical_annual_yield = #{historicalAnnualYield},
+        register_count = #{registerCount}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_platform_operation_data_show
+        WHERE id = #{id}
+    </update>
+    <!-- Chace 获取运营数据披露信息 -->
+    <select id="findData" resultType="P2pPlatformOperationDataShow" parameterType="P2pPlatformOperationDataShow">
+        SELECT *
+        FROM p2p_platform_operation_data_show
+    </select>
+</mapper>

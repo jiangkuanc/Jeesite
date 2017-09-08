@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.risk.dao.P2pRiskScoreDao">
+
+    <sql id="p2pRiskScoreColumns">
+        a.id AS "id",
+        a.risk_record_id AS "riskRecordId",
+        a.risk_answer_id AS "riskAnswerId"
+    </sql>
+
+    <sql id="p2pRiskScoreJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRiskScore">
+        SELECT
+        <include refid="p2pRiskScoreColumns"/>
+        FROM p2p_risk_score a
+        <include refid="p2pRiskScoreJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRiskScore">
+        SELECT
+        <include refid="p2pRiskScoreColumns"/>
+        FROM p2p_risk_score a
+        <include refid="p2pRiskScoreJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRiskScore">
+        SELECT
+        <include refid="p2pRiskScoreColumns"/>
+        FROM p2p_risk_score a
+        <include refid="p2pRiskScoreJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_risk_score(
+        id,
+        risk_record_id,
+        risk_answer_id
+        ) VALUES (
+        #{id},
+        #{riskRecordId},
+        #{riskAnswerId}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_risk_score SET
+        risk_record_id = #{riskRecordId},
+        risk_answer_id = #{riskAnswerId}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_risk_score
+        WHERE id = #{id}
+    </update>
+
+</mapper>

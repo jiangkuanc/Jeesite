@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.info.dao.InfPurchaseInformatioDao">
+
+    <sql id="infPurchaseInformatioColumns">
+        a.id AS "id",
+        a.product_name AS "productName",
+        a.expected_price AS "expectedPrice",
+        a.budget_amount AS "budgetAmount",
+        a.required_quantity AS "requiredQuantity",
+        a.enterprise_name AS "enterpriseName",
+        a.contacts_person AS "contactsPerson",
+        a.telphone AS "telphone",
+        a.term_of_validity AS "termOfValidity",
+        a.publish_time AS "publishTime",
+        a.notes AS "notes",
+        a.product_picture AS "productPicture",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="infPurchaseInformatioJoins">
+    </sql>
+
+    <select id="get" resultType="InfPurchaseInformatio">
+        SELECT
+        <include refid="infPurchaseInformatioColumns"/>
+        FROM inf_purchase_informatio a
+        <include refid="infPurchaseInformatioJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="InfPurchaseInformatio">
+        SELECT
+        <include refid="infPurchaseInformatioColumns"/>
+        FROM inf_purchase_informatio a
+        <include refid="infPurchaseInformatioJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="productName != null and productName != ''">
+                AND a.product_name = #{productName}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="InfPurchaseInformatio">
+        SELECT
+        <include refid="infPurchaseInformatioColumns"/>
+        FROM inf_purchase_informatio a
+        <include refid="infPurchaseInformatioJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO inf_purchase_informatio(
+        id,
+        product_name,
+        expected_price,
+        budget_amount,
+        required_quantity,
+        enterprise_name,
+        contacts_person,
+        telphone,
+        term_of_validity,
+        publish_time,
+        notes,
+        product_picture,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{productName},
+        #{expectedPrice},
+        #{budgetAmount},
+        #{requiredQuantity},
+        #{enterpriseName},
+        #{contactsPerson},
+        #{telphone},
+        #{termOfValidity},
+        #{publishTime},
+        #{notes},
+        #{productPicture},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE inf_purchase_informatio SET
+        product_name = #{productName},
+        expected_price = #{expectedPrice},
+        budget_amount = #{budgetAmount},
+        required_quantity = #{requiredQuantity},
+        enterprise_name = #{enterpriseName},
+        contacts_person = #{contactsPerson},
+        telphone = #{telphone},
+        term_of_validity = #{termOfValidity},
+        publish_time = #{publishTime},
+        notes = #{notes},
+        product_picture = #{productPicture},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE inf_purchase_informatio SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

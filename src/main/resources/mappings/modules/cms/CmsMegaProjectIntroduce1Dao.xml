@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsMegaProjectIntroduce1Dao">
+
+    <sql id="cmsMegaProjectIntroduce1Columns">
+        a.id AS "id",
+        a.article_id AS "articleId",
+        c.title AS "projectName",
+        a.project_investment AS "projectInvestment",
+        a.project_contractor AS "projectContractor",
+        a.project_schedule AS "projectSchedule",
+        a.project_located AS "projectLocated",
+        a.contacts AS "contacts",
+        a.duty AS "duty",
+        a.phone AS "phone",
+        a.industry_involved AS "industryInvolved",
+        a.validity AS "validity",
+        a.project_enterprise AS "projectEnterprise",
+        a.working_range AS "workingRange",
+        a.qualification_requirement AS "qualificationRequirement",
+        a.requirement AS "requirement",
+        a.file_access AS "fileAccess",
+        a.file_submit AS "fileSubmit",
+        a.project_display AS "projectDisplay",
+        a.cooperation_opportunities AS "cooperationOpportunities"
+    </sql>
+
+    <sql id="cmsMegaProjectIntroduce1Joins">
+        JOIN cms_article c ON c.id = a.article_id
+
+    </sql>
+
+    <select id="get" resultType="CmsMegaProjectIntroduce1">
+        SELECT
+        <include refid="cmsMegaProjectIntroduce1Columns"/>
+        FROM cms_mega_project_introduce1 a
+        <include refid="cmsMegaProjectIntroduce1Joins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 查询当前大型项目的详情 -->
+
+
+    <select id="selectCurrentMegaProjectDetail" parameterType="String" resultType="CmsMegaProjectIntroduce1">
+        SELECT
+        <include refid="cmsMegaProjectIntroduce1Columns"/>
+        FROM cms_mega_project_introduce1 a
+        <include refid="cmsMegaProjectIntroduce1Joins"/>
+        WHERE a.article_id = #{id}
+    </select>
+
+
+    <select id="findList" resultType="CmsMegaProjectIntroduce1">
+        SELECT
+        <include refid="cmsMegaProjectIntroduce1Columns"/>
+        FROM cms_mega_project_introduce1 a
+        <include refid="cmsMegaProjectIntroduce1Joins"/>
+        <where>
+            <if test="projectName != null and projectName != ''">
+                AND c.title LIKE CONCAT('%', #{projectName}, '%')
+            </if>
+            <if test="projectLocated != null and projectLocated != ''">
+                AND a.project_located LIKE CONCAT('%', #{projectLocated}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsMegaProjectIntroduce1">
+        SELECT
+        <include refid="cmsMegaProjectIntroduce1Columns"/>
+        FROM cms_mega_project_introduce1 a
+        <include refid="cmsMegaProjectIntroduce1Joins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_mega_project_introduce1(
+        id,
+        article_id,
+        project_name,
+        project_investment,
+        project_contractor,
+        project_schedule,
+        project_located,
+        contacts,
+        duty,
+        phone,
+        industry_involved,
+        validity,
+        project_enterprise,
+        working_range,
+        qualification_requirement,
+        requirement,
+        file_access,
+        file_submit,
+        project_display,
+        cooperation_opportunities
+        ) VALUES (
+        #{id},
+        #{articleId},
+        #{projectName},
+        #{projectInvestment},
+        #{projectContractor},
+        #{projectSchedule},
+        #{projectLocated},
+        #{contacts},
+        #{duty},
+        #{phone},
+        #{industryInvolved},
+        #{validity},
+        #{projectEnterprise},
+        #{workingRange},
+        #{qualificationRequirement},
+        #{requirement},
+        #{fileAccess},
+        #{fileSubmit},
+        #{projectDisplay},
+        #{cooperationOpportunities}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_mega_project_introduce1 SET
+        article_id = #{articleId},
+        project_name = #{projectName},
+        project_investment = #{projectInvestment},
+        project_contractor = #{projectContractor},
+        project_schedule = #{projectSchedule},
+        project_located = #{projectLocated},
+        contacts = #{contacts},
+        duty = #{duty},
+        phone = #{phone},
+        industry_involved = #{industryInvolved},
+        validity = #{validity},
+        project_enterprise = #{projectEnterprise},
+        working_range = #{workingRange},
+        qualification_requirement = #{qualificationRequirement},
+        requirement = #{requirement},
+        file_access = #{fileAccess},
+        file_submit = #{fileSubmit},
+        project_display = #{projectDisplay},
+        cooperation_opportunities = #{cooperationOpportunities}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_mega_project_introduce1
+        WHERE id = #{id}
+    </update>
+
+</mapper>

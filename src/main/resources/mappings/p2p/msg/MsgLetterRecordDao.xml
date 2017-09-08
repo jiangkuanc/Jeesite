@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.msg.dao.MsgLetterRecordDao">
+
+    <sql id="msgLetterRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.rec_id AS "recId",
+        a.title AS "title",
+        a.content AS "content",
+        a.msg_id AS "msgId",
+        a.send_date AS "sendDate",
+        a.read_state AS "readState",
+        u2.name AS "user.name"
+    </sql>
+
+
+    <sql id="msgLetterRecordColumns2">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.rec_id AS "recId",
+        a.title AS "title",
+        a.content AS "content",
+        a.send_date AS "sendDate",
+        a.read_state AS "readState"
+    </sql>
+
+    <sql id="msgLetterRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+        LEFT JOIN sys_user u3 ON u3.id = a.rec_id
+    </sql>
+    <!-- 未读消息 -->
+    <select id="getListUnReadMessage" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns"/>
+        FROM msg_letter_record a
+        <where>
+            a.read_state = #{readState}
+        </where>
+    </select>
+
+    <!-- 已读消息 -->
+    <select id="getListReadMessage" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns"/>
+        FROM msg_letter_record a
+        <where>
+            a.read_state = #{readState}
+        </where>
+    </select>
+
+
+    <select id="get" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns"/>
+        FROM msg_letter_record a
+        <include refid="msgLetterRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="get2" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns2"/>
+        FROM msg_letter_record a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns"/>
+        FROM msg_letter_record a
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+        <where>
+            <!-- 	a.del_flag = #{DEL_FLAG_NORMAL} -->
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id = #{user.id}
+            </if>
+            <if test="recId != null and recId != ''">
+                AND a.rec_id = #{recId}
+            </if>
+            <if test="readState != null and readState != ''">
+                AND a.read_state = #{readState}
+            </if>
+            <if test="title != null and title != ''">
+                AND a.title = #{title}
+            </if>
+            <if test="content != null and content != ''">
+                AND a.content = #{content}
+            </if>
+            <if test="beginSendDate != null and beginSendDate != '' and endSendDate != null and endSendDate != ''">
+                AND a.send_date BETWEEN #{beginSendDate} AND #{endSendDate}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.send_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns"/>
+        FROM msg_letter_record a
+        <include refid="msgLetterRecordJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO msg_letter_record(
+        id,
+        user_id,
+        rec_id,
+        msg_id,
+        send_date,
+        read_state,
+        title,
+        content
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{recId},
+        #{msgId},
+        #{sendDate},
+        #{readState},
+        #{title},
+        #{content}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE msg_letter_record SET
+        user_id = #{user.id},
+        rec_id = #{recId},
+        msg_id = #{msgId},
+        send_date = #{sendDate},
+        read_state = #{readState},
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM
+        msg_letter_record
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="getListByUserId" resultType="MsgLetterRecord">
+        SELECT
+        <include refid="msgLetterRecordColumns"/>
+        FROM msg_letter_record a
+        <include refid="msgLetterRecordJoins"/>
+        <where>
+            AND a.rec_id = #{userId}
+            AND a.read_state = 0
+            ORDER BY a.send_date asc
+        </where>
+    </select>
+    <!-- 根据id查询 -->
+    <select id="getById" resultType="MsgLetterRecord" parameterType="MsgLetterRecord">
+        select *
+        from msg_letter_record
+        where id=#{id}
+
+    </select>
+    <!-- 未读消息的状态 -->
+    <select id="getReadMessageJson" parameterType="MsgLetterRecord" resultType="int">
+        SELECT count(*)
+        FROM msg_letter_record a
+        where
+        a.read_state=#{readState}
+        and a.rec_id = #{recId}
+    </select>
+
+    <!-- 未读消息的状态 -->
+    <select id="getUnReadMessageJson" parameterType="MsgLetterRecord" resultType="int">
+        SELECT
+        count(read_state)
+        FROM
+        msg_letter_record a
+        WHERE
+        a.read_state=#{readState}
+        and a.rec_id = #{recId}
+    </select>
+    <!-- 标记为已读 -->
+    <update id="markRead" parameterType="MsgLetterRecord">
+        update msg_letter_record SET
+        read_state = 1
+        where id=#{id}
+    </update>
+</mapper>

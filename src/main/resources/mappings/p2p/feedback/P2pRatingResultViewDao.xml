@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.feedback.dao.P2pRatingResultViewDao">
+
+    <sql id="p2pRatingResultViewColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.view_type AS "viewType",
+        a.view_explain AS "viewExplain",
+        a.view_time AS "viewTime",
+        a.audit_state AS "auditState",
+        a.audit_reason AS "auditReason",
+        a.audit_time AS "auditTime"
+    </sql>
+
+    <sql id="p2pRatingResultViewJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRatingResultView">
+        SELECT
+        <include refid="p2pRatingResultViewColumns"/>
+        FROM p2p_rating_result_view a
+        <include refid="p2pRatingResultViewJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRatingResultView">
+        SELECT
+        <include refid="p2pRatingResultViewColumns"/>
+        FROM p2p_rating_result_view a
+        <include refid="p2pRatingResultViewJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRatingResultView">
+        SELECT
+        <include refid="p2pRatingResultViewColumns"/>
+        FROM p2p_rating_result_view a
+        <include refid="p2pRatingResultViewJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_rating_result_view(
+        id,
+        financing_information_id,
+        view_type,
+        view_explain,
+        view_time,
+        audit_state,
+        audit_reason,
+        audit_time
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{viewType},
+        #{viewExplain},
+        #{viewTime},
+        #{auditState},
+        #{auditReason},
+        #{auditTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_rating_result_view SET
+        financing_information_id = #{financingInformationId},
+        view_type = #{viewType},
+        view_explain = #{viewExplain},
+        view_time = #{viewTime},
+        audit_state = #{auditState},
+        audit_reason = #{auditReason},
+        audit_time = #{auditTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_rating_result_view
+        WHERE id = #{id}
+    </update>
+
+    <!-- Quincy 添加反馈记录 -->
+    <insert id="insertReceiptRecord" parameterType="P2pRatingResultView">
+        INSERT INTO p2p_rating_result_view(
+        id,
+        financing_information_id,
+        view_type,
+        view_explain,
+        view_time,
+        audit_state
+        )VALUES(
+        #{id},
+        #{financingInformationId},
+        #{viewType},
+        #{viewExplain},
+        #{viewTime},
+        #{auditState}
+        )
+    </insert>
+
+    <!-- Quincy 根据债项ID查询单条记录 -->
+    <select id="findOneByFid" parameterType="java.lang.String" resultType="P2pRatingResultView">
+        SELECT
+        id,financing_information_id,view_type,view_explain,view_time
+        FROM
+        p2p_rating_result_view
+        WHERE
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 根据债项ID修改审核状态 -->
+    <update id="updateReceiptRecord" parameterType="P2pRatingResultView">
+        UPDATE
+        p2p_rating_result_view
+        SET
+        financing_information_id = #{financingInformationId},
+        view_type = #{viewType},
+        view_explain = #{viewExplain},
+        view_time = #{viewTime},
+        audit_state = #{auditState}
+        WHERE
+        financing_information_id = #{financingInformationId}
+    </update>
+
+    <!-- Quincy 融资项目刷新复评状态 -->
+    <select id="refreshReview1" resultType="p2pFinancingInformation">
+        SELECT
+        b.id AS "id",
+        b.finacing_name AS "finacingName",
+        b.applicants_id AS "applicantsId",
+        b.is_hand_rate_cost AS "isHandRateCost",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel"
+        FROM
+        p2p_rating_result_view a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        p2p_financing_rating_info c
+        ON
+        b.id = c.financing_information_id
+        WHERE
+        b.current_stage in (212,220)
+        AND
+        a.audit_state = 2
+    </select>
+
+    <select id="refreshReview2" resultType="p2pRatingServiceInfo">
+        SELECT
+        b.id AS "id"
+        FROM
+        p2p_rating_result_view a
+        LEFT JOIN
+        p2p_rating_service_info b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        p2p_financing_rating_info c
+        ON
+        b.id = c.financing_information_id
+        WHERE
+        b.current_stage = '600'
+        AND
+        a.audit_state = 2
+    </select>
+
+    <delete id="deleteReceiptRecord" parameterType="java.lang.String">
+        DELETE FROM p2p_rating_result_view WHERE financing_information_id = #{_parameter}
+    </delete>
+</mapper>

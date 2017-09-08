@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-4.0.xsd"
+       default-lazy-init="true">
+
+    <description>Shiro Configuration</description>
+
+    <!-- 加载配置属性文件 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:jeesite.properties"/>
+
+    <!-- Shiro权限过滤过滤器定义 -->
+    <bean name="shiroFilterChainDefinitions" class="java.lang.String">
+        <constructor-arg>
+            <value>
+                /static/** = anon
+                /userfiles/** = anon
+                ${adminPath}/cas = cas
+                ${adminPath}/creditmanage/creditAppealInfoFront/** = anon
+                ${adminPath}/creditmanage/creditReportInfoFront/** = anon
+                ${adminPath}/creditmanage/creditReportInfo/attachmentDownload = anon
+                ${adminPath}/creditmanage/creditAppealInfo/attachmentDownload = anon
+                ${adminPath}/rating/front/** = anon
+                ${adminPath}/rating/p2pRatingServiceInfo/ctrlRatingFlow = anon
+                ${adminPath}/sys/user/preUserRegister = anon<!-- 跳转注册JSP方法 -->
+                ${adminPath}/sys/user/userRegister = anon<!-- 前台注册方法 -->
+                ${adminPath}/sys/user/getByLoginName = anon<!-- 前台校验注册用户名是否可用方法 -->
+                ${adminPath}/sys/user/getByPhone = anon<!-- 前台校验注册用户手机是否可用方法 -->
+                ${adminPath}/sys/user/userLogin = anon<!-- 前台登录方法 -->
+                ${adminPath}/sys/user/rememberMe = anon<!-- 自动登录 -->
+                ${adminPath}/sys/user/updatePwd = anon<!-- 外网用户修改密码方法 -->
+                ${adminPath}/sys/user/passwordModify = anon
+                ${adminPath}/sys/user/preUserLogin = anon<!-- 跳转登录JSP方法 -->
+                ${adminPath}/sys/user/userLogout = anon<!-- 前台注销用户方法 -->
+                ${adminPath}/sys/user/updatePhone2 = anon
+                ${adminPath}/sys/user/updatePhone = anon <!-- 绑定手机号 -->
+                ${adminPath}/sys/user/checkPwd = anon<!-- 校验密码 -->
+                ${adminPath}/sys/user/differentPwd = anon<!-- 校验密码 -->
+                ${adminPath}/sys/user/getOldPassword = anon <!-- 修改密码 -->
+                ${adminPath}/sys/user/modifyPwdReception = anon
+                ${adminPath}/sys/user/signAgreementPage = anon <!-- 投资用户签订服务协议页面 -->
+                ${adminPath}/sys/user/signAgreement = anon <!-- 投资用户签订服务协议 -->
+                ${adminPath}/sys/user/preResetPwd = anon
+                ${adminPath}/sys/user/isPhoneExist = anon
+                ${adminPath}/sys/user/resetPwd = anon
+                ${adminPath}/sys/user/jumpWebsite = anon <!-- 网站和服务平台跳转 -->
+                ${adminPath}/sys/user/returnIndex = anon <!-- 直接跳转网站 -->
+                ${adminPath}/sys/user/signIn = anon <!-- 点击登录跳转网站 -->
+                ${adminPath}/sys/user/preResetPwd2 = anon
+                ${adminPath}/cms/p2pProductInfo/** = anon <!-- 前台跳转到一带一路页面 -->
+                ${adminPath}/cmsca/cmsChinaAreaCity/** = anon  <!-- 前台跳转一带一路(国内) -->
+                ${adminPath}/cms/cmsForeignCountry/** = anon <!-- 前台跳转一带一路(国外) -->
+                ${adminPath}/cms/article/** = anon <!-- 跳转到关于我们页面 -->
+                ${adminPath}/cms/cmsProjectDetils/** = anon <!-- 跳转到项目招标详情页面 -->
+                ${adminPath}/cms/cmsMegaProjectIntroduce1/** = anon <!-- 跳转到大型项目简介详情页面 -->
+                ${adminPath}/cms/cmsReport/** = anon <!-- 跳转到信息产品详情页面 -->
+                ${adminPath}/cms/cmsDemandInformation/** = anon <!-- 跳转到商务需求信息详情页面 -->
+                ${adminPath}/cms/cmsRequirementInformation/** = anon <!-- 跳转到商务需求信息页面 -->
+                ${adminPath}/cms/cmsSupplyInformation/** = anon <!-- 跳转到供给信息详情页面 -->
+                ${adminPath}/cms/link/** = anon <!-- 跳转到信用教育视频页面 -->
+                ${adminPath}/info/infTender/** = anon <!-- 调到发布页面 -->
+                ${adminPath}/cms/comment/** = anon
+                ${adminPath}/cms/cmsCreditactivity/** = anon
+                ${adminPath}/user/userList/enterpriseDetails = user
+                ${adminPath}/user/** = anon
+                ${adminPath}/user/userList/** = user
+                ${adminPath}/financing/** = anon
+                ${adminPath}/document/** = anon
+                ${adminPath}/msg/** = anon
+                ${adminPath}/p2p/user/p2pAccountRechargeRecord/** = anon
+                ${adminPath}/p2p/user/p2pAccountWithdrawRecord/** = anon
+                ${adminPath}/login = authc
+                ${adminPath}/logout = logout
+                ${adminPath}/RatingFee/** = anon
+                ${adminPath}/DebtDetails/** = anon
+                ${adminPath}/application/** = anon
+                ${adminPath}/feedback/** = anon
+                ${adminPath}/repayment/** = anon
+                ${adminPath}/image/** = anon
+                ${adminPath}/p2p/config/p2pAgreement/agreementShow = user
+                ${adminPath}/p2p/config/p2pAdvertiserment/getAdvertisement = anon
+                ${adminPath}/p2p/config/p2pFriendshipLink/findPublish = anon
+                ${adminPath}/p2p/config/** = user
+                ${adminPath}/p2p/** = anon
+                ${adminPath}/Industry/** = anon
+                ${adminPath}/user/validEmailCode/** = anon
+                ${adminPath}/p2p/config/p2pAdvertiserment/takeTurn=anon<!-- 轮播图 -->
+                ${adminPath}/creditreport/** = anon
+                ${adminPath}/enterpriseDatabase/** = anon
+                ${adminPath}/** = user
+                t/test/** = anon
+                /act/rest/service/editor/** = perms[act:model:edit]
+                /act/rest/service/model/** = perms[act:model:edit]
+                /act/rest/service/** = user
+                /ReportServer/** = user
+            </value>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- 安全认证过滤器 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/><!--
+		<property name="loginUrl" value="${cas.server.url}?service=${cas.project.url}${adminPath}/cas" /> -->
+        <property name="loginUrl" value="${adminPath}/login"/>
+        <property name="successUrl" value="${adminPath}?login"/>
+        <property name="filters">
+            <map>
+                <entry key="cas" value-ref="casFilter"/>
+                <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="logout" value-ref="logoutFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <ref bean="shiroFilterChainDefinitions"/>
+        </property>
+    </bean>
+
+    <!--退出过滤器-->
+    <bean id="logoutFilter" class="org.apache.shiro.web.filter.authc.LogoutFilter">
+        <property name="redirectUrl" value="${adminPath}/login/a"/>
+    </bean>
+
+    <!-- CAS认证过滤器 -->
+    <bean id="casFilter" class="org.apache.shiro.cas.CasFilter">
+        <property name="failureUrl" value="${adminPath}/login"/>
+    </bean>
+
+    <!-- 定义Shiro安全管理配置 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="systemAuthorizingRealm"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="cacheManager" ref="shiroCacheManager"/>
+    </bean>
+
+    <!-- 自定义会话管理配置 -->
+    <bean id="sessionManager" class="com.thinkgem.jeesite.common.security.shiro.session.SessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+
+        <!-- 会话超时时间，单位：毫秒  -->
+        <property name="globalSessionTimeout" value="${session.sessionTimeout}"/>
+
+        <!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   -->
+        <property name="sessionValidationInterval" value="${session.sessionTimeoutClean}"/>
+        <!--  		<property name="sessionValidationSchedulerEnabled" value="false"/> -->
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+    </bean>
+
+    <!-- 指定本系统SESSIONID, 默认为: JSESSIONID 问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
+        当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失! -->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="jeesite.session.id"/>
+    </bean>
+
+    <!-- 自定义Session存储容器 -->
+    <!-- 	<bean id="sessionDAO" class="com.thinkgem.jeesite.common.security.shiro.session.JedisSessionDAO"> -->
+    <!-- 		<property name="sessionIdGenerator" ref="idGen" /> -->
+    <!-- 		<property name="sessionKeyPrefix" value="${redis.keyPrefix}_session_" /> -->
+    <!-- 	</bean> -->
+    <bean id="sessionDAO" class="com.thinkgem.jeesite.common.security.shiro.session.CacheSessionDAO">
+        <property name="sessionIdGenerator" ref="idGen"/>
+        <property name="activeSessionsCacheName" value="activeSessionsCache"/>
+        <property name="cacheManager" ref="shiroCacheManager"/>
+    </bean>
+
+    <!-- 定义授权缓存管理器 -->
+    <!-- 	<bean id="shiroCacheManager" class="com.thinkgem.jeesite.common.security.shiro.cache.SessionCacheManager" /> -->
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+
+    <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <!-- AOP式方法级权限检查  -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor">
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+</beans>

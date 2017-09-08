@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.risk.dao.P2pMemberPayDetailsDao">
+
+    <sql id="p2pMemberPayDetailsColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.member_type AS "memberType",
+        a.renewal_time AS "renewalTime",
+        a.start_time AS "startTime",
+        a.end_time AS "endTime",
+        a.pay_cost AS "payCost",
+        a.pay_style AS "payStyle",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pMemberPayDetailsJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pMemberPayDetails">
+        SELECT
+        <include refid="p2pMemberPayDetailsColumns"/>
+        FROM p2p_member_pay_details a
+        <include refid="p2pMemberPayDetailsJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pMemberPayDetails">
+        SELECT
+        <include refid="p2pMemberPayDetailsColumns"/>
+        FROM p2p_member_pay_details a
+        <include refid="p2pMemberPayDetailsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pMemberPayDetails">
+        SELECT
+        <include refid="p2pMemberPayDetailsColumns"/>
+        FROM p2p_member_pay_details a
+        <include refid="p2pMemberPayDetailsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_member_pay_details(
+        id,
+        user_id,
+        member_type,
+        renewal_time,
+        start_time,
+        end_time,
+        pay_cost,
+        pay_style
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{memberType},
+        #{renewalTime},
+        #{startTime},
+        #{endTime},
+        #{payCost},
+        #{payStyle}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_member_pay_details SET
+        user_id = #{user.id},
+        member_type = #{memberType},
+        renewal_time = #{renewalTime},
+        start_time = #{startTime},
+        end_time = #{endTime},
+        pay_cost = #{payCost},
+        pay_style = #{payStyle}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_member_pay_details
+        WHERE id = #{id}
+    </update>
+
+</mapper>

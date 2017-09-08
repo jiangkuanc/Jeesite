@@ -1,0 +1,379 @@
+/*2016-7-29 11:01:09*/
+/*ZMW*/
+.shenq .shenqp {
+    line-height: 30px;
+}
+
+.shenq .shenqp span {
+    color: red;
+}
+
+.red {
+    background: #f14349;
+    color: #fff;
+    height: 46px;
+    font-size: 18px;
+    border-radius: 8px;
+    width: 120px
+}
+
+.shenq .red {
+    margin-left: 100px;
+    padding: 0px;
+}
+
+.tabs {
+    margin-bottom: 20px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 690px;
+}
+
+.tabs ul {
+    padding: 0
+}
+
+.tabs .two {
+    width: 25%;
+    height: 44px;
+    float: left;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+    list-style: none;
+    font-size: 18px;
+    font-weight: 600;
+    color: #909090;
+}
+
+.tabs .two span {
+    display: block;
+    margin-left: 26px;
+    /* border-top: 2px solid #bf1a20; */
+}
+
+.border-top {
+    border-top: 2px solid #bf1a20;
+}
+
+.tabs .two:first-child span {
+    margin-left: 0;
+    width: 100%;
+}
+
+.border {
+    border-bottom: 1px solid #bf1a20;
+}
+
+.one {
+    width: 100%;
+    display: none;
+}
+
+.current {
+    display: block;
+    border-right: none;
+    position: relative;
+}
+
+.current span {
+    color: #bf1a20;
+    border-left: 1px solid #bf1a20;
+    border-right: 1px solid #bf1a20;
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    height: 44px;
+    width: 87%;
+}
+
+.current2 {
+    display: block;
+}
+
+.one h3 a {
+    color: #bf1a20;
+}
+
+.one h3 {
+    line-height: 208px;
+    text-align: center;
+    font-weight: 700
+}
+
+.tabs table.table thead tr {
+    background: #ebeaea;
+}
+
+.tabs table.table tbody tr {
+    height: 50px;
+    color: black
+}
+
+.tabs table.table tbody tr td a {
+    color: #3289e2
+}
+
+.tabs table.table tbody tr td a.xiu {
+    background: #f14349;
+    color: #fff;
+    padding: 3px 15px
+}
+
+/*分页*/
+.page {
+    width: 1100px;
+    margin-left: 30%;
+    margin-bottom: 80px;
+    margin-top: 28px;
+}
+
+.page .page-width {
+    width: 60px;
+}
+
+.page .current {
+    color: #d00000;
+}
+
+.page a {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    margin-left: 10px;
+    text-align: center;
+    border: 1px solid #ebebee;
+    color: #909090;
+    border-radius: 4px;
+}
+
+.page span {
+    margin-left: 10px;
+    text-align: center;
+    color: #909090;
+    border-radius: 4px;
+}
+
+.page .page-input {
+    width: 30px;
+    height: 18px;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+.page .page-button {
+    margin-left: 10px;
+    width: 34px;
+    height: 18px;
+    font-size: 12px;
+    margin-top: 2px;
+    text-align: center;
+    padding: 0;
+    line-height: 11px;
+    color: #fff;
+    background: #2481e0;
+    border: none;
+}
+
+.heiheihui {
+    background: #ebeaea;
+    width: 63.333%;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.heiheihui h5 {
+    text-align: center;
+    line-height: 50px;
+}
+
+/*债项信息预览*/
+.zxylh4 {
+    line-height: 26px;
+    background: #ebeaea;
+    text-indent: 17.5%
+}
+
+.zxxinxiyulan {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.zxxinxiyulan .chenghui {
+    margin-left: 8%;
+    width: 35%;
+    border-right: 1px solid #ebeaea;
+    font-size: 14px;
+    font-weight: 600
+}
+
+.zxxinxiyulan .chenghui tr {
+    height: 50px;
+}
+
+.zxxinxiyulan .weilehui {
+    width: 49%;
+    margin-left: 5%;
+    font-size: 14px;
+}
+
+.zxxinxiyulan .weilehui tr {
+    height: 40px;
+}
+
+.zxxinxiyulan .ouou {
+    color: #909090;
+    padding-right: 1%;
+    text-align: right
+}
+
+.zxxinxiyulan .hcc {
+    color: #ee9667;
+}
+
+.zxxinxiyulan .weilehui tr td {
+}
+
+/*债项信息预览*/
+.zxxinxiyulan2 table tr {
+    height: 40px;
+    font-weight: 600
+}
+
+.zxxinxiyulan2 table:first-child {
+    margin-left: 17.5%;
+}
+
+.zxxinxiyulan2 .ouou {
+    color: #909090;
+}
+
+/*提交补信材料*/
+.zshenm table {
+    margin-left: 17.5%;
+    width: 30%;
+    border-right: 1px solid #ebeaea;
+    font-weight: 600
+}
+
+.zshenm table tr {
+    height: 50px;
+}
+
+.zshenm table tr td:first-child {
+    color: #ee9667;
+}
+
+.zshenm #interviewForm {
+    width: 50%;
+    margin-left: 20px;
+}
+
+.zshenm #interviewForm label {
+    font-weight: 500;
+    color: #333;
+    float: left;
+}
+
+.zshenm .form-group .aimg {
+    margin-left: 17%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.zshenm .honghong {
+    color: red;
+    margin-left: 0
+}
+
+.onlyone {
+    position: relative;
+}
+
+.onlyone img {
+    margin-left: -4.6%;
+    position: absolute;
+}
+
+.onlyone span {
+    position: absolute;
+    display: block;
+    color: #ccc;
+    width: 100px;
+}
+
+.onlyone .span1 {
+    top: 188px;
+    left: 110px;
+}
+
+.onlyone .span2 {
+    top: 188px;
+    left: 257px;
+}
+
+.onlyone .span3 {
+    top: 188px;
+    left: 384px;
+}
+
+.onlyone .span4 {
+    top: 188px;
+    left: 537px;
+}
+
+.onlyone .span5 {
+    top: 390px;
+    left: 347px;
+}
+
+.onlyone .span6 {
+    top: 390px;
+    left: 413px;
+}
+
+.onlyone .span7 {
+    top: 390px;
+    left: 520px;
+}
+
+.onlyone .span8 {
+    top: 390px;
+    left: 42px;
+}
+
+.onlyone .span9 {
+    top: 390px;
+    left: 110px;
+}
+
+.onlyone .span10 {
+    top: 390px;
+    left: 172px;
+}
+
+.onlyone .span11 {
+    top: 390px;
+    left: 238px;
+}
+
+.onlyone .span12 {
+    width: 19px;
+    height: 19px;
+    top: 345px;
+    left: 127px;
+    cursor: pointer;
+}
+
+.onlyone p {
+    background: #fff;
+    position: absolute;
+    top: 364px;
+    left: 126px;
+    border: 1px solid #ccc;
+    width: 180px;
+    padding: 10px;
+    display: none;
+}

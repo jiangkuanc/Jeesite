@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.investment.dao.P2pInvestmentDetailsDao">
+
+    <sql id="p2pInvestmentDetailsColumns">
+        a.id AS "id",
+        a.investment_information_id AS "investmentInformationId",
+        a.investment_amount AS "investmentAmount",
+        a.investment_time AS "investmentTime",
+        a.investment_agreement_id AS "investmentAgreementId"
+    </sql>
+
+    <sql id="p2pInvestmentDetailsJoins">
+    </sql>
+
+    <select id="get" resultType="P2pInvestmentDetails">
+        SELECT
+        <include refid="p2pInvestmentDetailsColumns"/>
+        FROM p2p_investment_details a
+        <include refid="p2pInvestmentDetailsJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pInvestmentDetails">
+        SELECT
+        <include refid="p2pInvestmentDetailsColumns"/>
+        FROM p2p_investment_details a
+        <include refid="p2pInvestmentDetailsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pInvestmentDetails">
+        SELECT
+        <include refid="p2pInvestmentDetailsColumns"/>
+        FROM p2p_investment_details a
+        <include refid="p2pInvestmentDetailsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_investment_details(
+        id,
+        investment_information_id,
+        investment_amount,
+        investment_time,
+        investment_agreement_id
+        ) VALUES (
+        #{id},
+        #{investmentInformationId},
+        #{investmentAmount},
+        #{investmentTime},
+        #{investmentAgreementId}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_investment_details SET
+        investment_information_id = #{investmentInformationId},
+        investment_amount = #{investmentAmount},
+        investment_time = #{investmentTime},
+        investment_agreement_id = #{investmentAgreementId}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_investment_details
+        WHERE id = #{id}
+    </update>
+
+</mapper>

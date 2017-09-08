@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.msg.dao.MsgSmsRecordDao">
+
+    <sql id="msgSmsRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.rec_id AS "recId",
+        a.tel_num AS "telnum",
+        a.sms_content AS "smsContent",
+        a.send_state AS "sendState",
+        a.msg_id AS "msgId",
+        a.send_date AS "sendDate",
+        u2.name AS "user.name",
+        u2.login_name AS "user.loginName"
+    </sql>
+
+    <sql id="msgSmsRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+        LEFT JOIN sys_user u3 ON u3.id = a.rec_id
+    </sql>
+
+    <select id="get" resultType="MsgSmsRecord">
+        SELECT
+        <include refid="msgSmsRecordColumns"/>
+        FROM msg_sms_record a
+        <include refid="msgSmsRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="MsgSmsRecord">
+        SELECT
+        <include refid="msgSmsRecordColumns"/>
+        FROM msg_sms_record a
+        <include refid="msgSmsRecordJoins"/>
+        <where>
+            <!-- 	a.del_flag = #{DEL_FLAG_NORMAL} -->
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id = #{user.id}
+            </if>
+            <if test="telnum != null and telnum != ''">
+                AND a.tel_num = #{telnum}
+            </if>
+            <if test="smsContent != null and smsContent != ''">
+                AND a.sms_content = #{smsContent}
+            </if>
+            <if test="sendState != null and sendState != ''">
+                AND a.send_state = #{sendState}
+            </if>
+
+            <if test="msgId != null and msgId != ''">
+                AND a.msg_id = #{msgId}
+            </if>
+            <if test="recId != null and recId != ''">
+                AND a.rec_id IN (${recId})
+            </if>
+            <if test="beginSendDate != null and beginSendDate != '' and endSendDate != null and endSendDate != ''">
+                AND a.send_date BETWEEN #{beginSendDate} AND #{endSendDate}
+            </if>
+
+        </where>
+        ORDER BY a.send_date DESC
+        <!-- <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose> -->
+    </select>
+
+    <select id="findAllList" resultType="MsgSmsRecord">
+        SELECT
+        <include refid="msgSmsRecordColumns"/>
+        FROM msg_sms_record a
+        <include refid="msgSmsRecordJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO msg_sms_record(
+        id,
+        user_id,
+        rec_id,
+        msg_id,
+        tel_num,
+        sms_content,
+        send_state,
+        send_date
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{recId},
+        #{msgId},
+        #{telnum},
+        #{smsContent},
+        #{sendState},
+        #{sendDate}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE msg_sms_record SET
+        user_id = #{user.id},
+        msg_id = #{msgId},
+        send_date = #{sendDate}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM
+        msg_letter_record
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="getListByUserId" resultType="MsgSmsRecord">
+        SELECT
+        <include refid="msgSmsRecordColumns"/>
+        FROM msg_sms_record a
+        <include refid="msgSmsRecordJoins"/>
+        <where>
+            AND a.rec_id = #{userId}
+            AND a.send_state = 0
+            ORDER BY a.send_date DESC
+        </where>
+    </select>
+
+
+    <!-- Chace 前台注册成功后根据用户手机号更新短信记录表接收人id -->
+    <update id="updateRecIdByTelnum" parameterType="MsgSmsRecord">
+        UPDATE
+        msg_sms_record
+        SET rec_id = #{recId}
+        WHERE tel_num = #{telnum}
+        AND rec_id IS NULL
+    </update>
+
+    <!-- Chace  查询每个手机号当天接收短信条数 -->
+    <select id="getCountByOhone" resultType="Integer" parameterType="string">
+        SELECT
+        COUNT(*)
+        FROM msg_sms_record
+        WHERE tel_num = #{_parameter}
+        AND TO_DAYS(send_date) = TO_DAYS(NOW())
+        AND send_state = 1
+    </select>
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.config.dao.P2pAdvertisermentDao">
+
+    <sql id="p2pAdvertisermentColumns">
+        a.id AS "id",
+        a.ad_picture AS "adPicture",
+        a.is_enable_link AS "isEnableLink",
+        a.link_address AS "linkAddress",
+        a.open_way AS "openWay",
+        a.position AS "position",
+        a.is_enable AS "isEnable",
+        a.serial_number AS "serialNumber",
+        a.operation_person AS "operationPerson",
+        a.operate_time AS "operateTime"
+    </sql>
+
+    <sql id="p2pAdvertisermentJoins">
+    </sql>
+
+    <select id="get" resultType="P2pAdvertiserment">
+        SELECT
+        <include refid="p2pAdvertisermentColumns"/>
+        FROM p2p_advertiserment a
+        <include refid="p2pAdvertisermentJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAdvertiserment">
+        SELECT
+        <include refid="p2pAdvertisermentColumns"/>
+        FROM p2p_advertiserment a
+        <include refid="p2pAdvertisermentJoins"/>
+        <where>
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+            </if>
+            <if test="isEnableLink != null and isEnableLink != ''">
+                AND a.is_enable_link = #{isEnableLink}
+            </if>
+            <if test="openWay != null and openWay != ''">
+                AND a.open_way = #{openWay}
+            </if>
+            <if test="position != null and position != ''">
+                AND a.position = #{position}
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                AND a.is_enable = #{isEnable}
+            </if>
+        </where>
+        ORDER BY a.operate_time
+    </select>
+
+    <select id="findAllList" resultType="P2pAdvertiserment">
+        SELECT
+        <include refid="p2pAdvertisermentColumns"/>
+        FROM p2p_advertiserment a
+        <include refid="p2pAdvertisermentJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_advertiserment(
+        id,
+        ad_picture,
+        is_enable_link,
+        link_address,
+        open_way,
+        position,
+        is_enable,
+        serial_number,
+        operation_person,
+        operate_time
+        ) VALUES (
+        #{id},
+        #{adPicture},
+        #{isEnableLink},
+        #{linkAddress},
+        #{openWay},
+        #{position},
+        #{isEnable},
+        #{serialNumber},
+        #{operationPerson},
+        #{operateTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_advertiserment
+        <set>
+            <if test="adPicture != null and adPicture != ''">
+                ad_picture = #{adPicture},
+            </if>
+            <if test="linkAddress != null and linkAddress != ''">
+                link_address = #{linkAddress},
+            </if>
+            <if test="openWay != null and openWay != ''">
+                open_way = #{openWay},
+            </if>
+            is_enable_link = #{isEnableLink},
+            position = #{position},
+            is_enable = #{isEnable},
+            serial_number = #{serialNumber},
+            <!-- 				operation_person = #{operationPerson}, -->
+            <!-- 				operate_time = #{operateTime} -->
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_advertiserment
+        WHERE id = #{id}
+    </update>
+    <!-- Chace  查询不同位置的广告信息-->
+    <select id="findByType" resultType="P2pAdvertiserment" parameterType="P2pAdvertiserment">
+        SELECT
+        a.id AS "id",
+        a.ad_picture AS "adPicture",
+        a.is_enable_link AS "isEnableLink",
+        a.link_address AS "linkAddress",
+        a.open_way AS "openWay",
+        a.position AS "position",
+        a.serial_number AS "serialNumber",
+        a.operate_time AS "operateTime",
+        a.is_enable AS "isEnable"
+        FROM p2p_advertiserment a
+        WHERE
+        a.is_enable = 1
+        ORDER BY a.serial_number ASC,a.operate_time DESC
+    </select>
+
+    <!--Chace 查询不同位置广告启用条数 -->
+    <select id="getCount" parameterType="P2pAdvertiserment" resultType="Int">
+        SELECT
+        COUNT(*)
+        FROM p2p_advertiserment a
+        WHERE a.position = #{position}
+        AND a.is_enable = '1'
+    </select>
+
+    <!-- Chace 停用左/右广告 -->
+    <update id="stopLeftOrRight" parameterType="P2pAdvertiserment">
+        UPDATE
+        p2p_advertiserment a
+        SET
+        a.is_enable = '0'
+        WHERE
+        a.position = #{position}
+    </update>
+
+    <!-- Chace 修改广告启用状态 -->
+    <update id="changeStage" parameterType="P2pAdvertiserment">
+        UPDATE
+        p2p_advertiserment a
+        SET
+        a.is_enable = #{isEnable}
+        <!-- 			a.operation_person = #{operationPerson}, -->
+        <!-- 			a.operate_time = #{operateTime} -->
+        WHERE a.id = #{id}
+    </update>
+
+    <select id="takeTurn" resultType="P2pAdvertiserment">
+        SELECT
+        id, ad_picture, link_address, serial_number, operate_time
+        FROM
+        p2p_advertiserment
+        WHERE
+        is_enable_link=1 AND open_way=1 AND position=1 AND is_enable=1
+        <if test="size != null">
+            LIMIT #{size}
+        </if>
+    </select>
+
+
+</mapper>

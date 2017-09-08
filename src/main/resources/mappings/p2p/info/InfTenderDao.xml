@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.info.dao.InfTenderDao">
+
+    <sql id="infTenderColumns">
+        a.id AS "id",
+        a.project_name AS "projectName",
+        a.term_of_validity AS "termOfValidity",
+        a.project_location AS "projectLocation",
+        a.investment_side AS "investmentSide",
+        a.construction_side AS "constructionSide",
+        a.industry AS "industry",
+        a.info_stage As "infoStage",
+        a.envy_progress AS "envyProgress",
+        a.construction_site_logo AS "constructionSiteLogo",
+        a.contacts_person AS "contactsPerson",
+        a.position_person AS "positionPerson",
+        a.telphone AS "telphone",
+        a.bidding_content AS "biddingContent",
+        a.project_zhao AS "projectZhao",
+        a.publish_time AS "publishTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        a.user_id AS "userId"
+    </sql>
+
+    <sql id="infTenderJoins">
+    </sql>
+
+    <select id="get" resultType="InfTender">
+        SELECT
+        <include refid="infTenderColumns"/>
+        FROM inf_tender a
+        <include refid="infTenderJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="InfTender">
+        SELECT
+        <include refid="infTenderColumns"/>
+        FROM inf_tender a
+        <include refid="infTenderJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                AND a.project_name = #{projectName}
+            </if>
+            <if test="userId != null and userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="InfTender">
+        SELECT
+        <include refid="infTenderColumns"/>
+        FROM inf_tender a
+        <include refid="infTenderJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO inf_tender(
+        id,
+        project_name,
+        term_of_validity,
+        project_location,
+        investment_side,
+        construction_side,
+        industry,
+        envy_progress,
+        construction_site_logo,
+        contacts_person,
+        position_person,
+        telphone,
+        bidding_content,
+        project_zhao,
+        info_stage,
+        publish_time,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag,
+        user_id
+        ) VALUES (
+        #{id},
+        #{projectName},
+        #{termOfValidity},
+        #{projectLocation},
+        #{investmentSide},
+        #{constructionSide},
+        #{industry},
+        #{envyProgress},
+        #{constructionSiteLogo},
+        #{contactsPerson},
+        #{positionPerson},
+        #{telphone},
+        #{biddingContent},
+        #{projectZhao},
+        #{infoStage},
+        #{publishTime},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag},
+        #{userId}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE inf_tender SET
+        project_name = #{projectName},
+        term_of_validity = #{termOfValidity},
+        project_location = #{projectLocation},
+        investment_side = #{investmentSide},
+        construction_side = #{constructionSide},
+        industry = #{industry},
+        envy_progress = #{envyProgress},
+        construction_site_logo = #{constructionSiteLogo},
+        contacts_person = #{contactsPerson},
+        position_person = #{positionPerson},
+        telphone = #{telphone},
+        bidding_content = #{biddingContent},
+        publish_time = #{publishTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks},
+        user_id = #{userId}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateInfoStage" parameterType="com.dagongsoft.p2p.info.entity.InfTender">
+        UPDATE inf_tender SET
+        info_stage = #{infoStage}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE inf_tender SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findTenderinfoList" resultType="com.dagongsoft.p2p.info.entity.InfTender">
+        select a.id,a.project_name,a.publish_time,a.info_stage from inf_tender a
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="infoStage != null and infoStage != ''">
+                AND a.info_stage = #{infoStage}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                AND a.project_name LIKE CONCAT(CONCAT('%',#{projectName}),'%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

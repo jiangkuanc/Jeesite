@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.risk.dao.P2pRiskQuestionDao">
+
+    <sql id="p2pRiskQuestionColumns">
+        a.id AS "id",
+        a.paper_id AS "paperId",
+        a.question_type AS "questionType",
+        a.question_content AS "questionContent",
+        a.select_way AS "selectWay",
+        a.sort AS "sort"
+    </sql>
+
+    <sql id="p2pRiskQuestionJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRiskQuestion">
+        SELECT
+        <include refid="p2pRiskQuestionColumns"/>
+        FROM p2p_risk_question a
+        <include refid="p2pRiskQuestionJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRiskQuestion">
+        SELECT
+        <include refid="p2pRiskQuestionColumns"/>
+        FROM p2p_risk_question a
+        <include refid="p2pRiskQuestionJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRiskQuestion">
+        SELECT
+        <include refid="p2pRiskQuestionColumns"/>
+        FROM p2p_risk_question a
+        <include refid="p2pRiskQuestionJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getPaperId" resultType="P2pRiskQuestion">
+        SELECT
+        <include refid="p2pRiskQuestionColumns"/>
+        FROM p2p_risk_question a where paper_id=#{0}
+        ORDER BY sort
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_risk_question(
+        id,
+        paper_id,
+        question_type,
+        question_content,
+        select_way,
+        sort
+        ) VALUES (
+        #{id},
+        #{paperId},
+        #{questionType},
+        #{questionContent},
+        #{selectWay},
+        #{sort}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_risk_question SET
+        paper_id = #{paperId},
+        question_type = #{questionType},
+        question_content = #{questionContent},
+        select_way = #{selectWay},
+        sort = #{sort}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_risk_question
+        WHERE id = #{id}
+    </update>
+
+</mapper>

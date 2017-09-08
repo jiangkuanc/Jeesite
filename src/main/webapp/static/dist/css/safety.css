@@ -1,0 +1,347 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    font-family: '微软雅黑';
+}
+
+/*我要融资 安全保障*/
+.safety {
+    width: 100%;
+}
+
+.safety img {
+    width: 100%;
+    display: block;
+}
+
+.safety_tab {
+    width: 76.38%;
+    margin: 24px auto 0;
+    background: #fff;
+}
+
+.safety_tab #myTab {
+    border-bottom: 1px solid #bf1a20;
+}
+
+.safety_tab #myTab li {
+    width: 25%;
+    text-align: center;
+    font-size: 22px;
+    color: #bf1a20;
+}
+
+.safety_tab #myTab li a {
+    color: #bf1a20;
+    border: none;
+}
+
+.safety_tab #myTab .active {
+    border: 1px solid #bf1a20;
+    border-bottom: 1px solid #fff;
+    border-top: 4px solid #bf1a20;
+}
+
+/*tab-1*/
+#home {
+    font-family: '微软雅黑';
+    font-size: 14px;
+    line-height: 35px;
+}
+
+#home p {
+    text-indent: 2em;
+    color: #000000;
+    margin-top: 50px;
+    font-weight: 600;
+}
+
+#home .home_last_p {
+    margin-bottom: 264px;
+}
+
+#home .home_tab_flow {
+    width: 650px;
+    margin: 40px auto 0;
+}
+
+#home .home_tab_flow ul {
+    width: 130px;
+    border: 2px solid #5a96df;
+    border-radius: 10px;
+    color: #6684b0;
+    display: inline-block;
+}
+
+#home .home_tab_flow ul li {
+    width: 100%;
+    text-align: center;
+    height: 22px;
+    font-weight: 600;
+    line-height: 22px;
+    background: url("../images/point_03.png") 20px center no-repeat;
+}
+
+#home .home_tab_flow ul li:first-child {
+    margin-top: 15px;
+}
+
+#home .home_tab_flow ul h3 {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    background: #5a96df;
+    border-radius: 0 0 5px 5px;
+    margin: 0;
+    margin-top: 10px;
+}
+
+#home .home_tab_flow ul .home_tab_flow_h3 {
+    margin-top: 0;
+    border-radius: 5px 5px 0 0;
+    margin-bottom: 10px;
+}
+
+#home .home_tab_flow ul .home_tab_flow_li {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.home_tab_flow a {
+    display: inline-block;
+    width: 107px;
+    height: 159px;
+    background: url("../images/jiantou_07.png") center 80px no-repeat;
+}
+
+/*tab-2*/
+#profile {
+    font-family: '微软雅黑';
+    font-size: 14px;
+    line-height: 35px;
+}
+
+#profile p {
+    text-indent: 2em;
+    color: #000000;
+    font-weight: 600;
+}
+
+#profile .profile_last_p {
+    margin-bottom: 580px;
+}
+
+#profile p:first-child {
+    margin-top: 50px;
+}
+
+/*tab-3*/
+#profile1 {
+    font-family: '微软雅黑';
+    font-size: 14px;
+    line-height: 35px;
+}
+
+#profile1 p {
+    text-indent: 2em;
+    color: #000000;
+    margin-top: 50px;
+    font-weight: 600;
+    margin-bottom: 580px;
+}
+
+/*tab-4*/
+#profile3 {
+    font-family: '微软雅黑';
+    font-size: 14px;
+    line-height: 35px;
+}
+
+#profile3 p {
+    text-indent: 2em;
+    color: #000000;
+    margin-top: 50px;
+    font-weight: 600;
+    margin-bottom: 580px;
+}
+
+/*tab-5*/
+#profile2 {
+    font-family: '微软雅黑';
+    font-size: 14px;
+    line-height: 35px;
+}
+
+#profile2 p {
+    text-indent: 2em;
+    color: #000000;
+    margin-top: 50px;
+    font-weight: 600;
+}
+
+#profile2 span {
+    text-indent: 2em;
+    color: #666666;
+    display: inline-block;
+    margin-bottom: 57px;
+}
+
+#profile2 span:last-child {
+    margin-bottom: 107px;
+}
+
+#profile2 h3 {
+    font-size: 18px;
+    color: #000000;
+    font-weight: 600;
+}
+
+/*我要融资 评级方法说明*/
+.safety {
+    position: relative;
+}
+
+.apply_funding {
+    position: absolute;
+    right: 190px;
+    top: 20px;
+    width: 300px;
+    background: rgba(255, 255, 255, .6);
+}
+
+.apply_funding p {
+    width: 100%;
+    text-align: center;
+    color: #333232;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.apply_funding span {
+    display: block;
+    color: #333232;
+    font-size: 18px;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+.apply_funding a {
+    display: block;
+    font-size: 30px;
+    width: 100%;
+    height: 64px;
+    background: #f93e3f;
+    text-align: center;
+    line-height: 64px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.apply_funding a:hover {
+    color: #4f81bd;
+}
+
+.apply_funding_p1 {
+    margin-top: 40px;
+}
+
+.apply_funding_p2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.safety_tab_wyrz {
+    width: 76.38%;
+    margin: 24px auto 0;
+    background: #fff;
+}
+
+.safety_tab_wyrz #myTab {
+    border-bottom: 1px solid #bf1a20;
+}
+
+.safety_tab_wyrz #myTab li {
+    width: 20%;
+    text-align: center;
+    font-size: 22px;
+    color: #bf1a20;
+}
+
+.safety_tab_wyrz #myTab li a {
+    color: #bf1a20;
+    border: none;
+}
+
+.safety_tab_wyrz #myTab .active {
+    border: 1px solid #bf1a20;
+    border-bottom: 1px solid #fff;
+    border-top: 4px solid #bf1a20;
+}
+
+.safety_tab_wyrz .table {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+.safety_tab_wyrz .table th {
+    height: 60px;
+    background: #4f81bd;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    border: 1px solid #999;
+}
+
+.safety_tab_wyrz .table .table_fir_th {
+    width: 28.9%;
+}
+
+.safety_tab_wyrz .table td {
+    color: #333;
+    font-weight: 600;
+    border: 1px solid #999;
+}
+
+.safety_tab_wyrz .table .active_td {
+    background: #d4e0ef;
+}
+
+.safety_tab_wyrz .table tr:hover {
+    background: #e0e0e0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

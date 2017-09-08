@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pAccountWithdrawRecordDao">
+
+    <sql id="p2pAccountWithdrawRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.withdraw_amount AS "withdrawAmount",
+        a.withdraw_time AS "withdrawTime",
+        a.withdraw_state AS "withdrawState",
+        a.withdraw_success_time AS "withdrawSuccessTime",
+        a.withdraw_fee AS "withdrawFee",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pAccountWithdrawRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pAccountWithdrawRecord">
+        SELECT
+        <include refid="p2pAccountWithdrawRecordColumns"/>
+        FROM p2p_account_withdraw_record a
+        <include refid="p2pAccountWithdrawRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAccountWithdrawRecord">
+        SELECT
+        <include refid="p2pAccountWithdrawRecordColumns"/>
+        FROM p2p_account_withdraw_record a
+        <include refid="p2pAccountWithdrawRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAccountWithdrawRecord">
+        SELECT
+        <include refid="p2pAccountWithdrawRecordColumns"/>
+        FROM p2p_account_withdraw_record a
+        <include refid="p2pAccountWithdrawRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_account_withdraw_record(
+        id,
+        user_id,
+        withdraw_amount,
+        withdraw_time,
+        withdraw_state,
+        withdraw_success_time,
+        withdraw_fee
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{withdrawAmount},
+        #{withdrawTime},
+        #{withdrawState},
+        #{withdrawSuccessTime},
+        #{withdrawFee}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_account_withdraw_record SET
+        user_id = #{user.id},
+        withdraw_amount = #{withdrawAmount},
+        withdraw_time = #{withdrawTime},
+        withdraw_state = #{withdrawState},
+        withdraw_success_time = #{withdrawSuccessTime},
+        withdraw_fee = #{withdrawFee}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_account_withdraw_record
+        WHERE id = #{id}
+    </update>
+    <!-- Chace 根据userId查询提现记录 -->
+    <select id="getByUserId" resultType="P2pAccountWithdrawRecord" parameterType="P2pAccountWithdrawRecord">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.withdraw_amount AS "withdrawAmount",
+        a.withdraw_time AS "withdrawTime",
+        a.withdraw_state AS "withdrawState",
+        a.withdraw_success_time AS "withdrawSuccessTime",
+        a.withdraw_fee AS "withdrawFee",
+        b.bank_account AS "p2pAccount.bankAccount"
+        FROM p2p_account_withdraw_record a
+        INNER JOIN p2p_account b ON b.user_id = a.user_id
+        WHERE a.user_id = #{userId}
+    </select>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditreport.dao.P2pCreditReportBuyDao">
+
+    <sql id="p2pCreditReportBuyColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.cost AS "cost",
+        a.buy_time AS "buyTime",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pCreditReportBuyJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pCreditReportBuy">
+        SELECT
+        <include refid="p2pCreditReportBuyColumns"/>
+        FROM p2p_credit_report_buy a
+        <include refid="p2pCreditReportBuyJoins"/>
+        WHERE a.id = #{id}
+    </select>
+    <select id="tableList" resultType="P2pCreditReportBuy" parameterType="P2pCreditReportBuy">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.cost AS "cost",
+        a.buy_time AS "buyTime",
+        c.name AS "user.name",
+        b.id AS "id",
+        b.user_id AS "p2pCreditReport.user.id",
+        b.enterprise_name AS "p2pCreditReport.enterpriseName",
+        b.enterprise_type AS "p2pCreditReport.enterpriseType",
+        b.industry_code AS "p2pCreditReport.industryCode",
+        b.enterprise_introduce AS "p2pCreditReport.enterpriseIntroduce",
+        b.is_delete AS "p2pCreditReport.isDelete",
+        b.report_time AS "p2pCreditReport.reportTime",
+        b.rating_level AS "p2pCreditReport.ratingLevel",
+        b.rating_time AS "p2pCreditReport.ratingTime",
+        b.rating_definition AS "p2pCreditReport.ratingDefinition",
+        b.unified_social_credit_code AS "p2pCreditReport.unifiedSocialCreditCode",
+        b.uscc_is_commit AS "p2pCreditReport.usccIsCommit",
+        b.organization_code AS "p2pCreditReport.organizationCode",
+        b.oc_is_commit AS "p2pCreditReport.ocIsCommit",
+        b.gongshang_regist_num AS "gongshangRegistNum",
+        b.grn_is_commit AS "p2pCreditReport.grnIsCommit",
+        b.tax_registration_num AS "p2pCreditReport.taxRegistrationNum",
+        b.trn_is_commit AS "p2pCreditReport.trnIsCommit",
+        b.legal_name AS "p2pCreditReport.legalName",
+        b.legal_is_change AS "p2pCreditReport.legalIsChange",
+        b.registered_capital AS "p2pCreditReport.registeredCapital",
+        b.registered_capital_is_change AS "p2pCreditReport.registeredCapitalIsChange",
+        b.enterprise_base_info_comment AS "p2pCreditReport.enterpriseBaseInfoComment",
+        b.government_regulation_info_comment AS "p2pCreditReport.governmentRegulationInfoComment",
+        b.financial_credit_info_comment AS "p2pCreditReport.financialCreditInfoComment",
+        b.industry_evaluation_info_comment AS "p2pCreditReport.industryEvaluationInfoComment",
+        b.media_evaluation_info_comment AS "p2pCreditReport.mediaEvaluationInfoComment",
+        b.enterprise_operation_info_comment AS "p2pCreditReport.enterpriseOperationInfoComment",
+        b.market_feedback_info_comment AS "p2pCreditReport.marketFeedbackInfoComment",
+        d.ClassiName_CN AS "p2pIndustryclassi.classinameCn"
+
+        FROM p2p_credit_report_buy a
+        LEFT JOIN p2p_credit_report b
+        on a.credit_report_id = b.id
+        LEFT JOIN
+        p2p_industryclassi d ON b.industry_code = d.IndustryNum
+        left join sys_user c on a.user_id = c.id
+        <where>
+            a.user_id = #{user.id}
+
+            <if test="p2pCreditReport != null and p2pCreditReport.industryCode != null and p2pCreditReport.industryCode != ''">
+                AND b.industry_code LIKE concat('%',#{p2pCreditReport.industryCode},'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.enterpriseType != null and p2pCreditReport.enterpriseType != ''">
+                AND b.enterprise_type LIKE concat('%',#{p2pCreditReport.enterpriseType},'%')
+            </if>
+        </where>
+        group by a.credit_report_id
+    </select>
+
+    <select id="getCreditReprotId" resultType="P2pCreditReportBuy">
+        SELECT
+        <include refid="p2pCreditReportBuyColumns"/>
+        FROM p2p_credit_report_buy a
+        <include refid="p2pCreditReportBuyJoins"/>
+        WHERE a.credit_report_id = #{0}
+        AND
+        a.user_id = #{1}
+    </select>
+
+    <select id="findList" resultType="P2pCreditReportBuy">
+        SELECT
+        <include refid="p2pCreditReportBuyColumns"/>
+        FROM p2p_credit_report_buy a
+        <include refid="p2pCreditReportBuyJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <select id="findAllList" resultType="P2pCreditReportBuy">
+        SELECT
+        <include refid="p2pCreditReportBuyColumns"/>
+        FROM p2p_credit_report_buy a
+        <include refid="p2pCreditReportBuyJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <insert id="insert">
+        INSERT INTO p2p_credit_report_buy(
+        id,
+        user_id,
+        credit_report_id,
+        credit_info_type,
+        cost,
+        buy_time
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{creditReportId},
+        #{creditInfoType},
+        #{cost},
+        #{buyTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_credit_report_buy SET
+        user_id = #{user.id},
+        credit_report_id = #{creditReportId},
+        credit_info_type = #{creditInfoType},
+        cost = #{cost},
+        buy_time = #{buyTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_credit_report_buy
+        WHERE id = #{id}
+    </update>
+
+</mapper>

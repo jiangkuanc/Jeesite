@@ -1,0 +1,73 @@
+.renzheng-index {
+    width: 76.39%;
+    margin: 0 auto;
+}
+
+.renzheng-index-top-back {
+    width: 7%;
+    height: 8px;
+    border: 1px solid #909090;
+    border-radius: 4px;
+    margin: 78px 20px 0;
+}
+
+.renzheng-form {
+    width: 70%;
+    margin-left: 50px;
+}
+
+.renzheng-index h3 {
+    font-size: 18px;
+}
+
+.renzheng-index .icn_lis {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-position: -58px 0;
+    position: relative;
+    margin: 0 auto;
+}
+
+.renzheng-index > div:nth-of-type(1) .icn_lis span {
+    width: 28px;
+    height: 37px;
+    margin: -18px -14px;
+    background-position: 0px -56px;
+}
+
+.renzheng-index > div:nth-of-type(3) .icn_lis span {
+    width: 40px;
+    height: 38px;
+    margin: -20px -22px;
+    background-position: -143px -56px;
+}
+
+.renzheng-index > div:nth-of-type(5) .icn_lis span {
+    width: 46px;
+    height: 28px;
+    margin: -14px -22px;
+    background-position: -87px -56px;
+}
+
+.renzheng-index > div:nth-of-type(7) .icn_lis span {
+    width: 28px;
+    height: 36px;
+    margin: -18px -14px;
+    background-position: -43px -56px;
+}
+
+.renzheng-index .icn_lis span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.bg {
+    background-image: url("../images/icn-xbt.png");
+    background-repeat: no-repeat;
+}
+
+.renzheng-index .active_bgred {
+    background-position: 0 0;
+}

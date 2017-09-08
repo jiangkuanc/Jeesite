@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.feedback.dao.P2pReviewDocumentDao">
+
+    <sql id="p2pReviewDocumentColumns">
+        a.id AS "id",
+        a.rate_result_view_id AS "rateResultViewId",
+        a.file_name AS "fileName",
+        a.file_address AS "fileAddress"
+    </sql>
+
+    <sql id="p2pReviewDocumentJoins">
+    </sql>
+
+    <select id="get" resultType="P2pReviewDocument">
+        SELECT
+        <include refid="p2pReviewDocumentColumns"/>
+        FROM p2p_review_document a
+        <include refid="p2pReviewDocumentJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pReviewDocument">
+        SELECT
+        <include refid="p2pReviewDocumentColumns"/>
+        FROM p2p_review_document a
+        <include refid="p2pReviewDocumentJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pReviewDocument">
+        SELECT
+        <include refid="p2pReviewDocumentColumns"/>
+        FROM p2p_review_document a
+        <include refid="p2pReviewDocumentJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_review_document(
+        id,
+        rate_result_view_id,
+        file_name,
+        file_address
+        ) VALUES (
+        #{id},
+        #{rateResultViewId},
+        #{fileName},
+        #{fileAddress}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_review_document SET
+        rate_result_view_id = #{rateResultViewId},
+        file_name = #{fileName},
+        file_address = #{fileAddress}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_review_document
+        WHERE id = #{id}
+    </update>
+
+    <!-- Quincy 根据意见反馈ID删除材料记录 -->
+    <delete id="deleteReviewDocument" parameterType="java.lang.String">
+        DELETE FROM
+        p2p_review_document
+        WHERE
+        rate_result_view_id = #{_parameter}
+    </delete>
+
+    <select id="getByRateResultViewId" resultType="P2pReviewDocument" parameterType="java.lang.String">
+        SELECT
+        a.id AS "id",
+        a.rate_result_view_id AS "rateResultViewId",
+        a.file_name AS "fileName",
+        a.file_address AS "fileAddress"
+        FROM p2p_review_document a
+        WHERE a.rate_result_view_id = #{_parameter}
+    </select>
+</mapper>

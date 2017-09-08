@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.document.dao.P2pRateDocumentUploadDao">
+
+    <sql id="p2pRateDocumentUploadColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.rate_document_temp_id AS "rateDocumentTempId",
+        a.upload_time AS "uploadTime",
+        a.is_reject AS "isReject",
+        a.reject_reason AS "rejectReason",
+        a.audit_person AS "auditPerson",
+        a.audit_time AS "auditTime"
+        <!-- a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag" -->
+    </sql>
+
+    <sql id="p2pRateDocumentUploadJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRateDocumentUpload">
+        SELECT
+        <include refid="p2pRateDocumentUploadColumns"/>
+        FROM p2p_rate_document_upload a
+        <include refid="p2pRateDocumentUploadJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findByIdAndName" resultType="P2pRateDocumentUpload">
+        SELECT
+        <include refid="p2pRateDocumentUploadColumns"/>
+        FROM p2p_rate_document_upload a
+        <include refid="p2pRateDocumentUploadJoins"/>
+        WHERE a.financing_information_id=#{financingInformationId}
+        AND a.rate_document_temp_id=#{rateDocumentTempId}
+    </select>
+
+    <select id="findListById" resultType="P2pRateDocumentUpload">
+        SELECT
+        u.id AS "id",
+        u.financing_information_id AS "financingInformationId",
+        u.rate_document_temp_id AS "rateDocumentTempId",
+        t.temp_name AS "p2pRateDocumentTemplate.tempName",
+        u.upload_time AS "uploadTime",
+        u.is_reject AS "isReject",
+        u.reject_reason AS "rejectReason",
+        u.audit_person AS "auditPerson",
+        u.audit_time AS "auditTime",
+        t.temp_type AS "p2pRateDocumentTemplate.tempType"
+        from p2p_rate_document_upload u
+        LEFT JOIN p2p_rate_document_template t ON u.rate_document_temp_id = t.id
+        WHERE u.financing_information_id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRateDocumentUpload">
+        SELECT
+        <include refid="p2pRateDocumentUploadColumns"/>
+        FROM p2p_rate_document_upload a
+        <include refid="p2pRateDocumentUploadJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRateDocumentUpload">
+        SELECT
+        <include refid="p2pRateDocumentUploadColumns"/>
+        FROM p2p_rate_document_upload a
+        <include refid="p2pRateDocumentUploadJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_rate_document_upload(
+        id,
+        financing_information_id,
+        rate_document_id,
+        upload_time,
+        is_reject,
+        reject_reason,
+        audit_person,
+        audit_time
+        <!-- ,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag -->
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{rateDocumentId},
+        #{uploadTime},
+        #{isReject},
+        #{rejectReason},
+        #{auditPerson},
+        #{auditTime}
+        <!-- ,
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag} -->
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_rate_document_upload SET
+        <!-- 	financing_information_id = #{financingInformationId},
+            rate_document_id = #{rateDocumentId},
+            upload_time = #{uploadTime}, -->
+        is_reject = #{isReject},
+        reject_reason = #{rejectReason},
+        audit_person=#{auditPerson},
+        audit_time=#{auditTime}
+        <!-- ,
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks} -->
+        WHERE id = #{id}
+    </update>
+
+    <!-- <update id="delete">
+        UPDATE p2p_rate_document_upload SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update> -->
+
+    <insert id="insertUploadRecord" parameterType="P2pRateDocumentUpload">
+        INSERT INTO p2p_rate_document_upload(
+        id,
+        financing_information_id,
+        rate_document_temp_id,
+        upload_time
+        )VALUES(
+        #{id},
+        #{financingInformationId},
+        #{rateDocumentTempId},
+        #{uploadTime}
+        )
+    </insert>
+
+    <select id="getDocumentByFiId" parameterType="java.lang.String" resultType="P2pRateDocumentUpload">
+        SELECT
+        <include refid="p2pRateDocumentUploadColumns"/>
+        FROM p2p_rate_document_upload a
+        WHERE financing_information_id = #{_parameter}
+        <!-- ORDER BY a.address  -->
+    </select>
+
+    <update id="saveSingleDocument">
+        UPDATE p2p_rate_document_upload SET
+        is_reject = #{isReject},
+        reject_reason = #{rejectReason}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delDocById" parameterType="java.lang.String">
+        DELETE FROM
+        p2p_rate_document_upload
+        WHERE
+        id = #{_parameter}
+    </delete>
+
+    <!-- 二期Quincy -->
+    <select id="findRecord" parameterType="P2pRateDocumentUpload" resultType="P2pRateDocumentUpload">
+        SELECT * FROM p2p_rate_document_upload
+        WHERE financing_information_id = #{financingInformationId}
+        AND rate_document_temp_id = #{rateDocumentTempId}
+    </select>
+
+    <!-- Quincy修改上传时间 -->
+    <update id="updateUploadTime" parameterType="P2pRateDocumentUpload">
+        UPDATE p2p_rate_document_upload SET
+        upload_time = #{uploadTime}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Quincy修改驳回状态 -->
+    <update id="updateIsReject" parameterType="P2pRateDocumentUpload">
+        UPDATE p2p_rate_document_upload SET
+        is_reject = #{isReject},
+        reject_reason = #{rejectReason}
+        WHERE id = #{id}
+    </update>
+
+    <resultMap type="P2pRateDocumentUpload" id="listMap">
+        <id property="id" column="aid"/>
+        <result property="rateDocumentTempId" column="rateDocumentTempId"/>
+        <collection property="p2pDocumentUploadRecordList" ofType="P2pDocumentUploadRecord">
+            <id property="id" column="bid"/>
+            <result property="fileAddress" column="fileAddress"/>
+            <result property="fileName" column="fileName"/>
+        </collection>
+    </resultMap>
+
+    <!-- Quincy查询材料详情列表 -->
+    <select id="findRateDocumentList" parameterType="java.lang.String" resultMap="listMap">
+        SELECT
+        a.id AS "aid",
+        a.rate_document_temp_id AS "rateDocumentTempId",
+        b.id AS "bid",
+        b.file_address AS "fileAddress",
+        b.file_name AS "fileName"
+        FROM
+        p2p_rate_document_upload a,p2p_document_upload_record b
+        WHERE
+        a.id = b.rate_document_upload_id
+        AND
+        a.financing_information_id = #{_parameter}
+    </select>
+
+    <!-- Zeus 根据债项id验证材料是否全部审核(返回未审核数据) -->
+    <select id="validateIfAuditAll" parameterType="java.lang.String" resultType="P2pRateDocumentUpload">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.rate_document_temp_id AS "rateDocumentTempId",
+        a.upload_time AS "uploadTime",
+        a.is_reject AS "isReject",
+        a.reject_reason AS "rejectReason",
+        a.audit_person AS "auditPerson",
+        a.audit_time AS "auditTime",
+        b.temp_name AS "p2pRateDocumentTemplate.tempName"
+        FROM
+        p2p_rate_document_upload a
+        LEFT JOIN p2p_rate_document_template b ON b.id = a.rate_document_temp_id
+        WHERE
+        a.financing_information_id = #{fiId}
+        AND a.is_reject IS NULL
+        ORDER BY
+        CAST(
+        a.rate_document_temp_id AS DECIMAL
+        )
+    </select>
+
+    <!-- Quincy 查询全部材料简要列表 -->
+    <select id="findSimpleList" parameterType="java.lang.String" resultType="P2pRateDocumentUpload">
+        SELECT
+        a.id AS "id",
+        b.temp_name AS "p2pRateDocumentTemplate.tempName",
+        b.temp_type AS "p2pRateDocumentTemplate.tempType",
+        a.upload_time AS "uploadTime",
+        a.financing_information_id AS "financingInformationId",
+        a.rate_document_temp_id AS "rateDocumentTempId"
+        FROM p2p_rate_document_upload a,p2p_rate_document_template b
+        WHERE
+        a.rate_document_temp_id = b.id
+        AND
+        a.financing_information_id = #{_parameter}
+        ORDER BY
+        b.id
+    </select>
+
+    <!-- 二期Quincy 查询已提交材料简要列表 -->
+    <select id="findSimpleList1" parameterType="java.lang.String" resultType="P2pRateDocumentUpload">
+        SELECT
+        a.id AS "id",
+        b.temp_name AS "p2pRateDocumentTemplate.tempName",
+        b.temp_type AS "p2pRateDocumentTemplate.tempType",
+        a.upload_time AS "uploadTime",
+        a.financing_information_id AS "financingInformationId",
+        a.rate_document_temp_id AS "rateDocumentTempId"
+        FROM p2p_rate_document_upload a,p2p_rate_document_template b
+        WHERE
+        a.rate_document_temp_id = b.id
+        AND
+        a.financing_information_id = #{_parameter}
+        AND
+        a.is_reject != 0
+    </select>
+
+    <resultMap type="P2pRateDocumentUpload" id="listMap2">
+        <id property="id" column="aid"/>
+        <result property="uploadTime" column="uploadTime"/>
+        <result property="rejectReason" column="rejectReason"/>
+        <result property="financingInformationId" column="financingInformationId"/>
+        <association property="p2pRateDocumentTemplate" javaType="P2pRateDocumentTemplate">
+            <id property="id" column="bid"/>
+            <result property="tempName" column="p2pRateDocumentTemplate.tempName"/>
+            <result property="tempType" column="p2pRateDocumentTemplate.tempType"/>
+        </association>
+        <collection property="p2pDocumentUploadRecordList" ofType="P2pDocumentUploadRecord">
+            <id property="id" column="cid"/>
+            <result property="fileAddress" column="fileAddress"/>
+            <result property="fileName" column="fileName"/>
+        </collection>
+    </resultMap>
+
+    <!-- 二期Quincy 查询待提交材料简要列表 -->
+    <select id="findSimpleList2" parameterType="java.lang.String" resultMap="listMap2">
+        SELECT
+        a.id AS "aid",
+        a.upload_time AS "uploadTime",
+        a.reject_reason AS "rejectReason",
+        a.financing_information_id AS "financingInformationId",
+        b.id AS "bid",
+        b.temp_name AS "p2pRateDocumentTemplate.tempName",
+        b.temp_type AS "p2pRateDocumentTemplate.tempType",
+        c.id AS "cid",
+        c.file_name AS "fileName",
+        c.file_address AS "fileAddress"
+        FROM
+        p2p_rate_document_upload a
+        LEFT JOIN
+        p2p_rate_document_template b
+        ON
+        a.rate_document_temp_id = b.id
+        LEFT JOIN
+        p2p_document_upload_record c
+        ON
+        a.id = c.rate_document_upload_id
+        WHERE
+        a.is_reject = 0
+        AND
+        a.financing_information_id = #{_parameter}
+    </select>
+</mapper>

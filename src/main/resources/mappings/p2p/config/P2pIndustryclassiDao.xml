@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.config.dao.P2pIndustryclassiDao">
+    <sql id="p2pIndustryclassiColumns">
+        a.industrynum AS "industrynum",
+        a.classiname_cn AS "classinameCn",
+        a.classiname_en AS "classinameEn",
+        a.parentnum AS "parentnum",
+        a.sort AS "sort",
+        a.isleaf AS "isleaf",
+        a.createdate AS "createdate",
+        a.remark AS "remark"
+    </sql>
+
+    <sql id="p2pIndustryclassiJoins">
+    </sql>
+
+    <select id="get" resultType="P2pIndustryclassi">
+        SELECT
+        <include refid="p2pIndustryclassiColumns"/>
+        FROM p2p_industryclassi a
+        <include refid="p2pIndustryclassiJoins"/>
+        WHERE a.industrynum = #{industrynum}
+    </select>
+
+
+    <select id="getByIndustyNum" resultType="P2pIndustryclassi" parameterType="java.lang.String">
+        SELECT
+        *
+        FROM p2p_industryclassi
+        WHERE industrynum = #{_parameter}
+    </select>
+
+    <select id="findList" resultType="P2pIndustryclassi">
+        SELECT
+        <include refid="p2pIndustryclassiColumns"/>
+        FROM p2p_industryclassi a
+        <include refid="p2pIndustryclassiJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pIndustryclassi">
+        SELECT
+        <include refid="p2pIndustryclassiColumns"/>
+        FROM p2p_industryclassi a
+        <include refid="p2pIndustryclassiJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_industryclassi(
+        industrynum,
+        classiname_cn,
+        classiname_en,
+        parentnum,
+        sort,
+        isleaf,
+        createdate,
+        remark
+        ) VALUES (
+        #{industrynum},
+        #{classinameCn},
+        #{classinameEn},
+        #{parentnum},
+        #{sort},
+        #{isleaf},
+        #{createdate},
+        #{remark}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_industryclassi SET
+        industrynum = #{industrynum},
+        classiname_cn = #{classinameCn},
+        classiname_en = #{classinameEn},
+        parentnum = #{parentnum},
+        sort = #{sort},
+        isleaf = #{isleaf},
+        createdate = #{createdate},
+        remark = #{remark}
+        WHERE industrynum = #{industrynum}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_industryclassi
+        WHERE industrynum = #{industrynum}
+    </update>
+
+    <!-- Quincy 加载一级行业列表 -->
+    <select id="findTopCategory" resultType="P2pIndustryclassi">
+        SELECT
+        *
+        FROM
+        p2p_industryclassi
+        WHERE
+        isleaf = 0
+    </select>
+
+    <!-- Quincy 加载二级行业列表 -->
+    <select id="findSecondCategory" parameterType="java.lang.String" resultType="P2pIndustryclassi">
+        SELECT
+        *
+        FROM
+        p2p_industryclassi
+        WHERE
+        parentNum = #{_parameter}
+    </select>
+</mapper>

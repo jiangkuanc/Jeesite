@@ -1,0 +1,145 @@
+/*关于我们-安全保障*/
+.gywm-zh-p {
+    border-bottom: 2px solid #e0e1e5;
+}
+
+.gywm-h3 {
+    color: #bf1a20;
+    font-weight: 700;
+    border-bottom: 3px solid #bf1a20;
+    line-height: 50px;
+    margin-top: -20px;
+}
+
+.gywm-content-div {
+    margin: 30px 0;
+}
+
+.gywm-content-div h4 {
+    font-weight: 700;
+}
+
+.gywm-content-div p {
+    text-indent: 2em;
+    color: #666666;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: justify;
+}
+
+.gywm-content-div-div {
+    display: inline-block;
+    border: 2px solid #5a96df;
+    height: 160px;
+    width: 130px;
+    margin: 30px 0;
+    border-radius: 20px;
+}
+
+.gywm-content-div-div span {
+    display: inline-block;
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    color: #FFFFFF;
+    text-align: center;
+    background: #5a96df;
+    border-radius: 0 0 20px 20px;
+
+}
+
+.gywm-content-div-div ul {
+    height: 100px;
+    margin: 12px 0 6px 0;
+    border-radius: 20px;
+}
+
+.gywm-content-div-div ul li {
+    width: 45%;
+    margin-left: 41px;
+    text-align: center;
+    line-height: 24px;
+    font-size: 14px;
+    color: #5a96df;
+    font-weight: 600;
+    list-style-image: url("../../dist/images/yuanlan.png");
+}
+
+.gywm-img {
+    margin: 50px 30px;
+    vertical-align: super;
+}
+
+.gywm-content-div-div-span {
+    border-radius: 20px 20px 0 0 !important;
+    margin-top: -3px;
+}
+
+.gywm-content-div-div ul.last li {
+    width: 23%;
+}
+
+.gywm-div-center {
+    text-align: center;
+}
+
+/*关于我们-公司简介*/
+.gywm-gsjj p {
+    margin: 20px 0;
+}
+
+.gywm-gsjj p:first-child {
+    text-indent: 0em;
+}
+
+/*关于我们-联系我们*/
+.gywm-lxwm {
+    margin: 40px 0;
+}
+
+.gywm-lxwm h4, h5 {
+    font-weight: 600;
+}
+
+.gywm-lxwm h4 span, .gywm-lxwm h5 span {
+    font-weight: 400;
+}
+
+.gywm-lxwm-img {
+    margin-bottom: 100px;
+}
+
+/*关于我们-合作伙伴*/
+.gywm-content-hzhb img {
+    margin: 20px;
+}
+
+/*关于我们-平台简介*/
+.gywm-ptjj-img {
+    margin: 20px 0;
+}
+
+/*关于我们-运营数据*/
+.gywm-content-yysj ul li h4 {
+    height: 30px;
+    line-height: 30px;
+    background: #d5dce4;
+    margin: 0;
+}
+
+.gywm-content-yysj ul li:nth-child(2n) h4 {
+    background: #FFFFFF;
+}
+
+.gywm-content-yysj {
+    margin: 20px 0 100px 0;
+}
+
+
+
+
+
+
+
+
+

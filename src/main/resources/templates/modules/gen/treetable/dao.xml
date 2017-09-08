@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <name>dao</name>
+    <filePath>src/main/java/${packageName}/${moduleName}/${subModuleName}/dao</filePath>
+    <fileName>${ClassName}Dao.java</fileName>
+    <content><![CDATA[
+package ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.dao;
+
+import com.thinkgem.jeesite.common.persistence.TreeDao;
+import com.thinkgem.jeesite.common.persistence.annotation.MyBatisDao;
+import ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.entity.${ClassName};
+
+/**
+ * ${functionName}DAO接口
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@MyBatisDao
+public interface ${ClassName}Dao extends TreeDao<${ClassName}> {
+	
+}]]>
+    </content>
+</template>

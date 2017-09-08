@@ -1,0 +1,1 @@
+alter table p2p_reg_user_certify modify column power_of_attorney varchar(200);

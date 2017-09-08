@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <name>service</name>
+    <filePath>src/main/java/${packageName}/${moduleName}/${subModuleName}/service</filePath>
+    <fileName>${ClassName}Service.java</fileName>
+    <content><![CDATA[
+package ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.service;
+
+import java.util.List;
+
+
+import ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.entity.${ClassName};
+import com.thinkgem.jeesite.common.persistence.Page;
+
+/**
+ * ${functionName}Service
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+public interface ${ClassName}Service {
+	
+	public ${ClassName} get(String id);
+	
+	public List<${ClassName}> findList(${ClassName} ${className});
+	
+	public Page<${ClassName}> findPage(Page<${ClassName}> page, ${ClassName} ${className});
+	
+	public void save(${ClassName} ${className});
+	
+	public void delete(${ClassName} ${className});
+	
+}]]>
+    </content>
+</template>

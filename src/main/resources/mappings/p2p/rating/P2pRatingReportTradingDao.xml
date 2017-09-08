@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.rating.dao.P2pRatingReportTradingDao">
+
+    <sql id="p2pRatingReportTradingColumns">
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.report_id AS "reportId",
+        a.trading_time AS "tradingTime",
+        a.report_type AS "reportType"
+    </sql>
+
+    <sql id="p2pRatingReportTradingJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pRatingReportTrading">
+        SELECT
+        <include refid="p2pRatingReportTradingColumns"/>
+        FROM p2p_rating_report_trading a
+        <include refid="p2pRatingReportTradingJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRatingReportTrading">
+        SELECT
+        <include refid="p2pRatingReportTradingColumns"/>
+        FROM p2p_rating_report_trading a
+        <include refid="p2pRatingReportTradingJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRatingReportTrading">
+        SELECT
+        <include refid="p2pRatingReportTradingColumns"/>
+        FROM p2p_rating_report_trading a
+        <include refid="p2pRatingReportTradingJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_rating_report_trading(
+        id,
+        user_id,
+        report_id,
+        trading_time,
+        report_type
+        ) VALUES (
+        #{id},
+        #{userId},
+        #{reportId},
+        #{tradingTime},
+        #{reportType}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_rating_report_trading SET
+        user_id = #{userId},
+        report_id = #{reportId},
+        trading_time = #{tradingTime},
+        report_type = #{reportType}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_rating_report_trading
+        WHERE id = #{id}
+    </update>
+
+    <select id="findListByUid" parameterType="P2pRatingReportTrading" resultType="P2pRatingReportTrading">
+        SELECT DISTINCT
+        a.report_id AS "reportId",
+        b.id AS "p2pRatingServiceInfo.id",
+        b.rating_name AS "p2pRatingServiceInfo.ratingName",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        c.publish_time AS "p2pFinancingRatingInfo.publishTime",
+        c.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        d.id AS "p2pFinancingInformation.id",
+        d.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM p2p_rating_report_trading a
+        LEFT JOIN p2p_rating_service_info b
+        ON a.report_id = b.id
+        LEFT JOIN p2p_financing_information d
+        ON a.report_id = d.id
+        LEFT JOIN p2p_payment_of_rating_cost e
+        ON a.report_id = e.financing_information_id
+        LEFT JOIN p2p_financing_rating_info c
+        ON (b.id = c.financing_information_id
+        OR d.id = c.financing_information_id)
+        <where>
+            a.user_id = #{userId}
+            AND
+            e.payment_status = 1
+            AND
+            ((b.current_stage &gt; '700' AND b.current_stage &lt; '901')
+            OR (d.current_stage &gt; '400' AND d.current_stage &lt; '902'))
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+                AND b.apply_time <![CDATA[   >=  ]]> #{beginTime} AND b.apply_time <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+    </select>
+    <!-- 查询购买记录 -->
+    <select id="findRecordByUid" parameterType="P2pRatingReportTrading" resultType="P2pRatingReportTrading">
+        SELECT
+        a.report_id AS "reportId"
+        FROM p2p_rating_report_trading a
+        WHERE a.user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.document.dao.P2pRateDocumentAuditRecordDao">
+
+    <sql id="p2pRateDocumentAuditRecordColumns">
+        a.id AS "id",
+        a.rate_document_upload_id AS "rateDocumentUploadId",
+        a.handle_time AS "handleTime",
+        a.is_reject AS "isReject",
+        a.reject_reason AS "rejectReason",
+        a.audit_person AS "auditPerson"
+    </sql>
+
+    <sql id="p2pRateDocumentAuditRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRateDocumentAuditRecord">
+        SELECT
+        <include refid="p2pRateDocumentAuditRecordColumns"/>
+        FROM p2p_rate_document_audit_record a
+        <include refid="p2pRateDocumentAuditRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findById" resultType="P2pRateDocumentAuditRecord">
+        SELECT
+        <include refid="p2pRateDocumentAuditRecordColumns"/>
+        FROM p2p_rate_document_audit_record a
+        <include refid="p2pRateDocumentAuditRecordJoins"/>
+        WHERE a.rate_document_upload_id = #{rateDocumentUploadId}
+        ORDER by a.handle_time desc
+    </select>
+
+    <select id="findById2" resultType="P2pRateDocumentAuditRecord" parameterType="string">
+        SELECT
+        a.id AS "id",
+        a.rate_document_upload_id AS "rateDocumentUploadId",
+        a.handle_time AS "handleTime",
+        a.is_reject AS "isReject",
+        a.reject_reason AS "rejectReason",
+        a.audit_person AS "auditPerson"
+        FROM
+        p2p_rate_document_audit_record a
+        WHERE
+        a.rate_document_upload_id = #{rateDocumentUploadId}
+        ORDER by a.handle_time desc
+    </select>
+
+    <select id="findList" resultType="P2pRateDocumentAuditRecord">
+        SELECT
+        <include refid="p2pRateDocumentAuditRecordColumns"/>
+        FROM p2p_rate_document_audit_record a
+        <include refid="p2pRateDocumentAuditRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRateDocumentAuditRecord">
+        SELECT
+        <include refid="p2pRateDocumentAuditRecordColumns"/>
+        FROM p2p_rate_document_audit_record a
+        <include refid="p2pRateDocumentAuditRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_rate_document_audit_record(
+        id,
+        rate_document_upload_id,
+        handle_time,
+        is_reject,
+        reject_reason,
+        audit_person
+        ) VALUES (
+        #{id},
+        #{rateDocumentUploadId},
+        #{handleTime},
+        #{isReject},
+        #{rejectReason},
+        #{auditPerson}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_rate_document_audit_record SET
+        rate_document_upload_id = #{rateDocumentUploadId},
+        handle_time = #{handleTime},
+        is_reject = #{isReject},
+        reject_reason = #{rejectReason},
+        audit_person=#{auditPerson}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_rate_document_audit_record
+        WHERE id = #{id}
+    </update>
+
+</mapper>

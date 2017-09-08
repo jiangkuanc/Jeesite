@@ -1,0 +1,361 @@
+/**/
+.xyjy-content-top {
+    width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.xyjy-content-top .xyjy-content-top-top {
+
+}
+
+.xyjy-content-top-top {
+    margin-top: 20px;
+}
+
+.xyjy-content-top .xyjy-content-top-top .xyjy-content-top-top-left {
+    width: 188px;
+    border-top: 4px solid #bf1a20;
+    border-right: 1px solid #bf1a20;
+    text-align: center;
+}
+
+.xyjy-content-top .xyjy-content-top-top .xyjy-content-top-top-left h3 {
+    margin: 14px 0 0;
+    padding: 0;
+    text-align: center;
+    color: #bf1a20;
+}
+
+.xyjy-content-top .xyjy-content-top-top .xyjy-content-top-top-right {
+    width: 912px;
+    height: 44px;
+    background: url("../images/xyjy-content-solid_05.png") no-repeat left bottom;
+    text-align: right;
+}
+
+.xyjy-content-top .xyjy-content-top-top .xyjy-content-top-top-right a {
+    color: #909090;
+    display: block;
+    margin: 15px 15px 10px 0;
+}
+
+.xyjy-content-top .xyjy-content-top-bot {
+}
+
+.xyjy-content-top .xyjy-content-top-bot .xyjy-content-top-bot-content {
+    width: 246px;
+    height: 285px;
+    margin: 34px 17px 0 12px;
+}
+
+.xyjy-content-top .xyjy-content-top-bot .xyjy-content-top-bot-content .xyjy-content-top-bot-content-p-1 {
+    margin-top: 20px;
+}
+
+.xyjy-content-top .xyjy-content-top-bot .xyjy-content-top-bot-content p {
+    text-align: center;
+    font-size: 18px;
+}
+
+.xyjy-content-bot {
+    width: 1100px;
+    margin: 0 auto;
+    background: #f7fbff;
+}
+
+.xyjy-content-bot .xyjy-content-top-top {
+}
+
+.xyjy-content-bot .xyjy-content-top-top .xyjy-content-top-top-left {
+    width: 188px;
+    border-top: 4px solid #bf1a20;
+    border-right: 1px solid #bf1a20;
+    text-align: center;
+}
+
+.xyjy-content-bot .xyjy-content-top-top .xyjy-content-top-top-left h3 {
+    margin: 14px 0 0;
+    padding: 0;
+    text-align: center;
+    color: #bf1a20;
+}
+
+.xyjy-content-bot .xyjy-content-top-top .xyjy-content-top-top-right {
+    width: 912px;
+    height: 44px;
+    background: url("../images/xyjy-content-solid_05.png") no-repeat left bottom;
+    text-align: right;
+}
+
+.xyjy-content-bot .xyjy-content-top-top .xyjy-content-top-top-right a {
+    color: #909090;
+    display: block;
+    margin: 15px 15px 10px 0;
+}
+
+.xyjy-content-bot .xyjy-content-top-bot {
+}
+
+.xyjy-content-bot .xyjy-content-top-bot .xyjy-content-top-bot-content {
+    width: 246px;
+    height: 285px;
+    margin: 34px 17px 0 12px;
+}
+
+.xyjy-content-bot .xyjy-content-top-bot .xyjy-content-top-bot-content .xyjy-content-top-bot-content-p-1 {
+    margin-top: 20px;
+}
+
+.xyjy-content-bot .xyjy-content-top-bot .xyjy-content-top-bot-content p {
+    text-align: center;
+    font-size: 18px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot {
+    margin-left: 30px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot h4 {
+    color: #ffb431;
+    margin-top: 30px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot .xyjy-content-bot-bot-bg {
+    width: 500px;
+    height: 8px;
+    background: #fbb458;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot .xyjy-content-bot-bot-content img {
+    margin-bottom: 20px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot .xyjy-content-bot-bot-content ul {
+    padding-left: 20px;
+    line-height: 15px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot .xyjy-content-bot-bot-content li {
+    list-style: none;
+    background: url("../images/index-xinyong-text1-dian_07.png") no-repeat left 45%;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot .xyjy-content-bot-bot-content li p {
+    margin-left: 25px;
+    font-size: 14px;
+    color: #333333;
+    margin-top: 5px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot .xyjy-content-bot-bot-content li p a {
+    color: #333333;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-center {
+    width: 2px;
+    height: 190px;
+    margin-top: 46px;
+    background: url("../images/index-xinyong-textbg_07.png") no-repeat;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right {
+    margin-left: 20px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right h4 {
+    color: #3175ff;
+    margin-top: 30px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right .xyjy-content-bot-bot-bg {
+    width: 500px;
+    height: 8px;
+    background: #5886fb;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right .xyjy-content-bot-bot-content img {
+    margin-bottom: 20px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right .xyjy-content-bot-bot-content ul {
+    padding-left: 20px;
+    line-height: 15px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right .xyjy-content-bot-bot-content li {
+    list-style: none;
+    background: url("../images/index-xinyong-text2-dian_11.png") no-repeat left 45%;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right .xyjy-content-bot-bot-content li p {
+    margin-left: 25px;
+    font-size: 14px;
+    color: #333333;
+    margin-top: 5px;
+}
+
+.xyjy-content-bot .xyjy-content-bot-bot-right .xyjy-content-bot-bot-content li p a {
+    color: #333333;
+}
+
+/**/
+.xyjyjt-content-top {
+    width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-top {
+
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-top .xyjyjt-content-top-top-left {
+    width: 188px;
+    border-top: 4px solid #bf1a20;
+    border-right: 1px solid #bf1a20;
+    text-align: center;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-top .xyjyjt-content-top-top-left h3 {
+    margin: 14px 0 0;
+    padding: 0;
+    text-align: center;
+    color: #bf1a20;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-top .xyjyjt-content-top-top-right {
+    width: 912px;
+    height: 44px;
+    background: url("../images/xyjy-content-solid_05.png") no-repeat left bottom;
+    text-align: right;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-top .xyjyjt-content-top-top-right a {
+    color: #909090;
+    display: block;
+    margin: 15px 15px 10px 0;
+}
+
+.xyjyjt-content-top ul {
+    padding: 0;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-bot {
+    list-style: none;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-bot .xyjyjt-content-top-bot-content-left {
+    width: 246px;
+    height: 318px;
+    margin: 34px 17px 0 12px;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-bot .xyjyjt-content-top-bot-content-left .xyjyjt-content-top-bot-content-left-p-1 {
+    margin-top: 38px;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-bot .xyjyjt-content-top-bot-content-left p {
+    text-align: center;
+    font-size: 18px;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-bot .xyjyjt-content-top-bot-content-right {
+    width: 792px;
+    margin: 34px 20px 0 12px;
+}
+
+.xyjyjt-content-top .xyjyjt-content-top-bot .xyjyjt-content-top-bot-content-right p {
+    font-size: 18px;
+    line-height: 34px;
+    margin-bottom: 4px;
+}
+
+/*鍒嗛〉*/
+.page {
+    width: 1100px;
+    margin-left: 23%;
+    margin-bottom: 140px;
+    margin-top: 28px;
+}
+
+.page .page-width {
+    width: 60px;
+}
+
+.page .current {
+    color: #d00000;
+}
+
+.page a {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    margin-left: 10px;
+    text-align: center;
+    border: 1px solid #ebebee;
+    color: #909090;
+    border-radius: 4px;
+}
+
+.page span {
+    margin-left: 10px;
+    text-align: center;
+    color: #909090;
+    border-radius: 4px;
+}
+
+.page .page-input {
+    width: 30px;
+    height: 18px;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+.page .page-button {
+    margin-left: 10px;
+    width: 34px;
+    height: 18px;
+    font-size: 12px;
+    margin-top: 2px;
+    text-align: center;
+    padding: 0;
+    line-height: 11px;
+    color: #fff;
+    background: #2481e0;
+    border: none;
+}
+
+/*信用教育讲堂详情页*/
+.xyjyjt-content {
+    width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+}
+
+.xyjyjt-content h3 {
+    text-align: center;
+}
+
+.xyjyjt-content .xyjyjt-content-bot {
+    border-top: 1px solid #bf1a20;
+    width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    margin-top: 25px;
+    border-bottom: 1px solid #bf1a20;
+    padding-bottom: 25px;
+    line-height: 24px;
+}
+
+
+

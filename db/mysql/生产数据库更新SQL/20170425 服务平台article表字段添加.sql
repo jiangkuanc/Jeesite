@@ -1,0 +1,1 @@
+ALTER TABLE cms_article ADD COLUMN lecture_number VARCHAR(64);

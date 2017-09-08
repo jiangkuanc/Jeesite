@@ -1,0 +1,278 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+    <link rel="stylesheet" href="../temp1.css" type="text/css">
+    <style>
+        table {
+            font-family: ΢���ź�, Consolas, Arial, ����;
+        }
+    </style>
+    <script type="text/javascript" src="../proptable.js"></script>
+    <script>
+        function gentable() {
+            var xmlDoc = getXMLDoc("properties.xml?81");
+            genproptable('TagProperties', xmlDoc, "");
+            var xmlDoc = getXMLDoc("properties.background.xml?81");
+            genproptable('TagBackground', xmlDoc, "");
+        }
+    </script>
+</head>
+
+<body onLoad="gentable()" bgcolor=#ffffff vlink=#0000ff>
+<div id="Tagǰ��"/>
+<br>
+<Table cols=3 border=0 width=100%>
+    <col width=5%>
+    <col width=55%>
+    <col width=40% valign=top>
+    <tr height=130 valign=top>
+        <td/>
+        <td></td>
+        <td><img src='../../res/freeformsh.jpg'></td>
+    </tr>
+</table>
+����Supcan Freeform��ҳ���չ��Ҳ�Ǹ���XML�ļ������ģ�����Ϊ��XML�Ĺ淶���ĵ���<br>
+����Supcan Freeform XML�ĵ���Ԫ������������Ҳ��<font color=red>��Сд������</font>��.<br>
+����������ĵ��У�����"0-n"��ʾԪ�������ж����Ҳ����û��; "1-n"��ʾ����Ҫ��1��; "0-1" ��ʾ������һ��; "1"��ʾ��������ֻ����һ��.<br>
+<br>
+������demo���� Treelist ��Ŀ¼���д�����XML�ļ�ʵ���ɹ��ο�.<br>
+<br><br>
+
+<div id="TagProperties"></div>
+<br>
+
+<div id="TagBackground"></div>
+<br>
+
+<div id="TagExpresses"/>
+<br>
+<b>Expresses</b>����<img src='document.bmp' title='��μ���ʾҳ: 1.����Freeform'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�����б��ʽ������:0 - 1</td>
+    </tr>
+    <tr bgcolor=#f1f1f1>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+    <tr>
+        <td>isOpt ��<br>isOptimize</td>
+        <td>�Ƿ��Զ����е����ù�ϵ�Ż�����˳��</td>
+        <td>true/false</td>
+        <td>true</td>
+    </tr>
+</table>
+
+<div id="TagExpress"/>
+<br>
+<b>Express</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�����б��ʽ��Ŀ������:1 - n������: ���ʽ</td>
+    </tr>
+</table>
+<br>
+
+<div id="TagValidations"/>
+<b>Validations</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�ͻ�����֤������:0 - 1</td>
+    </tr>
+</table>
+<br>
+
+<div id="TagValidation"/>
+<b>Validation</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�ͻ�����֤��Ŀ������:1 - n������: ���ʽ, ���������Ϊ���㣬��ʾͨ����֤</td>
+    </tr>
+    <tr bgcolor=#f1f1f1>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>id��,��ѡ</td>
+        <td>��עΨһ�Ĵ������ڰ���API��ȡ.</td>
+        <td>(��)</td>
+    </tr>
+    <tr>
+        <td>locate</td>
+        <td>��λ�Ķ���id,��ѡ</td>
+        <td>object��id����ʾδͨ����֤ʱ����꽫�Զ���λ���ö��󣬲����Ϸ�������ʾ��.<br>ע��Ҳ���Բ����壬˶��������Զ��ӱ��ʽ�з������.</td>
+        <td>(��)</td>
+    </tr>
+    <tr>
+        <td>errorText<br>�� error</td>
+        <td>δͨ����֤ʱ����ʾ������</td>
+        <td>���������ԡ�|���ָ���Ӣ��</td>
+        <td>(��)</td>
+    </tr>
+    <tr>
+        <td>title</td>
+        <td>��ʾ������</td>
+        <td>���⣬��ѡ���ɺ���������֮һ��Warn��Success��Fail��Error��Prompt(���Ը������������ɣ�����Successful��Warning���Ϸ�)
+        </td>
+        <td>Prompt</td>
+    </tr>
+    <tr>
+        <td>icon</td>
+        <td>��ʾ��ͼ��</td>
+        <td>�ɺ���������֮һ��Stop��Success��Question��Info(���Ը������������ɣ�����Successful��Information���Ϸ�)</td>
+        <td>Info</td>
+    </tr>
+    <tr>
+        <td>hold</td>
+        <td>��ʾ������ʱ��</td>
+        <td>��λ���룬0��ʾ��Զ��ʾ��������Źر�. ����Ĭ��ֵ��icon�й�(���Ǻܾ�ȷ):<br>
+            ����Success - 2.5��;<br>
+            ����Info - 3.5��;<br>
+            ����Question - 4.5��;<br>
+            ����Stop - ��Զ��ʾ;
+        </td>
+        <td>(��)</td>
+    </tr>
+</table>
+<br>
+
+
+<div id="TagFonts"/>
+<br>
+<b>Fonts</b>����<img src='document.bmp' title='��μ���ʾҳ: 1.����Freeform'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�õ���������Դ������:0 - 1</td>
+    </tr>
+    <tr bgcolor=#f1f1f1>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+    <tr>
+        <td>ref</td>
+        <td>�����ⲿXML�����ļ�,<br>�������ݽ����Ը��ļ�, ʵ������ҳ��CSS��ͳһ�û�����</td>
+        <td>�ⲿXML�ļ���URL�����������URL</td>
+        <td>(��)</td>
+    </tr>
+</table>
+
+<div id="TagFont"/>
+<br>
+<b>Font</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:������Դ������:0 - n</td>
+    </tr>
+    <tr bgcolor=#f1f1f1>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+
+    <tr>
+        <td>faceName �� Face, Name</td>
+        <td rowspan=14>��ӦWindows SDK�е�LOGFONT�ṹ�е�ͬ������.<br><br>
+            ע1:
+            Height(��size)������ĳߴ磬��λ��������߼���λ��ͨ������С��0�����֣��������0����߶Ȳ��������ֵ��ڲ��о�(internal-leading)�����õĳߴ���-8,
+            -9, -10, -11, -12, -14, -16, -18, -20, -22, -24, -26, -28, -36, -48, -72;<br>
+            ע2: weight=400/700 ��Ӧ �Ǵ���/���壻<br>
+            ע3: Bold=false/true ��Ӧ �Ǵ���/����
+        </td>
+        <td>��</td>
+        <td rowspan=14>ϵͳĬ������</td>
+    </tr>
+    <tr>
+        <td>charSet</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>height �� FontSize, Size</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>weight �� Bold</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>width</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>pitchAndFamily</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>quality</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>italic</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>underline</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>outPrecision</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>strikeOut</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>clipPrecision</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>escapement</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>orientation</td>
+        <td>����</td>
+    </tr>
+    <tr>
+        <td>isAntiAlias</td>
+        <td>�Ƿ񿹾��ƽ����ʾ</td>
+        <td>true/false</td>
+        <td>false</td>
+    </tr>
+    <tr>
+        <td>ShadowAlpha</td>
+        <td>��Ӱ��͸����</td>
+        <td>0 �� 255</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>ShadowBlur</td>
+        <td>��Ӱ��ģ����</td>
+        <td>0 �� 100</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>ShadowX</td>
+        <td>��Ӱ�ĺ���ƫ��</td>
+        <td>-120 �� 120</td>
+        <td>0</td>
+    </tr>
+    <tr>
+        <td>ShadowY</td>
+        <td>��Ӱ������ƫ��</td>
+        <td>-120 �� 120</td>
+        <td>0</td>
+    </tr>
+</table>
+
+<script type='text/javascript' src='../dev/nstd.js'></script>
+</body>
+</html>

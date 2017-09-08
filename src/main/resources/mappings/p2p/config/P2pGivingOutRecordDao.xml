@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.config.dao.P2pGivingOutRecordDao">
+
+    <sql id="p2pGivingOutRecordColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.giving_out_state AS "givingOutState",
+        a.auditor AS "auditor",
+        a.auditing_time AS "auditingTime",
+        a.auditing_opinion AS "auditingOpinion",
+        a.giving_out_voucher AS "givingOutVoucher"
+    </sql>
+
+    <sql id="p2pGivingOutRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pGivingOutRecord">
+        SELECT
+        <include refid="p2pGivingOutRecordColumns"/>
+        FROM p2p_giving_out_record a
+        <include refid="p2pGivingOutRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pGivingOutRecord" parameterType="P2pGivingOutRecord">
+        SELECT
+        <include refid="p2pGivingOutRecordColumns"/>
+        FROM p2p_giving_out_record a
+        where
+        a.financing_information_id = #{financingInformationId}
+    </select>
+
+    <select id="findAllList" resultType="P2pGivingOutRecord">
+        SELECT
+        <include refid="p2pGivingOutRecordColumns"/>
+        FROM p2p_giving_out_record a
+        <include refid="p2pGivingOutRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_giving_out_record(
+        id,
+        financing_information_id,
+        giving_out_state,
+        auditor,
+        auditing_time,
+        auditing_opinion,
+        giving_out_voucher
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{givingOutState},
+        #{auditor},
+        #{auditingTime},
+        #{auditingOpinion},
+        #{givingOutVoucher}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_giving_out_record SET
+        financing_information_id = #{financingInformationId},
+        giving_out_state = #{givingOutState},
+        auditor = #{auditor},
+        auditing_time = #{auditingTime},
+        auditing_opinion = #{auditingOpinion}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_giving_out_record
+        WHERE id = #{id}
+    </update>
+
+</mapper>

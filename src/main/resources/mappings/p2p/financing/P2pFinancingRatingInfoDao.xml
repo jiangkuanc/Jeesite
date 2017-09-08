@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pFinancingRatingInfoDao">
+
+    <sql id="p2pFinancingRatingInfoColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.rating_level AS "ratingLevel",
+        a.recommended_amount AS "recommendedAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.commit_report AS "commitReport",
+        a.credit_report AS "creditReport",
+        a.publish_time AS "publishTime",
+        a.rate_expectation AS "rateExpectation",
+        a.mark_type AS "mark_type",
+        a.wether_rep AS "wetherRep",
+        a.rep_count AS "repCount",
+        a.rating_audit_state AS "ratingAuditState",
+        a.rating_audit_opinion AS "ratingAuditOpinion",
+        a.is_finalized AS "isFinalized",
+        a.main_credit_grade AS "mainCreditGrade",<!-- 主体信用等级 -->
+        a.credit_report AS "creditReport",<!-- 详版信用报告 -->
+        a.credit_report_name AS "creditReportName",<!-- 详版信用报告 -->
+        a.rate_expectation AS "rateExpectation"<!-- 评级展望 -->
+    </sql>
+
+    <sql id="p2pFinancingRatingInfoJoins">
+    </sql>
+
+    <select id="get" resultType="P2pFinancingRatingInfo">
+        SELECT
+        <include refid="p2pFinancingRatingInfoColumns"/>
+        FROM p2p_financing_rating_info a
+        <include refid="p2pFinancingRatingInfoJoins"/>
+
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findById" resultType="P2pFinancingRatingInfo">
+        SELECT
+        <include refid="p2pFinancingRatingInfoColumns"/>
+        FROM p2p_financing_rating_info a
+        <include refid="p2pFinancingRatingInfoJoins"/>
+        WHERE a.financing_information_id=#{financingInformationId}
+    </select>
+
+    <select id="findList" resultType="P2pFinancingRatingInfo">
+        SELECT
+        <include refid="p2pFinancingRatingInfoColumns"/>
+        FROM p2p_financing_rating_info a
+        <include refid="p2pFinancingRatingInfoJoins"/>
+        <where>
+            <!-- a.del_flag = #{DEL_FLAG_NORMAL} -->
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id = #{financingInformationId}
+            </if>
+            <if test="ratingLevel != null and ratingLevel != ''">
+                AND a.rating_level = #{ratingLevel}
+            </if>
+            <if test="recommendedRate != null and recommendedRate != ''">
+                AND a.recommended_rate = #{recommendedRate}
+            </if>
+            <if test="creditReport != null and creditReport != ''">
+                AND a.credit_report = #{creditReport}
+            </if>
+            <if test="publishTime != null and publishTime != ''">
+                AND a.publish_time = #{publishTime}
+            </if>
+            <!-- <if test="creditState != null and creditState != ''">
+                AND a.credit_state = #{creditState}
+            </if> -->
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pFinancingRatingInfo">
+        SELECT
+        <include refid="p2pFinancingRatingInfoColumns"/>
+        FROM p2p_financing_rating_info a
+        <include refid="p2pFinancingRatingInfoJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- 	<otherwise>
+                    ORDER BY a.update_date DESC
+                </otherwise> -->
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_financing_rating_info(
+        id,
+        financing_information_id,
+        rating_level,
+        recommended_amount,
+        recommended_rate,
+        commit_report,
+        credit_report,
+        publish_time,
+        rate_expectation,
+        mark_type,
+        wether_rep,
+        rep_count,
+        rating_audit_state,
+        rating_audit_opinion
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{ratingLevel},
+        #{recommendedAmount},
+        #{recommendedRate},
+        #{commitReport},
+        #{creditReport},
+        #{publishTime},
+        #{rateExpectation},
+        #{markType},
+        #{wetherRep},
+        #{repCount},
+        #{ratingAuditState},
+        #{ratingAuditOpinion}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_financing_rating_info SET
+        financing_information_id=#{financingInformationId},
+        rating_level=#{ratingLevel},
+        recommended_amount=#{recommendedAmount},
+        recommended_rate=#{recommendedRate},
+        commit_report=#{commitReport},
+        credit_report=#{creditReport},
+        publish_time=#{publishTime},
+        rate_expectation=#{rateExpectation},
+        mark_type=#{markType},
+        wether_rep=#{wetherRep},
+        rep_count=#{repCount},
+        rating_audit_state=#{ratingAuditState},
+        rating_audit_opinion=#{ratingAuditOpinion}
+        WHERE id= #{id}
+    </update>
+
+    <update id="updateCreitRes" parameterType="P2pFinancingRatingInfo">
+        UPDATE p2p_financing_rating_info SET
+        rating_level = #{ratingLevel},
+        recommended_rate=#{recommendedRate},
+        credit_report = #{creditReport},
+        publish_time =#{publishTime},
+        <!-- 	credit_state=#{creditState}, -->
+        commit_report=#{commitReport},
+        <!-- 	commit_result=#{commitResult},
+            commit_person=#{commitPerson},
+            credit_person=#{creditPerson}, -->
+        wether_rep=#{wetherRep},
+        rep_count=#{repCount}
+        WHERE id= #{id}
+    </update>
+
+
+    <!-- <update id="delete">
+        UPDATE p2p_financing_rating_info SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update> -->
+
+    <select id="getByFiId" resultType="P2pFinancingRatingInfo">
+        SELECT
+        <include refid="p2pFinancingRatingInfoColumns"/>
+        FROM p2p_financing_rating_info a
+
+        WHERE a.financing_information_id = #{financingInformationId}
+    </select>
+
+    <!-- Quincy 根据债项ID查询评级信息 -->
+    <select id="findRatingInfoByFid" parameterType="java.lang.String" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id AS "id",
+        a.publish_time AS "publishTime",
+        a.rating_level AS "ratingLevel",
+        a.commit_report AS "commitReport",
+        a.credit_report AS "creditReport",
+        a.recommended_amount AS "recommendedAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.rep_count AS "repCount",
+        b.id AS "p2pFinancingInformation.id",
+        b.applicants_id AS "p2pFinancingInformation.applicantsId",
+        b.application_amount AS "p2pFinancingInformation.applicationAmount",
+        b.finacing_name AS "p2pFinancingInformation.finacingName",
+        b.is_hand_rate_cost AS "p2pFinancingInformation.isHandRateCost",
+        b.current_stage AS "p2pFinancingInformation.currentStage",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+        FROM
+        p2p_financing_rating_info a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        p2p_enterprise_certify c
+        ON
+        b.applicants_id = c.user_id
+        WHERE
+        a.financing_information_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 根据债项ID查询评级报告信息 -->
+    <select id="findRatingReportByFid" parameterType="java.lang.String" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.commit_report AS "commitReport",
+        a.credit_report AS "creditReport",
+        a.commit_report_name AS "commitReportName",
+        a.credit_report_name AS "creditReportName",
+        a.is_finalized AS "isFinalized",
+        b.current_stage AS "p2pFinancingInformation.currentStage"
+        FROM
+        p2p_financing_rating_info a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- 修改批复利率 -->
+    <update id="updateRecommendedRate" parameterType="P2pFinancingRatingInfo">
+        UPDATE
+        p2p_financing_rating_info
+        SET
+        recommended_rate = #{recommendedRate}
+        WHERE
+        financing_information_id = #{financingInformationId}
+    </update>
+
+    <select id="findReportPublishTime1" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id AS "id",
+        a.publish_time AS "publishTime",
+        a.financing_information_id AS "financingInformationId",
+        a.rating_level AS "ratingLevel",
+        b.is_hand_rate_cost AS "p2pFinancingInformation.isHandRateCost",
+        b.applicants_id AS "p2pFinancingInformation.applicantsId",
+        b.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM
+        p2p_financing_rating_info a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        b.current_stage = '211'
+    </select>
+
+    <!-- Chace 修改产品类型 -->
+    <update id="updateMarkType" parameterType="P2pFinancingRatingInfo">
+        UPDATE p2p_financing_rating_info
+        SET
+        mark_type = #{markType}
+        WHERE financing_information_id = #{financingInformationId}
+    </update>
+
+    <update id="updateRepInfo" parameterType="P2pFinancingRatingInfo">
+        UPDATE
+        p2p_financing_rating_info
+        SET
+        wether_rep=#{wetherRep},
+        rep_count=#{repCount}
+        WHERE
+        financing_information_id = #{financingInformationId}
+    </update>
+
+    <select id="findRatingInfoByRid" parameterType="java.lang.String" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id AS "id",
+        a.publish_time AS "publishTime",
+        a.main_credit_grade AS "mainCreditGrade",
+        a.commit_report AS "commitReport",
+        a.credit_report AS "creditReport",
+        b.id AS "p2pRatingServiceInfo.id",
+        b.applicants_id AS "p2pRatingServiceInfo.applicantsId",
+        b.rating_name AS "p2pRatingServiceInfo.ratingName",
+        b.is_hand_rate_cost AS "p2pRatingServiceInfo.isHandRateCost",
+        b.current_stage AS "p2pRatingServiceInfo.currentStage",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+        FROM
+        p2p_financing_rating_info a
+        LEFT JOIN
+        p2p_rating_service_info b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        p2p_enterprise_certify c
+        ON
+        b.applicants_id = c.user_id
+        WHERE
+        a.financing_information_id = #{_parameter}
+    </select>
+
+    <select id="findReportPublishTime2" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id AS "id",
+        a.publish_time AS "publishTime",
+        a.financing_information_id AS "financingInformationId"
+        FROM
+        p2p_financing_rating_info a
+        LEFT JOIN
+        p2p_rating_service_info b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        b.current_stage = '500'
+    </select>
+
+    <!-- Chace 查询借贷评级列表 -->
+    <select id="getFinancingRatingList" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id,
+        a.main_credit_grade,
+        a.rating_level,
+        a.rate_expectation,
+        a.publish_time,
+        b.id AS "p2pFinancingInformation.id",
+        b.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM p2p_financing_rating_info a
+        LEFT JOIN p2p_financing_information b ON a.financing_information_id = b.id
+        LEFT JOIN p2p_enterprise_certify c ON b.applicants_id = c.user_id
+        <where>
+            b.current_stage &gt; 400
+            AND b.current_stage &lt; 902
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.industryCode != null and p2pEnterpriseCertify.industryCode != ''">
+                AND c.industry_code LIKE CONCAT('%',#{p2pEnterpriseCertify.industryCode},'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND c.enterprise_name LIKE CONCAT('%',#{p2pEnterpriseCertify.enterpriseName},'%')
+            </if>
+            <if test="(ratingLevel != null and ratingLevel != '') or (mainCreditGrade != null and mainCreditGrade != '')">
+                AND ((a.rating_level = #{ratingLevel}) OR (a.main_credit_grade = #{mainCreditGrade}))
+            </if>
+        </where>
+    </select>
+
+    <!-- Chace 查询主体评级列表 -->
+    <select id="getMainRatingList" resultType="P2pFinancingRatingInfo" parameterType="P2pFinancingRatingInfo">
+        SELECT
+        a.id,
+        a.main_credit_grade,
+        a.rate_expectation,
+        a.publish_time,
+        b.id AS "p2pRatingServiceInfo.id",
+        b.rating_name AS "p2pRatingServiceInfo.ratingName"
+        FROM p2p_financing_rating_info a
+        LEFT JOIN p2p_rating_service_info b ON a.financing_information_id = b.id
+        LEFT JOIN p2p_enterprise_certify c ON b.applicants_id = c.user_id
+        <where>
+            b.current_stage &gt; 700
+            AND b.current_stage &lt; 901
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.industryCode != null and p2pEnterpriseCertify.industryCode != ''">
+                AND c.industry_code LIKE CONCAT('%',#{p2pEnterpriseCertify.industryCode},'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND c.enterprise_name LIKE CONCAT('%',#{p2pEnterpriseCertify.enterpriseName},'%')
+            </if>
+            <if test="mainCreditGrade != null and mainCreditGrade != ''">
+                AND a.main_credit_grade = #{mainCreditGrade}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据报告id查询报告名及地址 -->
+    <select id="getAddressANDName" parameterType="string" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.commit_report,
+        a.commit_report_name,
+        a.credit_report,
+        a.credit_report_name
+        FROM p2p_financing_rating_info a
+        WHERE a.id = #{_parameter}
+    </select>
+
+    <!-- Chace 评级报告购买页详情 -->
+    <select id="ratingReportDetails" parameterType="P2pFinancingRatingInfo" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id,
+        a.main_credit_grade AS "mainCreditGrade",
+        a.rating_level AS "ratingLevel",
+        a.rate_expectation AS "rateExpectation",
+        a.publish_time AS "publishTime",
+        a.financing_information_id AS "financingInformationId",
+        b.finacing_name AS "p2pFinancingInformation.finacingName",
+        b.id AS "p2pFinancingInformation.id",
+        d.user_id AS "p2pEnterpriseCertify.userId",
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        d.business_license AS "p2pEnterpriseCertify.businessLicense",
+        d.company_found_date AS "p2pEnterpriseCertify.companyFoundDate",
+        d.enterprise_nature AS "p2pEnterpriseCertify.enterpriseNature",
+        d.enterprise_scale AS "p2pEnterpriseCertify.enterpriseScale",
+        d.registered_capital AS "p2pEnterpriseCertify.registeredCapital",
+        d.registered_address AS "p2pEnterpriseCertify.registeredAddress",
+        d.real_capital AS "p2pEnterpriseCertify.realCapital",
+        d.provincial_area AS "p2pEnterpriseCertify.provincialArea",
+        d.municipal_area AS "p2pEnterpriseCertify.municipalArea",
+        d.business_area AS "p2pEnterpriseCertify.businessArea",
+        d.industry_code AS "p2pEnterpriseCertify.industryCode",
+        d.name_of AS "p2pEnterpriseCertify.nameOf",
+        d.id_number_of AS "p2pEnterpriseCertify.idNumberOf",
+        d.telephone_num AS "p2pEnterpriseCertify.telephoneNumOf",
+        e.ClassiName_CN AS "p2pIndustryclassi.classinameCn",
+        f.certificate_state AS "p2pUserInformation.certificateState"
+        FROM p2p_financing_rating_info a
+        LEFT JOIN p2p_financing_information b ON a.financing_information_id = b.id
+        LEFT JOIN p2p_rating_service_info c ON a.financing_information_id = c.id
+        LEFT JOIN p2p_enterprise_certify d ON b.applicants_id = d.user_id OR c.applicants_id = d.user_id
+        LEFT JOIN industryclassi e ON d.industry_code = e.IndustryNum
+        LEFT JOIN p2p_user_information f ON d.user_id = f.user_id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findFiveFinancing" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id,
+        a.rating_level,
+        a.financing_information_id,
+        a.rate_expectation,
+        a.publish_time,
+        b.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM p2p_financing_rating_info a
+        LEFT JOIN p2p_financing_information b ON a.financing_information_id = b.id
+        LEFT JOIN p2p_enterprise_certify c ON b.applicants_id = c.user_id
+        WHERE
+        b.current_stage &gt; 400
+        AND b.current_stage &lt; 902
+        ORDER BY a.publish_time DESC
+        LIMIT 0,5
+    </select>
+    <!-- 首页主体评级查询 -->
+    <select id="findFiveRating" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.id,
+        a.main_credit_grade,
+        a.rate_expectation,
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+        FROM p2p_financing_rating_info a
+        LEFT JOIN p2p_rating_service_info b ON a.financing_information_id = b.id
+        LEFT JOIN p2p_enterprise_certify d ON b.applicants_id = d.user_id
+        LEFT JOIN rate_level_mapping e ON a.main_credit_grade = e.grade
+        WHERE
+        b.current_stage &gt; 700 AND b.current_stage &lt; 901
+        AND d.id is not null
+        ORDER BY a.publish_time DESC
+        <!-- e.threshold DESC, a.rate_expectation -->
+        LIMIT 0,5
+    </select>
+
+    <select id="findRatingReportByRid" parameterType="java.lang.String" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.commit_report AS "commitReport",
+        a.credit_report AS "creditReport",
+        a.commit_report_name AS "commitReportName",
+        a.credit_report_name AS "creditReportName",
+        a.is_finalized AS "isFinalized",
+        b.current_stage AS "p2pRatingServiceInfo.currentStage"
+        FROM
+        p2p_financing_rating_info a
+        LEFT JOIN
+        p2p_rating_service_info b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        a.financing_information_id = #{_parameter}
+    </select>
+    <select id="getP2pFinancingRatingInfoList" resultType="P2pFinancingRatingInfo">
+        SELECT
+        a.rating_level,
+        a.publish_time
+        FROM p2p_financing_rating_info a
+        LEFT JOIN p2p_financing_information b ON a.financing_information_id = b.id
+    </select>
+</mapper> 

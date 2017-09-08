@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pAccountDao">
+
+    <sql id="p2pAccountColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.zj_account AS "zjAccount",
+        a.open_account_name AS "openAccountName",
+        a.bank_name AS "bankName",
+        a.branch_bank_name AS "branchBankName",
+        a.bank_account AS "bankAccount",
+        a.certificate_status AS "certificateStatus",
+        a.bind_time AS "bindTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pAccountJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pAccount">
+        SELECT
+        <include refid="p2pAccountColumns"/>
+        FROM p2p_account a
+        <include refid="p2pAccountJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAccount">
+        SELECT
+        <include refid="p2pAccountColumns"/>
+        FROM p2p_account a
+        <include refid="p2pAccountJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAccount">
+        SELECT
+        <include refid="p2pAccountColumns"/>
+        FROM p2p_account a
+        <include refid="p2pAccountJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_account(
+        id,
+        user_id,
+        zj_account,
+        open_account_name,
+        bank_name,
+        branch_bank_name,
+        bank_account,
+        certificate_status,
+        bind_time,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{zjAccount},
+        #{openAccountName},
+        #{bankName},
+        #{branchBankName},
+        #{bankAccount},
+        #{certificateStatus},
+        #{bindTime},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_account SET
+        user_id = #{user.id},
+        zj_account = #{zjAccount},
+        open_account_name = #{openAccountName},
+        bank_name = #{bankName},
+        branch_bank_name = #{branchBankName},
+        bank_account = #{bankAccount},
+        certificate_status = #{certificateStatus},
+        bind_time = #{bindTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_account SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <select id="getAccountByUserId" resultType="P2pAccount">
+        SELECT
+        *
+        FROM
+        p2p_account a
+        WHERE
+        a.user_id = #{userId}
+    </select>
+</mapper>

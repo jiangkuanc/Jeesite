@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.rating.dao.P2pRatingServiceInfoDao">
+
+    <sql id="p2pRatingServiceInfoColumns">
+        a.id AS "id",
+        a.rating_name AS "ratingName",
+        a.applicants_id AS "applicantsId",
+        a.apply_time AS "applyTime",
+        a.current_stage AS "currentStage",
+        a.publish_time AS "publishTime",
+        a.is_supply AS "isSupply",
+        is_hand_rate_cost AS "isHandRateCost"
+    </sql>
+
+    <sql id="p2pRatingServiceInfoJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRatingServiceInfo">
+        SELECT
+        <include refid="p2pRatingServiceInfoColumns"/>
+        FROM p2p_rating_service_info a
+        <include refid="p2pRatingServiceInfoJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRatingServiceInfo">
+        SELECT
+        <include refid="p2pRatingServiceInfoColumns"/>
+        FROM p2p_rating_service_info a
+        <include refid="p2pRatingServiceInfoJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRatingServiceInfo">
+        SELECT
+        <include refid="p2pRatingServiceInfoColumns"/>
+        FROM p2p_rating_service_info a
+        <include refid="p2pRatingServiceInfoJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_rating_service_info(
+        id,
+        rating_name,
+        applicants_id,
+        apply_time,
+        current_stage,
+        publish_time,
+        is_supply,
+        is_hand_rate_cost
+        ) VALUES (
+        #{id},
+        #{ratingName},
+        #{applicantsId},
+        #{applyTime},
+        #{currentStage},
+        #{publishTime},
+        #{isSupply},
+        #{isHandRateCost}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_rating_service_info SET
+        rating_name = #{ratingName},
+        applicants_id = #{applicantsId},
+        apply_time = #{applyTime},
+        current_stage = #{currentStage},
+        publish_time = #{publishTime},
+        is_supply = #{isSupply},
+        is_hand_rate_cost = #{isHandRateCost}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_rating_service_info
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateInfoById" parameterType="P2pRatingServiceInfo">
+        UPDATE
+        p2p_rating_service_info
+        <set>
+            <if test="ratingName != null and ratingName != ''">
+                rating_name = #{ratingName},
+            </if>
+            <if test="applicantsId != null and applicantsId != ''">
+                applicants_id = #{applicantsId},
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                current_stage = #{currentStage},
+            </if>
+            <if test="publishTime != null and publishTime != ''">
+                publish_time = #{publishTime},
+            </if>
+            <if test="publishId != null and publishId != ''">
+                publish_id = #{publishId},
+            </if>
+            <if test="isSupply != null">
+                is_supply = #{isSupply},
+            </if>
+            <if test="isHandRateCost != null">
+                is_hand_rate_cost = #{isHandRateCost},
+            </if>
+            <if test="applyTime != null and applyTime != ''">
+                apply_time = #{applyTime},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="findInfoByApplicantsId" parameterType="java.lang.String" resultType="P2pRatingServiceInfo">
+        SELECT
+        id AS "id",
+        rating_name AS "ratingName",
+        current_stage AS "currentStage",
+        publish_Time AS "publishTime",
+        is_supply AS "isSupply",
+        is_hand_rate_cost AS "isHandRateCost"
+        FROM
+        p2p_rating_service_info
+        WHERE
+        applicants_id = #{applicantsId}
+        AND
+        current_stage &lt; 900
+    </select>
+
+    <select id="findDateByNoHandCost" resultType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        b.state_time AS "p2pBeforeMatchDebtState.stateTime"
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN
+        (SELECT finacing_information_id,state_time FROM p2p_before_match_debt_state WHERE progress_stage = '300') b
+        ON
+        a.id = b.finacing_information_id
+        WHERE
+        a.current_stage = '300'
+    </select>
+
+    <select id="refreshRatingInfo" resultType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        b.id AS "p2pFinancingRatingInfo.id"
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        WHERE
+        a.current_stage = '400'
+    </select>
+
+    <select id="findDateByFinished" resultType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        b.state_time AS "p2pBeforeMatchDebtState.stateTime"
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN (
+        SELECT
+        finacing_information_id,
+        state_time
+        FROM
+        p2p_rating_service_info x
+        LEFT JOIN
+        p2p_before_match_debt_state y
+        ON
+        x.id = y.finacing_information_id
+        WHERE
+        y.progress_stage = '800'
+        ) b
+        ON
+        a.id = b.finacing_information_id
+        WHERE
+        a.current_stage = '800'
+    </select>
+
+
+    <select id="getRatingEnterpriseList" resultType="P2pRatingServiceInfo" parameterType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.rating_name AS "ratingName",
+        a.apply_time AS "applyTime",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.credit_report_name AS "p2pFinancingRatingInfo.creditReportName",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        a.current_stage AS "currentStage",
+        a.is_hand_rate_cost AS "isHandRateCost"
+
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON c.financing_information_id = a.id
+        <where>
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT('%',#{id},'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+            <if test="isHandRateCost != null">
+                AND a.is_hand_rate_cost = #{isHandRateCost}
+            </if>
+            <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.mainCreditGrade != null and p2pFinancingRatingInfo.mainCreditGrade != ''">
+                AND c.main_credit_grade = #{p2pFinancingRatingInfo.mainCreditGrade}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getRatingDocumnetAuditList" resultType="P2pRatingServiceInfo" parameterType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.rating_name AS "ratingName",
+        a.apply_time AS "applyTime",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.credit_report_name AS "p2pFinancingRatingInfo.creditReportName",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        a.current_stage AS "currentStage",
+        a.is_hand_rate_cost AS "isHandRateCost"
+
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON c.financing_information_id = a.id
+        <where>
+            a.current_stage IN('201','202','300')
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT('%',#{id},'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT('%',#{p2pEnterpriseCertify.enterpriseName},'%')
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getRatingDraftSearchList" resultType="P2pRatingServiceInfo" parameterType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.rating_name AS "ratingName",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.credit_report_name AS "p2pFinancingRatingInfo.creditReportName",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",
+        a.current_stage AS "currentStage",
+        d.view_type AS "p2pRatingResultView.viewType"
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON c.financing_information_id = a.id
+        LEFT JOIN p2p_rating_result_view d ON d.financing_information_id = a.id
+        <where>
+            a.current_stage IN ('500','600','700','800','900')
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT('%',#{id},'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+            <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.mainCreditGrade != null and p2pFinancingRatingInfo.mainCreditGrade != ''">
+                AND c.main_credit_grade = #{p2pFinancingRatingInfo.mainCreditGrade}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getRatingReportPublishList" resultType="P2pRatingServiceInfo" parameterType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.rating_name AS "ratingName",
+        a.apply_time AS "applyTime",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.credit_report_name AS "p2pFinancingRatingInfo.creditReportName",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        c.is_finalized AS "p2pFinancingRatingInfo.isFinalized",
+        a.current_stage AS "currentStage",
+        a.publish_time AS "publishTime",
+        a.publish_id AS "publishId"
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON c.financing_information_id = a.id
+        <where>
+            a.current_stage IN ('700','800','900')
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT('%',#{id},'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+            <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.mainCreditGrade != null and p2pFinancingRatingInfo.mainCreditGrade != ''">
+                AND c.main_credit_grade = #{p2pFinancingRatingInfo.mainCreditGrade}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getRatingDetails" resultType="P2pRatingServiceInfo">
+        SELECT
+        a.id AS "id",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.registered_address AS "p2pEnterpriseCertify.registeredAddress",
+        b.enterprise_scale AS "p2pEnterpriseCertify.enterpriseScale",
+        b.enterprise_nature AS "p2pEnterpriseCertify.enterpriseNature",
+        b.industry_code AS "p2pEnterpriseCertify.industryCode",
+        d.ClassiName_CN AS "p2pEnterpriseCertify.p2pIndustryclassi.classinameCn",
+        b.provincial_area AS "p2pEnterpriseCertify.provincialArea",
+        b.municipal_area AS "p2pEnterpriseCertify.municipalArea",
+        b.business_scope AS "p2pEnterpriseCertify.businessScope",
+        b.registration_authority AS "p2pEnterpriseCertify.registrationAuthority",
+        b.registration_state AS "p2pEnterpriseCertify.registrationState",
+        b.quasi_nuclear_date AS "p2pEnterpriseCertify.quasiNuclearDate",
+        b.is_offshore_transaction AS "p2pEnterpriseCertify.isOffshoreTransaction",
+        b.real_capital AS "p2pEnterpriseCertify.realCapital",
+        b.business_area AS "p2pEnterpriseCertify.businessArea",
+
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.financing_information_id AS "p2pFinancingRatingInfo.financingInformationId",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        c.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        c.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.publish_time AS "p2pFinancingRatingInfo.publishTime",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        c.mark_type AS "p2pFinancingRatingInfo.mark_type",
+        c.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        c.rep_count AS "p2pFinancingRatingInfo.repCount",
+        c.rating_audit_state AS "p2pFinancingRatingInfo.ratingAuditState",
+        c.rating_audit_opinion AS "p2pFinancingRatingInfo.ratingAuditOpinion",
+        c.is_finalized AS "p2pFinancingRatingInfo.isFinalized"
+
+        FROM
+        p2p_rating_service_info a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON a.id = c.financing_information_id
+        LEFT JOIN p2p_industryclassi d ON d.industryNum = b.industry_code
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 获取最大的ID -->
+    <select id="getMaxId" resultType="java.lang.String">
+        SELECT MAX(id) FROM p2p_rating_service_info WHERE id LIKE '${prefix}%'
+    </select>
+</mapper>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.document.dao.P2pDocumentUploadRecordDao">
+
+    <sql id="p2pDocumentUploadRecordColumns">
+        a.id AS "id",
+        a.rate_document_upload_id AS "rateDocumentUploadId",
+        a.file_name AS "fileName",
+        a.file_address AS "fileAddress"<!-- ,
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag" -->
+    </sql>
+
+    <sql id="p2pDocumentUploadRecordJoins">
+    </sql>
+
+    <select id="findById" resultType="P2pDocumentUploadRecord">
+        SELECT
+        <include refid="p2pDocumentUploadRecordColumns"/>
+        FROM p2p_document_upload_record a
+        <include refid="p2pDocumentUploadRecordJoins"/>
+        WHERE a.rate_document_upload_id = #{rateDocumentUploadId}
+    </select>
+    <select id="get" resultType="P2pDocumentUploadRecord">
+        SELECT
+        <include refid="p2pDocumentUploadRecordColumns"/>
+        FROM p2p_document_upload_record a
+        <include refid="p2pDocumentUploadRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pDocumentUploadRecord">
+        SELECT
+        <include refid="p2pDocumentUploadRecordColumns"/>
+        FROM p2p_document_upload_record a
+        <include refid="p2pDocumentUploadRecordJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pDocumentUploadRecord">
+        SELECT
+        <include refid="p2pDocumentUploadRecordColumns"/>
+        FROM p2p_document_upload_record a
+        <include refid="p2pDocumentUploadRecordJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_document_upload_record(
+        id,
+        rate_document_upload_id,
+        file_name,
+        file_address<!-- ,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag -->
+        ) VALUES (
+        #{id},
+        #{rateDocumentUploadId},
+        #{fileName},
+        #{fileAddress}<!-- ,
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag} -->
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_document_upload_record SET
+        rate_document_upload_id = #{rateDocumentUploadId},
+        file_name = #{fileName},
+        file_address = #{fileAddress}<!-- ,
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks} -->
+        WHERE id = #{id}
+    </update>
+
+    <!-- <update id="delete">
+        UPDATE p2p_document_upload_record SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update> -->
+
+    <!-- 二期Quincy -->
+    <insert id="insertAttachment" parameterType="P2pDocumentUploadRecord">
+        INSERT INTO p2p_document_upload_record (
+        id,
+        rate_document_upload_id,
+        file_name,
+        file_address
+        )VALUES(
+        #{id},
+        #{rateDocumentUploadId},
+        #{fileName},
+        #{fileAddress}
+        )
+    </insert>
+
+    <!-- 二期Quincy -->
+    <delete id="deleteAttachment" parameterType="java.lang.String">
+        DELETE FROM p2p_document_upload_record WHERE file_address = #{_parameters}
+    </delete>
+    <!-- Chace 根据债项ID和rateDocumentTempId查询需下载的文件路径集合 -->
+    <select id="getAddress" parameterType="P2pDocumentUploadRecord" resultType="java.lang.String">
+        SELECT a.file_address AS "fileAddress"
+        FROM p2p_document_upload_record a
+        INNER JOIN p2p_rate_document_upload b
+        ON a.rate_document_upload_id = b.id
+        WHERE b.financing_information_id = #{p2pRateDocumentUpload.financingInformationId}
+        AND b.rate_document_temp_id = #{p2pRateDocumentUpload.rateDocumentTempId}
+    </select>
+
+    <!-- Chace 根据文件路径获取保存的原文件名 -->
+    <select id="getNameByAddress" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT a.file_name
+        FROM p2p_document_upload_record a
+        WHERE a.file_address = #{_parameter}
+    </select>
+
+    <!-- Chace 根据债项ID和rateDocumentTempId查询需下载的文件路径集合 -->
+    <select id="getAddresses" parameterType="String" resultType="P2pDocumentUploadRecord">
+        SELECT a.file_address AS "fileAddress",
+        a.file_name AS "fileName",
+        c.temp_name AS "p2pRateDocumentTemplate.tempName"
+        FROM p2p_document_upload_record a
+        INNER JOIN p2p_rate_document_upload b
+        ON a.rate_document_upload_id = b.id
+        INNER JOIN p2p_rate_document_template c
+        ON b.rate_document_temp_id = c.id
+        WHERE b.financing_information_id = #{0}
+        AND b.rate_document_temp_id = #{1}
+    </select>
+
+</mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditmanage.dao.CreditRecordInfoDao">
+
+    <sql id="creditRecordInfoColumns">
+
+    </sql>
+
+    <sql id="creditRecordInfoJoins">
+    </sql>
+
+    <select id="get" resultType="CreditRecordInfo">
+        SELECT
+        <include refid="creditRecordInfoColumns"/>
+        FROM credit_report_info a
+        <include refid="creditRecordInfoJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CreditRecordInfo">
+        SELECT
+        IF(a.id=NULL,'0',COUNT(a.id)) AS "recordNum",
+        pec.user_id AS "user.p2pEnterpriseCertify.userId",
+        pec.enterprise_name AS "user.p2pEnterpriseCertify.enterpriseName",
+        si.ClassiName_CN AS "user.p2pEnterpriseCertify.industryCode"
+        FROM p2p_enterprise_certify pec
+        LEFT JOIN credit_overdue_info a ON pec.user_id = a.user_id
+        LEFT JOIN sys_industry si on si.industrynum=pec.industry_code
+        <include refid="creditRecordInfoJoins"/>
+        <where>
+            <if test="user != null and user.p2pEnterpriseCertify != null and user.p2pEnterpriseCertify.userId != null and user.p2pEnterpriseCertify.userId != ''">
+                pec.user_id like
+                <if test="dbName == 'oracle'">'%'||#{user.p2pEnterpriseCertify.userId}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.p2pEnterpriseCertify.userId}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{user.p2pEnterpriseCertify.userId}, '%')</if>
+            </if>
+            <if test="user!=null and user.p2pEnterpriseCertify!=null and user.p2pEnterpriseCertify.enterpriseName != null and user.p2pEnterpriseCertify.enterpriseName != ''">
+                AND pec.enterprise_name like
+                <if test="dbName == 'oracle'">'%'||#{user.p2pEnterpriseCertify.enterpriseName}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.p2pEnterpriseCertify.enterpriseName}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{user.p2pEnterpriseCertify.enterpriseName}, '%')</if>
+            </if>
+            <if test="user != null and user.p2pEnterpriseCertify != null and user.p2pEnterpriseCertify.industryCode != null and user.p2pEnterpriseCertify.industryCode != ''">
+                AND pec.industry_code like
+                <if test="dbName == 'oracle'">'%'||#{user.p2pEnterpriseCertify.industryCode}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.p2pEnterpriseCertify.industryCode}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{user.p2pEnterpriseCertify.industryCode}, '%')</if>
+            </if>
+        </where>
+        GROUP BY pec.user_id,pec.enterprise_name,si.ClassiName_CN
+        <if test="recordNum != null and recordNum !=''">
+            having COUNT(a.id) = #{recordNum}
+        </if>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CreditRecordInfo">
+        SELECT
+        <include refid="creditRecordInfoColumns"/>
+        FROM credit_report_info a
+        <include refid="creditRecordInfoJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>

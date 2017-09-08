@@ -1,0 +1,1 @@
+alter table sys_config modify column constant_value varchar(300) ;

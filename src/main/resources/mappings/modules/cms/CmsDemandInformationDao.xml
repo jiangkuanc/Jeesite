@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsDemandInformationDao">
+
+    <sql id="cmsDemandInformationColumns">
+        a.id AS "id",
+        a.requirement_id AS "requirementId",
+        c.product_name AS "productName",
+        a.hope_price AS "hopePrice",
+        a.budget_amount AS "budgetAmount",
+        a.required_number AS "requiredNumber",
+        a.company_name AS "companyName",
+        a.contacts AS "contacts",
+        a.phone AS "phone",
+        a.validity AS "validity",
+        a.required_enterprise AS "requiredEnterprise"
+    </sql>
+    <sql id="cmsDemandInformationJoins">
+        JOIN cms_requirement_information c ON c.id = a.requirement_id
+    </sql>
+
+    <select id="get" resultType="CmsDemandInformation">
+        SELECT
+        <include refid="cmsDemandInformationColumns"/>
+        FROM cms_demand_information a
+        <include refid="cmsDemandInformationJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 查询对应的详细信息 -->
+    <select id="selsectDemandInformation" parameterType="String" resultType="CmsDemandInformation">
+        SELECT
+        <include refid="cmsDemandInformationColumns"/>
+        FROM cms_demand_information a
+        <include refid="cmsDemandInformationJoins"/>
+        WHERE a.requirement_id =#{id}
+    </select>
+
+    <select id="findList" resultType="CmsDemandInformation">
+        SELECT
+        <include refid="cmsDemandInformationColumns"/>
+        FROM cms_demand_information a
+        <include refid="cmsDemandInformationJoins"/>
+        <where>
+            <if test="productName != null and productName != ''">
+                AND c.product_name LIKE CONCAT('%', #{productName}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsDemandInformation">
+        SELECT
+        <include refid="cmsDemandInformationColumns"/>
+        FROM cms_demand_information a
+        <include refid="cmsDemandInformationJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_demand_information(
+        id,
+        requirement_id,
+        product_name,
+        hope_price,
+        budget_amount,
+        required_number,
+        company_name,
+        contacts,
+        phone,
+        validity,
+        required_enterprise
+        ) VALUES (
+        #{id},
+        #{requirementId},
+        #{productName},
+        #{hopePrice},
+        #{budgetAmount},
+        #{requiredNumber},
+        #{companyName},
+        #{contacts},
+        #{phone},
+        #{validity},
+        #{requiredEnterprise}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_demand_information SET
+        requirement_id=#{requirementId},
+        product_name = #{productName},
+        hope_price = #{hopePrice},
+        budget_amount = #{budgetAmount},
+        required_number = #{requiredNumber},
+        company_name = #{companyName},
+        contacts = #{contacts},
+        phone = #{phone},
+        validity = #{validity},
+        required_enterprise = #{requiredEnterprise}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_demand_information
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

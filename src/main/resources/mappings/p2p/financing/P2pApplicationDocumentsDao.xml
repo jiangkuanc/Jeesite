@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pApplicationDocumentsDao">
+
+    <sql id="p2pApplicationDocumentsColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.application_documents AS "applicationDocuments",
+        a.documents_explain AS "documentsExplain",
+        a.commit_time AS "commitTime",
+        a.audit_time AS "auditTime",
+        a.audit_opinion AS "auditOpinion",
+        a.audit_reason AS "auditReason",
+        a.audit_person_id AS "auditPersonId",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        u.name AS "user.name"
+    </sql>
+
+    <sql id="p2pApplicationDocumentsJoins">
+        LEFT JOIN sys_user u ON u.id = a.audit_person_id
+    </sql>
+
+    <select id="get" resultType="P2pApplicationDocuments">
+        SELECT
+        <include refid="p2pApplicationDocumentsColumns"/>
+        FROM p2p_application_documents a
+        <include refid="p2pApplicationDocumentsJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pApplicationDocuments">
+        SELECT
+        <include refid="p2pApplicationDocumentsColumns"/>
+        FROM p2p_application_documents a
+        <include refid="p2pApplicationDocumentsJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id = #{financingInformationId}
+            </if>
+            <if test="applicationDocuments != null and applicationDocuments != ''">
+                AND a.application_documents = #{applicationDocuments}
+            </if>
+            <if test="documentsExplain != null and documentsExplain != ''">
+                AND a.documents_explain = #{documentsExplain}
+            </if>
+            <if test="commitTime != null and commitTime != ''">
+                AND a.commit_time = #{commitTime}
+            </if>
+            <if test="auditTime != null and auditTime != ''">
+                AND a.audit_time = #{auditTime}
+            </if>
+            <if test="auditOpinion != null and auditOpinion != ''">
+                AND a.audit_opinion = #{auditOpinion}
+            </if>
+            <if test="auditReason != null and auditReason != ''">
+                AND a.audit_reason = #{auditReason}
+            </if>
+            <if test="auditPersonId != null and auditPersonId != ''">
+                AND a.audit_person_id = #{auditPersonId}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pApplicationDocuments">
+        SELECT
+        <include refid="p2pApplicationDocumentsColumns"/>
+        FROM p2p_application_documents a
+        <include refid="p2pApplicationDocumentsJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_application_documents(
+        id,
+        financing_information_id,
+        application_documents,
+        documents_explain,
+        commit_time,
+        audit_time,
+        audit_opinion,
+        audit_reason,
+        audit_person_id,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{applicationDocuments},
+        #{documentsExplain},
+        #{commitTime},
+        #{auditTime},
+        #{auditOpinion},
+        #{auditReason},
+        #{auditPersonId},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_application_documents SET
+        financing_information_id = #{financingInformationId},
+        application_documents = #{applicationDocuments},
+        documents_explain = #{documentsExplain},
+        commit_time = #{commitTime},
+        audit_time = #{auditTime},
+        audit_opinion = #{auditOpinion},
+        audit_reason = #{auditReason},
+        audit_person_id = #{auditPersonId},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_application_documents SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+    <!-- 添加融资材料基本信息 -->
+    <select id="getByFiId" resultType="P2pApplicationDocuments">
+        SELECT
+        <include refid="p2pApplicationDocumentsColumns"/>
+        FROM p2p_application_documents a
+        <include refid="p2pApplicationDocumentsJoins"/>
+        WHERE a.financing_information_id = #{financingInformationId}
+    </select>
+
+    <!-- 添加融资材料基本信息 -->
+    <insert id="saveP2pApplicationDocuments" parameterType="P2pApplicationDocuments">
+        INSERT INTO p2p_application_documents(
+        id,
+        financing_information_id,
+        application_documents,
+        documents_explain,
+        commit_time
+        )VALUES(
+        #{id},
+        #{financingInformationId},
+        #{applicationDocuments},
+        #{documentsExplain},
+        #{commitTime}
+        )
+    </insert>
+
+    <!-- 修改融资材料信息 -->
+    <update id="updateP2pApplicationDocuments" parameterType="P2pApplicationDocuments">
+        UPDATE
+        p2p_application_documents
+        <set>
+            <if test="applicationDocuments != null and applicationDocuments != ''">
+                application_documents = #{applicationDocuments},
+            </if>
+            <if test="documentsExplain != null and documentsExplain != ''">
+                documents_explain = #{documentsExplain},
+            </if>
+            <if test="commitTime != null and commitTime != ''">
+                commit_time = #{commitTime},
+            </if>
+            <if test="auditTime != null and auditTime != ''">
+                audit_time = #{auditTime},
+            </if>
+            <if test="auditOpinion != null and auditOpinion != ''">
+                audit_opinion = #{auditOpinion},
+            </if>
+            <if test="auditReason != null and auditReason != ''">
+                audit_reason = #{auditReason},
+            </if>
+            <if test="auditPersonId != null and auditPersonId != ''">
+                audit_person_id = #{auditPersonId}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <select id="findP2pApplicationDocumentsByFid" parameterType="P2pFinancingInformation"
+            resultType="P2pApplicationDocuments">
+        SELECT *
+        FROM
+        p2p_application_documents
+        WHERE
+        financing_information_id = #{id}
+    </select>
+</mapper>

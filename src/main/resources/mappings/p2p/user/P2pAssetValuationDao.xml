@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pAssetValuationDao">
+
+    <sql id="p2pAssetValuationColumns">
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.is_certify AS "isCertify",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.address AS "address",
+        a.address_detail AS "addressDetail",
+        a.business_scope AS "businessScope",
+        a.introduce AS "introduce",
+        a.web_site AS "webSite",
+        a.cooperation_plan AS "cooperationPlan",
+        a.business_license AS "businessLicense",
+        a.legal_person_idcard AS "legalPersonIdcard",
+        a.docking_sex AS "dockingSex",
+        a.docking_department AS "dockingDepartment",
+        a.docking_job AS "dockingJob",
+        a.docking_idscanning AS "dockingIdscanning"
+    </sql>
+
+    <sql id="p2pAssetValuationJoins">
+    </sql>
+
+    <select id="get" resultType="P2pAssetValuation">
+        SELECT
+        <include refid="p2pAssetValuationColumns"/>
+        FROM p2p_asset_valuation a
+        <include refid="p2pAssetValuationJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAssetValuation">
+        SELECT
+        <include refid="p2pAssetValuationColumns"/>
+        FROM p2p_asset_valuation a
+        <include refid="p2pAssetValuationJoins"/>
+        <where>
+
+            <if test="name != null and name != ''">
+                AND a.name LIKE
+                <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAssetValuation">
+        SELECT
+        <include refid="p2pAssetValuationColumns"/>
+        FROM p2p_asset_valuation a
+        <include refid="p2pAssetValuationJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_asset_valuation(
+        id,
+        user_id,
+        is_certify,
+        name,
+        phone,
+        address,
+        address_detail,
+        business_scope,
+        introduce,
+        web_site,
+        cooperation_plan,
+        business_license,
+        legal_person_idcard,
+        docking_sex,
+        docking_department,
+        docking_job,
+        docking_idscanning
+        ) VALUES (
+        #{id},
+        #{userId},
+        #{isCertify},
+        #{name},
+        #{phone},
+        #{address},
+        #{addressDetail},
+        #{businessScope},
+        #{introduce},
+        #{webSite},
+        #{cooperationPlan},
+        #{businessLicense},
+        #{legalPersonIdcard},
+        #{dockingSex},
+        #{dockingDepartment},
+        #{dockingJob},
+        #{dockingIdscanning}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_asset_valuation SET
+        user_id = #{userId},
+        is_certify = #{isCertify},
+        name = #{name},
+        phone = #{phone},
+        address = #{address},
+        address_detail = #{addressDetail},
+        business_scope = #{businessScope},
+        introduce = #{introduce},
+        web_site = #{webSite},
+        cooperation_plan = #{cooperationPlan},
+        business_license = #{businessLicense},
+        legal_person_idcard = #{legalPersonIdcard},
+        docking_sex = #{dockingSex},
+        docking_department = #{dockingDepartment},
+        docking_job = #{dockingJob},
+        docking_idscanning = #{dockingIdscanning}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_asset_valuation
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- Quincy 加载资产评估公司列表 -->
+    <select id="loadAllList" resultType="P2pAssetValuation">
+        SELECT
+        a.id AS "id",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.address AS "address",
+        a.address_detail AS "addressDetail",
+        a.docking_job AS "dockingJob",
+        b.id AS "user.id",
+        b.name AS "user.name",
+        b.phone AS "user.phone",
+        b.email AS "user.email"
+        FROM
+        p2p_asset_valuation a
+        LEFT JOIN
+        sys_user b
+        ON
+        a.user_id = b.id
+    </select>
+</mapper>

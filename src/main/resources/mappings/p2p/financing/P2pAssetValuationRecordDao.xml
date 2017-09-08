@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pAssetValuationRecordDao">
+
+    <sql id="p2pAssetValuationRecordColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.asset_company_id AS "assetCompanyId",
+        a.asset_valuation AS "assetValuation",
+        a.assessment_report AS "assessmentReport",
+        a.assessment_report_name AS "assessmentReportName",
+        a.evaluation_contract AS "evaluationContract",
+        a.evaluation_contract_name AS "evaluationContractName",
+        a.commit_time AS "commitTime",
+        a.is_reject AS "isReject",
+        a.reject_person AS "rejectPerson",
+        a.reject_reason AS "rejectReason",
+        a.reject_time AS "rejectTime"
+    </sql>
+
+    <sql id="p2pAssetValuationRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pAssetValuationRecord">
+        SELECT
+        <include refid="p2pAssetValuationRecordColumns"/>
+        FROM p2p_asset_valuation_record a
+        <include refid="p2pAssetValuationRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findByFinancingId" resultType="P2pAssetValuationRecord">
+        SELECT
+        <include refid="p2pAssetValuationRecordColumns"/>
+        FROM p2p_asset_valuation_record a
+        <include refid="p2pAssetValuationRecordJoins"/>
+        WHERE a.financing_information_id=#{financingInformationId}
+    </select>
+
+    <select id="findList" resultType="P2pAssetValuationRecord">
+        SELECT
+        <include refid="p2pAssetValuationRecordColumns"/>
+        FROM p2p_asset_valuation_record a
+        <include refid="p2pAssetValuationRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAssetValuationRecord">
+        SELECT
+        <include refid="p2pAssetValuationRecordColumns"/>
+        FROM p2p_asset_valuation_record a
+        <include refid="p2pAssetValuationRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_asset_valuation_record(
+        id,
+        financing_information_id,
+        asset_company_id,
+        asset_valuation,
+        assessment_report,
+        assessment_report_name,
+        evaluation_contract,
+        evaluation_contract_name,
+        commit_time,
+        is_reject,
+        reject_person,
+        reject_reason,
+        reject_time
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{assetCompanyId},
+        #{assetValuation},
+        #{assessmentReport},
+        #{assessmentReportName},
+        #{evaluationContract},
+        #{evaluationContractName},
+        #{commitTime},
+        #{isReject},
+        #{rejectPerson},
+        #{rejectReason},
+        #{rejectTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_asset_valuation_record SET
+        financing_information_id = #{financingInformationId},
+        asset_company_id = #{assetCompanyId},
+        asset_valuation = #{assetValuation},
+        assessment_report = #{assessmentReport},
+        assessment_report_name = #{assessmentReportName},
+        evaluation_contract = #{evaluationContract},
+        evaluation_contract_name = #{evaluationContractName},
+        commit_time = #{commitTime},
+        is_reject = #{isReject},
+        reject_person = #{rejectPerson},
+        reject_reason = #{rejectReason},
+        reject_time = #{rejectTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_asset_valuation_record
+        WHERE id = #{id}
+    </update>
+
+    <!-- Quincy 查询前台资产评估任务列表 -->
+    <select id="findAssetValuationTaskList" parameterType="java.lang.String" resultType="P2pAssetValuationRecord">
+        SELECT
+        y.state_time AS "p2pBeforeMatchDebtState.stateTime",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.applicants_id AS "p2pFinancingInformation.applicantsId",
+        b.id AS "p2pFinancingInformation.id",
+        a.is_reject AS "isReject",
+        a.assessment_report AS "assessmentReport",
+        a.evaluation_contract AS "evaluationContract"
+        FROM
+        p2p_asset_valuation_record a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        (SELECT
+        x.state_time,x.finacing_information_id
+        FROM
+        p2p_before_match_debt_state x
+        WHERE
+        x.progress_stage = '240') y
+        ON
+        b.id = y.finacing_information_id
+        LEFT JOIN
+        p2p_enterprise_certify c
+        ON
+        b.applicants_id = c.user_id
+        WHERE
+        a.asset_company_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 修改资产评估信息 -->
+    <update id="updateAssetValuationInfo" parameterType="P2pAssetValuationRecord">
+        UPDATE
+        p2p_asset_valuation_record
+        SET
+        asset_valuation = #{assetValuation},
+        assessment_report = #{assessmentReport},
+        assessment_report_name = #{assessmentReportName},
+        evaluation_contract = #{evaluationContract},
+        evaluation_contract_name = #{evaluationContractName},
+        commit_time = #{commitTime},
+        is_reject = #{isReject}
+        WHERE
+        financing_information_id = #{financingInformationId}
+    </update>
+
+
+    <!-- Zeus 根据fiId 获取资产评估信息 -->
+    <select id="getByFiId" parameterType="java.lang.String" resultType="P2pAssetValuationRecord">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.asset_company_id AS "assetCompanyId",
+        a.asset_valuation AS "assetValuation",
+        a.assessment_report AS "assessmentReport",
+        a.assessment_report_name AS "assessmentReportName",
+        a.evaluation_contract AS "evaluationContract",
+        a.evaluation_contract_name AS "evaluationContractName",
+        a.commit_time AS "commitTime",
+        a.is_reject AS "isReject",
+        a.reject_person AS "rejectPerson",
+        a.reject_reason AS "rejectReason",
+        a.reject_time AS "rejectTime",
+
+        b.id AS "p2pAssetValuation.id",
+        b.user_id AS "p2pAssetValuation.userId",
+        b.is_certify AS "p2pAssetValuation.isCertify",
+        b.name AS "p2pAssetValuation.name",
+        b.phone AS "p2pAssetValuation.phone",
+        b.address AS "p2pAssetValuation.address",
+        b.address_detail AS "p2pAssetValuation.addressDetail",
+        b.business_scope AS "p2pAssetValuation.businessScope",
+        b.introduce AS "p2pAssetValuation.introduce",
+        b.web_site AS "p2pAssetValuation.webSite",
+        b.cooperation_plan AS "p2pAssetValuation.cooperationPlan",
+        b.business_license AS "p2pAssetValuation.businessLicense",
+        b.legal_person_idcard AS "p2pAssetValuation.legalPersonIdcard",
+        b.docking_sex AS "p2pAssetValuation.dockingSex",
+        b.docking_department AS "p2pAssetValuation.dockingDepartment",
+        b.docking_job AS "p2pAssetValuation.dockingJob",
+        b.docking_idscanning AS "p2pAssetValuation.dockingIdscanning",
+
+        c.id AS "p2pAssetValuation.user.id",
+        c.name AS "p2pAssetValuation.user.name",
+        c.phone AS "p2pAssetValuation.user.phone",
+        c.email AS "p2pAssetValuation.user.email",
+        c.login_name AS "p2pAssetValuation.user.loginName"
+        FROM p2p_asset_valuation_record a
+        LEFT JOIN p2p_asset_valuation b ON b.user_id = a.asset_company_id
+        LEFT JOIN sys_user c ON c.id = b.user_id
+        WHERE a.financing_information_id = #{fiId}
+    </select>
+    <!-- Zeus 保存资产评估审核信息 -->
+    <update id="saveAudit">
+        UPDATE p2p_asset_valuation_record SET
+        is_reject = #{isReject},
+        reject_person = #{rejectPerson},
+        reject_reason = #{rejectReason},
+        reject_time = #{rejectTime}
+        WHERE id = #{id}
+    </update>
+</mapper>

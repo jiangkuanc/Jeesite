@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pGuaranteeRecordDao">
+
+    <sql id="p2pGuaranteeRecordColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.guarantee_company_id AS "guaranteeCompanyId",
+        a.letter_intent AS "letterIntent",
+        a.letter_intent_name AS "letterIntentName",
+        a.guarantee_contract AS "guaranteeContract",
+        a.guarantee_contract_name AS "guaranteeContractName",
+        a.commit_time AS "commitTime",
+        a.is_reject AS "isReject",
+        a.reject_person AS "rejectPerson",
+        a.reject_reason AS "rejectReason",
+        a.reject_time AS "rejectTime"
+    </sql>
+
+    <sql id="p2pGuaranteeRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pGuaranteeRecord">
+        SELECT
+        <include refid="p2pGuaranteeRecordColumns"/>
+        FROM p2p_guarantee_record a
+        <include refid="p2pGuaranteeRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findByFinancingId" resultType="P2pGuaranteeRecord">
+        SELECT
+        <include refid="p2pGuaranteeRecordColumns"/>
+        FROM p2p_guarantee_record a
+        <include refid="p2pGuaranteeRecordJoins"/>
+        WHERE a.financing_information_id=#{financingInformationId}
+    </select>
+
+    <select id="findList" resultType="P2pGuaranteeRecord">
+        SELECT
+        <include refid="p2pGuaranteeRecordColumns"/>
+        FROM p2p_guarantee_record a
+        <include refid="p2pGuaranteeRecordJoins"/>
+        <where>
+            a.financingInformationId
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pGuaranteeRecord">
+        SELECT
+        <include refid="p2pGuaranteeRecordColumns"/>
+        FROM p2p_guarantee_record a
+        <include refid="p2pGuaranteeRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_guarantee_record(
+        id,
+        financing_information_id,
+        guarantee_company_id,
+        letter_intent,
+        letter_intent_name,
+        guarantee_contract,
+        guarantee_contract_name,
+        commit_time,
+        is_reject,
+        reject_person,
+        reject_reason,
+        reject_time
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{guaranteeCompanyId},
+        #{letterIntent},
+        #{letterIntentName},
+        #{guaranteeContract},
+        #{guaranteeContractName},
+        #{commitTime},
+        #{isReject},
+        #{rejectPerson},
+        #{rejectReason},
+        #{rejectTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_guarantee_record SET
+        financing_information_id = #{financingInformationId},
+        guarantee_company_Id = #{guaranteeCompanyId},
+        letter_intent = #{letterIntent},
+        letter_intent_name = #{letterIntentName},
+        guarantee_contract = #{guaranteeContract},
+        guarantee_contract_name = #{guaranteeContractName},
+        commit_time = #{commitTime},
+        is_reject = #{isReject},
+        reject_person = #{rejectPerson},
+        reject_reason = #{rejectReason},
+        reject_time = #{rejectTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_guarantee_record
+        WHERE id = #{id}
+    </update>
+
+    <!-- Quincy 查询前台担保任务列表 -->
+    <select id="findGuaranteeTaskList" parameterType="java.lang.String" resultType="P2pGuaranteeRecord">
+        SELECT
+        y.state_time AS "p2pBeforeMatchDebtState.stateTime",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.applicants_id AS "p2pFinancingInformation.applicantsId",
+        b.id AS "p2pFinancingInformation.id",
+        a.is_reject AS "isReject",
+        a.letter_intent AS "letterIntent",
+        a.guarantee_contract AS "guaranteeContract"
+        FROM
+        p2p_guarantee_record a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        (SELECT
+        x.state_time,x.finacing_information_id
+        FROM
+        p2p_before_match_debt_state x
+        WHERE
+        x.progress_stage = '240') y
+        ON
+        b.id = y.finacing_information_id
+        LEFT JOIN
+        p2p_enterprise_certify c
+        ON
+        b.applicants_id = c.user_id
+        WHERE
+        a.guarantee_company_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 修改担保信息 -->
+    <update id="updateGuaranteeInfo" parameterType="P2pGuaranteeRecord">
+        UPDATE
+        p2p_guarantee_record
+        SET
+        letter_intent = #{letterIntent},
+        letter_intent_name = #{letterIntentName},
+        guarantee_contract = #{guaranteeContract},
+        guarantee_contract_name = #{guaranteeContractName},
+        commit_time = #{commitTime},
+        is_reject = #{isReject}
+        WHERE
+        financing_information_id = #{financingInformationId}
+    </update>
+    <!-- Zeus 根据fiId 获取担保信息 -->
+    <select id="getByFiId" parameterType="java.lang.String" resultType="P2pGuaranteeRecord">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.guarantee_company_id AS "guaranteeCompanyId",
+        a.letter_intent AS "letterIntent",
+        a.letter_intent_name AS "letterIntentName",
+        a.guarantee_contract AS "guaranteeContract",
+        a.guarantee_contract_name AS "guaranteeContractName",
+        a.commit_time AS "commitTime",
+        a.is_reject AS "isReject",
+        a.reject_person AS "rejectPerson",
+        a.reject_reason AS "rejectReason",
+        a.reject_time AS "rejectTime",
+
+        b.id AS "p2pGuarantee.id",
+        b.user_id AS "p2pGuarantee.userId",
+        b.is_certify AS "p2pGuarantee.isCertify",
+        b.name AS "p2pGuarantee.name",
+        b.phone AS "p2pGuarantee.phone",
+        b.address AS "p2pGuarantee.address",
+        b.address_detail AS "p2pGuarantee.addressDetail",
+        b.business_scope AS "p2pGuarantee.businessScope",
+        b.guarantee_limit AS "p2pGuarantee.guaranteeLimit",
+        b.guarantee_amount AS "p2pGuarantee.guaranteeAmount",
+        b.guarantee_proportion AS "p2pGuarantee.guaranteeProportion",
+        b.introduce AS "p2pGuarantee.introduce",
+        b.web_site AS "p2pGuarantee.webSite",
+        b.cooperation_plan AS "p2pGuarantee.cooperationPlan",
+        b.business_license AS "p2pGuarantee.businessLicense",
+        b.legal_person_idcard AS "p2pGuarantee.legalPersonIdcard",
+        b.docking_sex AS "p2pGuarantee.dockingSex",
+        b.docking_department AS "p2pGuarantee.dockingDepartment",
+        b.docking_job AS "p2pGuarantee.dockingJob",
+        b.docking_idscanning AS "p2pGuarantee.dockingIdscanning",
+
+        c.id AS "p2pGuarantee.user.id",
+        c.name AS "p2pGuarantee.user.name",
+        c.phone AS "p2pGuarantee.user.phone",
+        c.email AS "p2pGuarantee.user.email",
+        c.login_name AS "p2pGuarantee.user.loginName"
+        FROM p2p_guarantee_record a
+        LEFT JOIN p2p_guarantee b ON b.user_id = a.guarantee_company_id
+        LEFT JOIN sys_user c ON c.id = b.user_id
+        WHERE a.financing_information_id = #{fiId}
+    </select>
+    <!-- Zeus 保存担保审核信息 -->
+    <update id="saveAudit">
+        UPDATE p2p_guarantee_record SET
+        is_reject = #{isReject},
+        reject_person = #{rejectPerson},
+        reject_reason = #{rejectReason},
+        reject_time = #{rejectTime}
+        WHERE id = #{id}
+    </update>
+</mapper>

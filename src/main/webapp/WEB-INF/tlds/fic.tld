@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+    <description>JSTL 1.1 functions library</description>
+    <display-name>JSTL functions sys</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>fic</short-name>
+    <uri>http://java.sun.com/jsp/jstl/functionss</uri>
+    <function>
+        <description>获取外网注册总人数</description>
+        <name>getAllUserInformation</name>
+        <function-class>com.dagongsoft.p2p.utils.FrontIndexConfig</function-class>
+        <function-signature>java.lang.Integer getAllUserInformation()</function-signature>
+        <example>${fic:getAllUserInformation()}</example>
+    </function>
+    <function>
+        <description>获取已发布的融资总金额</description>
+        <name>getAllFinancingAmount</name>
+        <function-class>com.dagongsoft.p2p.utils.FrontIndexConfig</function-class>
+        <function-signature>java.lang.String getAllFinancingAmount()</function-signature>
+        <example>${fic:getAllFinancingAmount()}</example>
+    </function>
+    <function>
+        <description>获取已发布的融资总金额</description>
+        <name>getAllFinancingInformation</name>
+        <function-class>com.dagongsoft.p2p.utils.FrontIndexConfig</function-class>
+        <function-signature>java.lang.String getAllFinancingInformation()</function-signature>
+        <example>${fic:getAllFinancingInformation()}</example>
+    </function>
+    <function>
+        <description>获取平台用户投资总收益</description>
+        <name>getAllInvestmentIncome</name>
+        <function-class>com.dagongsoft.p2p.utils.FrontIndexConfig</function-class>
+        <function-signature>java.lang.String getAllInvestmentIncome()</function-signature>
+        <example>${fic:getAllInvestmentIncome()}</example>
+    </function>
+    <!-- 债项信息 -->
+    <function>
+        <description>获得获得债项当前期数</description>
+        <name>getCurrentPhase</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.util.Map getCurrentPhase(java.lang.String)</function-signature>
+        <example>${fic:getCurrentPhase(fiId)}</example>
+    </function>
+    <function>
+        <description>获得获得债项当前时间还款信息</description>
+        <name>getCurrentRepayment</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.util.Map getCurrentRepayment(java.lang.String)</function-signature>
+        <example>${fic:getCurrentRepayment(p2pfinancingInformationId)}</example>
+    </function>
+    <function>
+        <description>获得债项总逾期天数、次数、逾期总金额、逾期偿还金额、逾期待还金额</description>
+        <name>getDaysOfOverdue</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.util.Map
+            getDaysOfOverdue(com.dagongsoft.p2p.entity.financing.P2pFinancingInformation)
+        </function-signature>
+        <example>${fic:getDaysOfOverdue(p2pfinancingInformation)}</example>
+    </function>
+    <function>
+        <description>获得债项全部应还本金、利息、实还本金、利息、实还总金额</description>
+        <name>getSum</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.util.Map getSum(com.dagongsoft.p2p.entity.financing.P2pFinancingInformation)
+        </function-signature>
+        <example>${fic:getSum(p2pfinancingInformation)}</example>
+    </function>
+    <function>
+        <description>获得最后一次逾期时间</description>
+        <name>getLastOverdueDate</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.lang.String
+            getLastOverdueDate(com.dagongsoft.p2p.entity.financing.P2pFinancingInformation)
+        </function-signature>
+        <example>${fic:getLastOverdueDate(p2pFinancingInformation)}</example>
+    </function>
+    <function>
+        <description>获得债项还款计划总金额</description>
+        <name>getRepaymentAmount</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.lang.String
+            getRepaymentAmount(com.dagongsoft.p2p.entity.financing.P2pFinancingInformation)
+        </function-signature>
+        <example>${fic:getRepaymentAmount(p2pFinancingInformation)}</example>
+    </function>
+    <function>
+        <description>获得连续逾期天数</description>
+        <name>getLXYQTS</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.lang.String getLXYQTS(com.dagongsoft.p2p.entity.financing.P2pFinancingInformation)
+        </function-signature>
+        <example>${fic:getLXYQTS(p2pFinancingInformation)}</example>
+    </function>
+    <function>
+        <description>获取债项指定状态时间</description>
+        <name>getDebtStageTime</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.util.Date getDebtStageTime(java.lang.String,java.lang.String)</function-signature>
+        <example>${fic:getDebtStageTime(fiId,stage)}</example>
+    </function>
+    <function>
+        <description>获取企业性质(类型)</description>
+        <name>getEnterpriseNature</name>
+        <function-class>com.dagongsoft.p2p.utils.RepaymentPlanUtils</function-class>
+        <function-signature>java.lang.String getEnterpriseNature(java.lang.String)</function-signature>
+        <example>${fic:getEnterpriseNature(userId)}</example>
+    </function>
+    <!-- 投资 -->
+    <function>
+        <description>获得债项预计总收益</description>
+        <name>getDebtPlanTotalEarn</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.String getDebtPlanTotalEarn(java.lang.String)</function-signature>
+        <example>${fic:getDebtPlanTotalEarn(fiId)}</example>
+    </function>
+    <function>
+        <description>获得投资机构所有的债项的预计总收益</description>
+        <name>getBankPlanTotalEarn</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.String getBankPlanTotalEarn(java.lang.String)</function-signature>
+        <example>${fic:getBankPlanTotalEarn(userInformationId)}</example>
+    </function>
+    <function>
+        <description>获得债项实际总收益</description>
+        <name>getDebtRealTotalEarn</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.String getDebtRealTotalEarn(java.lang.String)</function-signature>
+        <example>${fic:getDebtRealTotalEarn(fiId)}</example>
+    </function>
+    <function>
+        <description>获得投资机构所有的债项的实际总收益</description>
+        <name>getBankRealTotalEarn</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.String getBankRealTotalEarn(java.lang.String)</function-signature>
+        <example>${fic:getBankRealTotalEarn(userInformationId)}</example>
+    </function>
+    <function>
+        <description>获得投资机构所有的债项的预计总利息</description>
+        <name>getBankPlanTotalEarnInterest</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.String getBankPlanTotalEarnInterest(java.lang.String)</function-signature>
+        <example>${fic:getBankPlanTotalEarnInterest(userId)}</example>
+    </function>
+    <function>
+        <description>获得投资机构所有的债项的实际总利息</description>
+        <name>getBankRealTotalEarnInterest</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.String getBankRealTotalEarnInterest(java.lang.String)</function-signature>
+        <example>${fic:getBankRealTotalEarnInterest(userId)}</example>
+    </function>
+
+    <function>
+        <description>当前债项是否满标</description>
+        <name>isFullDebt</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.Boolean isFullDebt(java.lang.String)</function-signature>
+        <example>${fic:isFullDebt(fiId)}</example>
+    </function>
+    <function>
+        <description>当前债项满标时间</description>
+        <name>fullDebtTime</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.util.Date fullDebtTime(java.lang.String)</function-signature>
+        <example>${fic:fullDebtTime(fiId)}</example>
+    </function>
+    <function>
+        <description>当前债项是否流标</description>
+        <name>isFlowDebt</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.lang.Boolean isFlowDebt(java.lang.String)</function-signature>
+        <example>${fic:isFlowDebt(fiId)}</example>
+    </function>
+    <function>
+        <description>当前债项流标时间</description>
+        <name>flowDebtTime</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.util.Date flowDebtTime(java.lang.String)</function-signature>
+        <example>${fic:flowDebtTime(fiId)}</example>
+    </function>
+
+    <function>
+        <description>当前债项募集到期时间</description>
+        <name>debtRaiseTime</name>
+        <function-class>com.dagongsoft.p2p.utils.InvestmentUtils</function-class>
+        <function-signature>java.util.Date debtRaiseTime(java.lang.String)</function-signature>
+        <example>${fic:debtddRaiseTime(fiId)}</example>
+    </function>
+
+</taglib>

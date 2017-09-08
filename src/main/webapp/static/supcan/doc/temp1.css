@@ -1,0 +1,78 @@
+body {
+    font-size: 10.5pt;
+    line-height: 14pt;
+    font-family: ΢���ź�, Verdana, Arial, ����;
+    color: #000000;
+}
+
+table {
+    font-size: 10.5pt;
+    line-height: 14pt;
+    font-family: ΢���ź�, Verdana, Arial, ����;
+    border-Collapse: Collapse;
+    border-color: #999999;
+}
+
+button {
+    font-size: 10.5pt;
+    line-height: 14pt;
+    font-family: ΢���ź�, Verdana, Arial, ����
+}
+
+select {
+    font-size: 10.5pt;
+    line-height: 14pt;
+    font-family: ΢���ź�, Verdana, Arial, ����
+}
+
+.blueTable {
+    font-size: 10.5pt;
+    line-height: 14pt;
+    font-family: ΢���ź�, Arial, Helvetica, ����;
+    border-Collapse: Collapse;
+    border-color: #2269a0
+}
+
+.programTable {
+    font-family: consolas, Verdana, ΢���ź�, ����;
+    font-size: 10.3pt;
+    background-color: #f7f7d0;
+    border-Collapse: Collapse;
+}
+
+.funcTable {
+    font-size: 10.5pt;
+    line-height: 14pt;
+    font-family: ΢���ź�, consolas, Verdana, ����;
+    border-Collapse: Collapse;
+    border-color: #999999;
+}
+
+.ruleTable {
+    font-family: ΢���ź�, Verdana, ΢���ź�, ����;
+    font-size: 10.3pt;
+    background-color: #ffffc4;
+    border-Collapse: Collapse
+}
+
+ruleTable td {
+    line-height: 130%;
+}
+
+.bBorder {
+    border-bottom-width: 1px;
+    border-bottom-color: #000000;
+    border-bottom-style: solid;
+}
+
+p.StyleProgram {
+    background-color: #ffffbb;
+    FONT-SIZE: 9pt;
+    Font-family: ΢���ź�, ������;
+}
+
+p.StyleTxt {
+    background-color: #ddffff;
+    FONT-SIZE: 9pt;
+    Font-family: ΢���ź�, ������;
+}

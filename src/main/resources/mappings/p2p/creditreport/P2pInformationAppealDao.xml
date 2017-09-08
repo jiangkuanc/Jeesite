@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditreport.dao.P2pInformationAppealDao">
+
+    <sql id="p2pInformationAppealColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.index_id AS "indexId",
+        a.appeal_category AS "appealCategory",
+        a.appeal_reason AS "appealReason",
+        a.appeal_time AS "appealTime",
+        a.upload_file AS "uploadFile",
+        a.first_review_opinion AS "firstReviewOpinion",
+        a.first_review_staff AS "firstReviewStaff",
+        a.first_review_explain AS "firstReviewExplain",
+        a.first_review_time AS "firstReviewTime",
+        a.review_opinion AS "reviewOpinion",
+        a.review_officer AS "reviewOfficer",
+        a.review_explain AS "reviewExplain",
+        a.review_time AS "reviewTime",
+        a.appeal_audit_state AS "appealAuditState",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pInformationAppealJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pInformationAppeal">
+        SELECT
+        <include refid="p2pInformationAppealColumns"/>
+        FROM p2p_information_appeal a
+        <include refid="p2pInformationAppealJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pInformationAppeal">
+        SELECT
+        <include refid="p2pInformationAppealColumns"/>
+        FROM p2p_information_appeal a
+        <include refid="p2pInformationAppealJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="ssList" resultType="P2pInformationAppeal" parameterType="java.lang.String">
+        SELECT
+        <include refid="p2pInformationAppealColumns"/>
+        FROM p2p_information_appeal a
+        <include refid="p2pInformationAppealJoins"/>
+        <where>
+            user_id = #{_parameter}
+        </where>
+    </select>
+
+    <select id="findAllList" resultType="P2pInformationAppeal">
+        SELECT
+        <include refid="p2pInformationAppealColumns"/>
+        FROM p2p_information_appeal a
+        <include refid="p2pInformationAppealJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_information_appeal(
+        id,
+        user_id,
+        credit_report_id,
+        credit_info_type,
+        index_id,
+        appeal_category,
+        appeal_reason,
+        appeal_time,
+        upload_file,
+        first_review_opinion,
+        first_review_staff,
+        first_review_explain,
+        first_review_time,
+        review_opinion,
+        review_officer,
+        review_explain,
+        review_time,
+        appeal_audit_state
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{creditReportId},
+        #{creditInfoType},
+        #{indexId},
+        #{appealCategory},
+        #{appealReason},
+        #{appealTime},
+        #{uploadFile},
+        #{firstReviewOpinion},
+        #{firstReviewStaff},
+        #{firstReviewExplain},
+        #{firstReviewTime},
+        #{reviewOpinion},
+        #{reviewOfficer},
+        #{reviewExplain},
+        #{reviewTime},
+        #{appealAuditState}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_information_appeal SET
+        user_id = #{user.id},
+        credit_report_id = #{creditReportId},
+        credit_info_type = #{creditInfoType},
+        index_id = #{indexId},
+        appeal_category = #{appealCategory},
+        appeal_reason = #{appealReason},
+        appeal_time = #{appealTime},
+        upload_file = #{uploadFile},
+        first_review_opinion = #{firstReviewOpinion},
+        first_review_staff = #{firstReviewStaff},
+        first_review_explain = #{firstReviewExplain},
+        first_review_time = #{firstReviewTime},
+        review_opinion = #{reviewOpinion},
+        review_officer = #{reviewOfficer},
+        review_explain = #{reviewExplain},
+        review_time = #{reviewTime},
+        appeal_audit_state = #{appealAuditState}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_information_appeal
+        WHERE id = #{id}
+    </update>
+
+    <!-- 申诉初审列表 -->
+    <select id="getAppealFirstAuditList" resultType="P2pInformationAppeal">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.index_id AS "indexId",
+        a.appeal_category AS "appealCategory",
+        a.appeal_reason AS "appealReason",
+        a.appeal_time AS "appealTime",
+        a.upload_file AS "uploadFile",
+        a.first_review_opinion AS "firstReviewOpinion",
+        a.first_review_staff AS "firstReviewStaff",
+        a.first_review_explain AS "firstReviewExplain",
+        a.first_review_time AS "firstReviewTime",
+        a.review_opinion AS "reviewOpinion",
+        a.review_officer AS "reviewOfficer",
+        a.review_explain AS "reviewExplain",
+        a.review_time AS "reviewTime",
+        a.appeal_audit_state AS "appealAuditState",
+        b.user_id AS "p2pCreditReport.userId",
+        b.enterprise_name AS "p2pCreditReport.enterpriseName",
+        b.industry_code AS "p2pCreditReport.industryCode",
+        c. NAME AS "user.name"
+        FROM
+        p2p_information_appeal a
+        LEFT JOIN p2p_credit_report b ON b.id = a.credit_report_id
+        LEFT JOIN sys_user c ON c.id = a.user_id
+        <where>
+            <if test="p2pCreditReport != null and p2pCreditReport.userId != null and p2pCreditReport.userId != ''">
+                AND b.user_id LIKE CONCAT(CONCAT('%',#{p2pCreditReport.userId}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.enterpriseName != null and p2pCreditReport.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pCreditReport.enterpriseName}),'%')
+            </if>
+            <if test="appealCategory != null and appealCategory != ''">
+                AND a.appeal_category = #{appealCategory}
+            </if>
+            <if test="user != null and user.name != null and user.name != ''">
+                AND c.name LIKE CONCAT(CONCAT('%',#{user.name}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.industryCode != null and p2pCreditReport.industryCode != ''">
+                AND b.industry_code = #{p2pCreditReport.industryCode}
+            </if>
+        </where>
+        order by a.appeal_audit_state,a.first_review_time desc
+    </select>
+
+    <!-- 申诉复审列表 -->
+    <select id="getAppealReviewAuditList" resultType="P2pInformationAppeal">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.index_id AS "indexId",
+        a.appeal_category AS "appealCategory",
+        a.appeal_reason AS "appealReason",
+        a.appeal_time AS "appealTime",
+        a.upload_file AS "uploadFile",
+        a.first_review_opinion AS "firstReviewOpinion",
+        a.first_review_staff AS "firstReviewStaff",
+        a.first_review_explain AS "firstReviewExplain",
+        a.first_review_time AS "firstReviewTime",
+        a.review_opinion AS "reviewOpinion",
+        a.review_officer AS "reviewOfficer",
+        a.review_explain AS "reviewExplain",
+        a.review_time AS "reviewTime",
+        a.appeal_audit_state AS "appealAuditState",
+        b.user_id AS "p2pCreditReport.userId",
+        b.enterprise_name AS "p2pCreditReport.enterpriseName",
+        b.industry_code AS "p2pCreditReport.industryCode",
+        c. NAME AS "user.name"
+        FROM
+        p2p_information_appeal a
+        LEFT JOIN p2p_credit_report b ON b.id = a.credit_report_id
+        LEFT JOIN sys_user c ON c.id = a.user_id
+        <where>
+            a.appeal_audit_state != 1
+            <if test="p2pCreditReport != null and p2pCreditReport.userId != null and p2pCreditReport.userId != ''">
+                AND b.user_id LIKE CONCAT(CONCAT('%',#{p2pCreditReport.userId}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.enterpriseName != null and p2pCreditReport.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pCreditReport.enterpriseName}),'%')
+            </if>
+            <if test="appealCategory != null and appealCategory != ''">
+                AND a.appeal_category = #{appealCategory}
+            </if>
+            <if test="user != null and user.name != null and user.name != ''">
+                AND c.name LIKE CONCAT(CONCAT('%',#{user.name}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.industryCode != null and p2pCreditReport.industryCode != ''">
+                AND b.industry_code = #{p2pCreditReport.industryCode}
+            </if>
+        </where>
+        order by a.appeal_audit_state,a.review_time desc
+    </select>
+</mapper>

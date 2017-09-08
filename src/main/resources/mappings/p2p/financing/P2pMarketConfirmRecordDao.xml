@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pMarketConfirmRecordDao">
+
+    <sql id="p2pMarketConfirmRecordColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.confirm_stage AS "confirmStage",
+        a.is_pass AS "isPass",
+        a.operate_explain AS "operateExplain",
+        a.operate_id AS "operateId",
+        a.operate_time AS "operateTime"
+    </sql>
+
+    <sql id="p2pMarketConfirmRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pMarketConfirmRecord">
+        SELECT
+        <include refid="p2pMarketConfirmRecordColumns"/>
+        FROM p2p_market_confirm_record a
+        <include refid="p2pMarketConfirmRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findById" resultType="P2pMarketConfirmRecord">
+        SELECT
+        <include refid="p2pMarketConfirmRecordColumns"/>
+        FROM p2p_market_confirm_record a
+        WHERE a.financing_information_id=#{financingInformationId}
+        AND a.confirm_stage='1'
+    </select>
+
+    <select id="findByIdTwo" resultType="P2pMarketConfirmRecord">
+        SELECT
+        <include refid="p2pMarketConfirmRecordColumns"/>
+        FROM p2p_market_confirm_record a
+        WHERE a.financing_information_id=#{financingInformationId}
+        AND a.confirm_stage='2'
+    </select>
+
+    <select id="findList" resultType="P2pMarketConfirmRecord">
+        SELECT
+        <include refid="p2pMarketConfirmRecordColumns"/>
+        FROM p2p_market_confirm_record a
+        <include refid="p2pMarketConfirmRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pMarketConfirmRecord">
+        SELECT
+        <include refid="p2pMarketConfirmRecordColumns"/>
+        FROM p2p_market_confirm_record a
+        <include refid="p2pMarketConfirmRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_market_confirm_record(
+        id,
+        financing_information_id,
+        confirm_stage,
+        is_pass,
+        operate_explain,
+        operate_id,
+        operate_time
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{confirmStage},
+        #{isPass},
+        #{operateExplain},
+        #{operateId},
+        #{operateTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_market_confirm_record SET
+        financing_information_id = #{financingInformationId},
+        confirm_stage = #{confirmStage},
+        is_pass = #{isPass},
+        operate_explain = #{operateExplain},
+        operate_id = #{operateId},
+        operate_time = #{operateTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_market_confirm_record
+        WHERE id = #{id}
+    </update>
+
+</mapper>

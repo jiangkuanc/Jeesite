@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.repayment.dao.P2pRepaymentVoucherAuditDao">
+
+    <sql id="p2pRepaymentVoucherAuditColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.phase AS "phase",
+        a.repayment_record_id AS "repaymentRecordId",
+        a.repayment_voucher AS "repaymentVoucher",
+        a.repayment_audit_state AS "repaymentAuditState",
+        a.repayment_audit_time AS "repaymentAuditTime",
+        a.repayment_audit_person AS "repaymentAuditPerson",
+        a.repayment_audit_reason AS "repaymentAuditReason"
+    </sql>
+
+    <sql id="p2pRepaymentVoucherAuditJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRepaymentVoucherAudit">
+        SELECT
+        <include refid="p2pRepaymentVoucherAuditColumns"/>
+        FROM p2p_repayment_voucher_audit a
+        <include refid="p2pRepaymentVoucherAuditJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRepaymentVoucherAudit">
+        SELECT
+        <include refid="p2pRepaymentVoucherAuditColumns"/>
+        FROM p2p_repayment_voucher_audit a
+        <include refid="p2pRepaymentVoucherAuditJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRepaymentVoucherAudit">
+        SELECT
+        <include refid="p2pRepaymentVoucherAuditColumns"/>
+        FROM p2p_repayment_voucher_audit a
+        <include refid="p2pRepaymentVoucherAuditJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_repayment_voucher_audit(
+        id,
+        financing_information_id,
+        phase,
+        repayment_record_id,
+        repayment_voucher,
+        repayment_audit_state,
+        repayment_audit_time,
+        repayment_audit_person,
+        repayment_audit_reason
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{phase},
+        #{repaymentRecordId},
+        #{repaymentVoucher},
+        #{repaymentAuditState},
+        #{repaymentAuditTime},
+        #{repaymentAuditPerson},
+        #{repaymentAuditReason}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_repayment_voucher_audit SET
+        financing_information_id = #{financingInformationId},
+        phase = #{phase},
+        repayment_record_id = #{repaymentRecordId},
+        repayment_voucher = #{repaymentVoucher},
+        repayment_audit_state = #{repaymentAuditState},
+        repayment_audit_time = #{repaymentAuditTime},
+        repayment_audit_person = #{repaymentAuditPerson},
+        repayment_audit_reason = #{repaymentAuditReason}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_repayment_voucher_audit
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据repaymentRecordId 获取历史审核记录 -->
+    <select id="getByRepaymentRecordId" resultType="P2pRepaymentVoucherAudit">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.phase AS "phase",
+        a.repayment_record_id AS "repaymentRecordId",
+        a.repayment_voucher AS "repaymentVoucher",
+        a.repayment_audit_state AS "repaymentAuditState",
+        a.repayment_audit_time AS "repaymentAuditTime",
+        a.repayment_audit_person AS "repaymentAuditPerson",
+        a.repayment_audit_reason AS "repaymentAuditReason"
+        FROM p2p_repayment_voucher_audit a
+        WHERE a.repayment_record_id = #{repaymentRecordId}
+        ORDER BY a.repayment_audit_time desc
+    </select>
+</mapper>

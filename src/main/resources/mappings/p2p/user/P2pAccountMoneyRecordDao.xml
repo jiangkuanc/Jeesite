@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pAccountMoneyRecordDao">
+    <sql id="p2pAccountMoneyRecordColumns">
+        a.id AS "id",
+        a.userid AS "userid",
+        a.amount AS "amount",
+        a.operate_time AS "operateTime",
+        a.zj_account AS "zjAccount",
+        a.account_money_type AS "accountMoneyType",
+        a.purpose AS "purpose",
+        a.income AS "income",
+        a.spending AS "spending",
+        a.trade_state AS "tradeState",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="p2pAccountMoneyRecordJoins"></sql>
+    <!-- 累计投资总额sql语句 -->
+    <select id="get" resultType="P2pAccountMoneyRecord">
+        SELECT
+        <include refid="p2pAccountMoneyRecordColumns"/>
+        FROM p2p_account_money_record a
+        <include refid="p2pAccountMoneyRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAccountMoneyRecord">
+        SELECT
+        <include refid="p2pAccountMoneyRecordColumns"/>
+        FROM p2p_account_money_record a
+        <include refid="p2pAccountMoneyRecordJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="amount != null and amount != ''">
+                AND a.amount = #{amount}
+            </if>
+            <if test="operateTime != null and operateTime != ''">
+                AND a.operate_time = #{operateTime}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAccountMoneyRecord">
+        SELECT
+        <include refid="p2pAccountMoneyRecordColumns"/>
+        FROM p2p_account_money_record a
+        <include refid="p2pAccountMoneyRecordJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_account_money_record(
+        id,
+        userid,
+        amount,
+        operate_time,
+        zj_account,
+        account_money_type,
+        purpose,
+        income,
+        spending,
+        trade_state,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{userid},
+        #{amount},
+        #{operateTime},
+        #{zjAccount},
+        #{accountMoneyType},
+        #{purpose},
+        #{income},
+        #{spending},
+        #{tradeState},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_account_money_record SET
+        userid = #{userid},
+        amount = #{amount},
+        operate_time = #{operateTime},
+        zj_account = #{zjAccount},
+        account_money_type = #{accountMoneyType},
+        purpose = #{purpose},
+        income = #{income},
+        spending = #{spending},
+        trade_state = #{tradeState},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_account_money_record SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+</mapper>

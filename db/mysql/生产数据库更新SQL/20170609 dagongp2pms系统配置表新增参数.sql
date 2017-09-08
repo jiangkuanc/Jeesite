@@ -1,0 +1,5 @@
+INSERT INTO sys_config (`id`, `sys_id`, `constant_name`, `constant_key`, `constant_value`, `constant_comment`, `sort`) VALUES ('E1', 'dagongp2pms', 'app版本号', 'appId', 'V1.0', 'app版本号', '1');
+INSERT INTO sys_config (`id`, `sys_id`, `constant_name`, `constant_key`, `constant_value`, `constant_comment`, `sort`) VALUES ('E2', 'dagongp2pms', 'app构建版本', 'buildVersion', '1', 'app构建版本（一般为整数递增）', '2');
+INSERT INTO sys_config (`id`, `sys_id`, `constant_name`, `constant_key`, `constant_value`, `constant_comment`, `sort`) VALUES ('E3', 'dagongp2pms', '版本发布日期', 'publishTime', '2017-06-09', '版本发布日期（精确到日）', '3');
+INSERT INTO sys_config (`id`, `sys_id`, `constant_name`, `constant_key`, `constant_value`, `constant_comment`, `sort`) VALUES ('E4', 'dagongp2pms', '版本更新描述', 'versionDescribe', '', '版本更新描述', '4');
+INSERT INTO sys_config (`id`, `sys_id`, `constant_name`, `constant_key`, `constant_value`, `constant_comment`, `sort`) VALUES ('E5', 'dagongp2pms', 'app下载地址', 'versionApk', 'http://www.silkroaditfin.com/a/image/test?mode=2', 'app下载地址', '5');

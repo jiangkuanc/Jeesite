@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.config.dao.P2pHolidayRecordDao">
+
+    <sql id="p2pHolidayRecordColumns">
+        a.id AS "id",
+        a.holiday AS "holiday"
+    </sql>
+
+    <sql id="p2pHolidayRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pHolidayRecord">
+        SELECT
+        <include refid="p2pHolidayRecordColumns"/>
+        FROM p2p_holiday_record a
+        <include refid="p2pHolidayRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pHolidayRecord">
+        SELECT
+        <include refid="p2pHolidayRecordColumns"/>
+        FROM p2p_holiday_record a
+        <include refid="p2pHolidayRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pHolidayRecord">
+        SELECT
+        <include refid="p2pHolidayRecordColumns"/>
+        FROM p2p_holiday_record a
+        <include refid="p2pHolidayRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_holiday_record(
+        id,
+        holiday,
+        operation_person,
+        operate_time
+        ) VALUES (
+        #{id},
+        #{holiday},
+        #{operationPerson},
+        #{operateTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_holiday_record SET
+        holiday = #{holiday}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_holiday_record
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="findHoildayByYear" parameterType="java.lang.Integer" resultType="P2pHolidayRecord">
+        SELECT
+        id AS "id",
+        holiday AS "holiday"
+        FROM
+        p2p_holiday_record
+        WHERE
+        DATE_FORMAT(holiday,'%Y') = #{thisYear}
+        OR
+        DATE_FORMAT(holiday,'%Y') = #{nextYear}
+    </select>
+
+    <!-- Chace 查询指定年每个月的节假日 -->
+    <select id="getHoildays" parameterType="P2pHolidayRecord" resultType="P2pHolidayRecord">
+        SELECT
+        a.id,
+        DATE_FORMAT(a.holiday,'%c') AS "month",
+        DATE_FORMAT(a.holiday,'%d') AS "getDay",
+        a.operation_person AS "operationPerson",
+        a.operate_time AS "operateTime"
+        FROM p2p_holiday_record a
+        WHERE DATE_FORMAT(a.holiday,'%Y') = #{getYear}
+        ORDER BY a.holiday
+    </select>
+</mapper>

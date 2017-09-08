@@ -1,0 +1,6 @@
+mvn install:install-file -DgroupId=com.alibaba -DartifactId=jconsole -Dversion=1.8.0 -Dpackaging=jar -Dfile=D:\web2016\jconsole.jar
+
+
+http://blog.csdn.net/whucyl/article/details/20153207
+
+http://www.tuicool.com/articles/bIVRJr

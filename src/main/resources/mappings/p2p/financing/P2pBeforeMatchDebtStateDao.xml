@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pBeforeMatchDebtStateDao">
+
+    <sql id="p2pBeforeMatchDebtStateColumns">
+        a.id AS "id",
+        a.finacing_information_id AS "finacingInformationId",
+        a.progress_stage AS "progressStage",
+        a.state_time AS "stateTime",
+        a.operator_id AS "operatorId",
+        a.handle_result AS "handleResult",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        u.name AS "user.name"
+
+    </sql>
+
+    <sql id="p2pBeforeMatchDebtStateJoins">
+        LEFT JOIN sys_user u ON u.id = a.operator_id
+
+    </sql>
+
+    <sql id="p2pBeforeMatchDebtStateColumnsTwo">
+        a.id AS "id",
+        a.finacing_information_id AS "finacingInformationId",
+        a.progress_stage AS "progressStage",
+        a.state_time AS "stateTime",
+        a.operator_id AS "operatorId",
+        a.handle_result AS "handleResult"
+    </sql>
+
+    <select id="get" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumns"/>
+        FROM p2p_before_match_debt_state a
+        <include refid="p2pBeforeMatchDebtStateJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findById" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumnsTwo"/>
+        FROM p2p_before_match_debt_state a
+        WHERE a.finacing_information_id=#{finacingInformationId}
+        AND a.progress_stage=#{progressStage}
+        ORDER BY a.state_time desc
+    </select>
+
+    <select id="findById2" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumnsTwo"/>
+        FROM p2p_before_match_debt_state a
+        WHERE a.finacing_information_id=#{finacingInformationId}
+        AND (a.progress_stage = 201 OR a.progress_stage = 203)
+        ORDER BY a.state_time desc
+    </select>
+
+    <select id="findById3" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumnsTwo"/>
+        FROM p2p_before_match_debt_state a
+        WHERE a.finacing_information_id=#{finacingInformationId}
+        AND (a.progress_stage = 201 OR a.progress_stage = 300)
+        ORDER BY a.state_time desc
+    </select>
+
+    <select id="findByIdOne" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumnsTwo"/>
+        FROM p2p_before_match_debt_state a
+        WHERE a.finacing_information_id=#{finacingInformationId}
+        AND a.progress_stage=#{progressStage}
+    </select>
+
+    <select id="findList" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumns"/>
+        FROM p2p_before_match_debt_state a
+        <include refid="p2pBeforeMatchDebtStateJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumns"/>
+        FROM p2p_before_match_debt_state a
+        <include refid="p2pBeforeMatchDebtStateJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_before_match_debt_state(
+        id,
+        finacing_information_id,
+        progress_stage,
+        state_time,
+        operator_id,
+        handle_result,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{finacingInformationId},
+        #{progressStage},
+        #{stateTime},
+        #{operatorId},
+        #{handleResult},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_before_match_debt_state SET
+        finacing_information_id = #{finacingInformationId},
+        progress_stage = #{progressStage},
+        state_time = #{stateTime},
+        operator_id = #{operatorId},
+        handle_result = #{handleResult},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_before_match_debt_state SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findListByFid" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumns"/>
+        FROM p2p_before_match_debt_state a
+        <include refid="p2pBeforeMatchDebtStateJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            AND a.finacing_information_id = #{finacingInformationId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.state_time ASC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="saveP2pBeforeMatchDebtState" parameterType="P2pBeforeMatchDebtState">
+        INSERT INTO p2p_before_match_debt_state(
+        id,
+        finacing_information_id,
+        progress_stage,
+        state_time,
+        operator_id,
+        handle_result
+        )VALUES(
+        #{id},
+        #{finacingInformationId},
+        #{progressStage},
+        #{stateTime},
+        #{operatorId},
+        #{handleResult}
+        )
+    </insert>
+
+    <select id="getDebtReleaseRecord" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumns"/>
+        FROM p2p_before_match_debt_state a
+        <include refid="p2pBeforeMatchDebtStateJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            AND a.finacing_information_id = #{finacingInformationId}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.state_time ASC
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 根据融资信息id和融资状态查询单条记录 -->
+    <select id="getRecordByFiIdAndState" resultType="P2pBeforeMatchDebtState">
+        SELECT
+        <include refid="p2pBeforeMatchDebtStateColumns"/>
+        FROM p2p_before_match_debt_state a
+        <include refid="p2pBeforeMatchDebtStateJoins"/>
+        <where>
+            a.finacing_information_id = #{fiId}
+            AND a.progress_stage = #{stage}
+        </where>
+        ORDER BY a.state_time DESC limit 1
+    </select>
+
+    <!-- Quincy 根据债项ID查询轨迹 -->
+    <select id="findDebtOrbitByFid" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        progress_stage
+        FROM
+        p2p_before_match_debt_state
+        WHERE
+        finacing_information_id = #{_parameter}
+        ORDER BY
+        progress_stage
+    </select>
+    <!-- Chace 根据债项id和债项状态查询轨迹 -->
+    <select id="findByIds" resultType="P2pBeforeMatchDebtState" parameterType="P2pBeforeMatchDebtState">
+        SELECT
+        a.id AS "id",
+        a.finacing_information_id AS "finacingInformationId",
+        a.progress_stage AS "progressStage",
+        a.state_time AS "stateTime",
+        a.operator_id AS "operatorId",
+        a.handle_result AS "handleResult",
+        b.name AS "user.name"
+        FROM p2p_before_match_debt_state a
+        INNER JOIN sys_user b ON a.operator_id = b.id
+        WHERE finacing_information_id = #{finacingInformationId}
+        AND progress_stage = #{progressStage}
+    </select>
+
+    <!-- 根据债项id查询是否经过复评 -->
+    <select id="isOrNoFuPing" resultType="P2pBeforeMatchDebtState" parameterType="string">
+        SELECT
+        a.progress_stage
+        FROM p2p_before_match_debt_state a
+        WHERE a.finacing_information_id = #{_parameter}
+        AND a.progress_stage = '220'
+    </select>
+</mapper>

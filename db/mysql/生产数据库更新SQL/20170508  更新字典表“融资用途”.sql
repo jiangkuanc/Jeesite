@@ -1,0 +1,1 @@
+UPDATE sys_dict SET label = '用于投资' WHERE id = 'FW303';

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.risk.dao.P2pRiskPaperDao">
+
+    <sql id="p2pRiskPaperColumns">
+        a.id AS "id",
+        a.paper_title AS "paperTitle",
+        a.user_id AS "user.id",
+        a.draw_time AS "drawTime",
+        a.paper_version AS "paperVersion",
+        a.paper_state AS "paperState",
+        a.audit_id AS "auditId",
+        a.audit_time AS "auditTime",
+        a.audit_opinion AS "auditOpinion",
+        a.publish_id AS "publishId",
+        a.publish_time AS "publishTime",
+
+        a.paper_explain AS "paperExplain",
+        u3.name AS "user.name"
+    </sql>
+
+    <sql id="p2pRiskPaperJoins">
+        LEFT JOIN sys_user u3 ON u3.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pRiskPaper">
+        SELECT
+        <include refid="p2pRiskPaperColumns"/>
+        FROM p2p_risk_paper a
+        <include refid="p2pRiskPaperJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRiskPaper">
+        SELECT
+        <include refid="p2pRiskPaperColumns"/>
+        FROM p2p_risk_paper a
+        <include refid="p2pRiskPaperJoins"/>
+        <where>
+            <if test="paperState != null and paperState != ''">
+                a.paper_state = #{paperState}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRiskPaper">
+        SELECT
+        <include refid="p2pRiskPaperColumns"/>
+        FROM p2p_risk_paper a
+        <include refid="p2pRiskPaperJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getByUserId" resultType="P2pRiskPaper">
+        SELECT
+        <include refid="p2pRiskPaperColumns"/>
+        FROM p2p_risk_paper a
+        <include refid="p2pRiskPaperJoins"/>
+        WHERE a.user_id = #{user.id}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_risk_paper(
+        id,
+        paper_title,
+        user_id,
+        draw_time,
+        paper_version,
+        paper_state,
+        audit_id,
+        audit_time,
+        audit_opinion,
+        publish_id,
+        publish_time,
+
+        paper_explain
+        ) VALUES (
+        #{id},
+        #{paperTitle},
+        #{user.id},
+        #{drawTime},
+        #{paperVersion},
+        #{paperState},
+        #{auditId},
+        #{auditTime},
+        #{auditOpinion},
+        #{publishId},
+        #{publishTime},
+
+        #{paperExplain}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_risk_paper SET
+        paper_title = #{paperTitle},
+        user_id = #{user.id},
+        draw_time = #{drawTime},
+        paper_version = #{paperVersion},
+        paper_state = #{paperState},
+        audit_id = #{auditId},
+        audit_time = #{auditTime},
+        audit_opinion = #{auditOpinion},
+        publish_id = #{publishId},
+        publish_time = #{publishTime},
+
+        paper_explain = #{paperExplain}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateXg">
+        UPDATE p2p_risk_paper SET
+        paper_state = #{paperState},
+        audit_id = #{auditId},
+        audit_time = #{auditTime},
+        publish_id = #{publishId},
+        publish_time = #{publishTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_risk_paper
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePaperState" parameterType="P2pRiskPaper">
+        UPDATE p2p_risk_paper SET
+        paper_state = '5'
+        WHERE paper_state = '4'
+    </update>
+
+</mapper>

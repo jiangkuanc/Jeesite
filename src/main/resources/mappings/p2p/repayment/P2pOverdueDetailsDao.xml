@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.repayment.dao.P2pOverdueDetailsDao">
+
+    <sql id="p2pOverdueDetailsColumns">
+        a.id AS "id",
+        a.repayment_plan_id AS "repaymentPlanId",
+        a.overdue_amount AS "overdueAmount",
+        a.overdue_date AS "overdueDate",
+        a.fine_day AS "fineDay"
+    </sql>
+
+    <sql id="p2pOverdueDetailsJoins">
+    </sql>
+
+    <select id="get" resultType="P2pOverdueDetails">
+        SELECT
+        <include refid="p2pOverdueDetailsColumns"/>
+        FROM p2p_overdue_details a
+        <include refid="p2pOverdueDetailsJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pOverdueDetails">
+        SELECT
+        <include refid="p2pOverdueDetailsColumns"/>
+        FROM p2p_overdue_details a
+        <include refid="p2pOverdueDetailsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pOverdueDetails">
+        SELECT
+        <include refid="p2pOverdueDetailsColumns"/>
+        FROM p2p_overdue_details a
+        <include refid="p2pOverdueDetailsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_overdue_details(
+        id,
+        repayment_plan_id,
+        overdue_amount,
+        overdue_date,
+        fine_day
+        ) VALUES (
+        #{id},
+        #{repaymentPlanId},
+        #{overdueAmount},
+        #{overdueDate},
+        #{fineDay}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_overdue_details SET
+        repayment_plan_id = #{repaymentPlanId},
+        overdue_amount = #{overdueAmount},
+        overdue_date = #{overdueDate},
+        fine_day = #{fineDay}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_overdue_details
+        WHERE id = #{id}
+    </update>
+
+    <!-- deleteLessRealRepaymentDate -->
+    <delete id="deleteLessRealRepaymentDate">
+        DELETE
+        FROM
+        p2p_overdue_details
+        WHERE
+        repayment_plan_id = #{p2pRepaymentPlanId}
+        AND overdue_date &gt;= #{realRepaymentDate}
+    </delete>
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsProjectDetilsDao">
+
+    <sql id="cmsProjectDetilsColumns">
+        a.id AS "id",
+        a.article_id AS "articleId",
+        c.title AS "projectName",
+        a.investment_way AS "investmentWay",
+        a.industry_involved AS "industryInvolved",
+        a.project_validity AS "projectValidity",
+        a.project_located AS "projectLocated",
+        a.project_enterprise AS "projectEnterprise",
+        a.project_display AS "projectDisplay",
+        a.cooperation_opportunities AS "cooperationOpportunities"
+    </sql>
+
+    <sql id="cmsProjectDetilsJoins">
+        JOIN cms_article c ON c.id = a.article_id
+    </sql>
+
+    <select id="get" resultType="CmsProjectDetils">
+        SELECT
+        <include refid="cmsProjectDetilsColumns"/>
+        FROM cms_project_detils a
+        <include refid="cmsProjectDetilsJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsProjectDetils">
+        SELECT
+        <include refid="cmsProjectDetilsColumns"/>
+        FROM cms_project_detils a
+        <include refid="cmsProjectDetilsJoins"/>
+        <where>
+            <if test="projectName != null and projectName != ''">
+                AND c.title LIKE CONCAT('%', #{projectName}, '%')
+            </if>
+            <if test="industryInvolved != null and industryInvolved != ''">
+                AND a.industry_involved LIKE CONCAT('%', #{industryInvolved}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 查询当前项目的详情 -->
+    <select id="selectCurrentDetail" parameterType="String" resultType="CmsProjectDetils">
+        SELECT
+        <include refid="cmsProjectDetilsColumns"/>
+        FROM cms_project_detils a
+        <include refid="cmsProjectDetilsJoins"/>
+        WHERE a.article_id = #{id}
+
+    </select>
+
+    <select id="findAllList" resultType="CmsProjectDetils">
+        SELECT
+        <include refid="cmsProjectDetilsColumns"/>
+        FROM cms_project_detils a
+        <include refid="cmsProjectDetilsJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_project_detils(
+        id,
+        article_id,
+        project_name,
+        investment_way,
+        industry_involved,
+        project_validity,
+        project_located,
+        project_enterprise,
+        project_display,
+        cooperation_opportunities
+        ) VALUES (
+        #{id},
+        #{articleId},
+        #{projectName},
+        #{investmentWay},
+        #{industryInvolved},
+        #{projectValidity},
+        #{projectLocated},
+        #{projectEnterprise},
+        #{projectDisplay},
+        #{cooperationOpportunities}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_project_detils SET
+        article_id = #{articleId},
+        project_name = #{projectName},
+        investment_way = #{investmentWay},
+        industry_involved = #{industryInvolved},
+        project_validity = #{projectValidity},
+        project_located = #{projectLocated},
+        project_enterprise = #{projectEnterprise},
+        project_display = #{projectDisplay},
+        cooperation_opportunities = #{cooperationOpportunities}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_project_detils
+        WHERE id = #{id}
+    </update>
+
+</mapper>

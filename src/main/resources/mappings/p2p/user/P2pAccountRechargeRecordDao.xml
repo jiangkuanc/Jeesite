@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pAccountRechargeRecordDao">
+
+    <sql id="p2pAccountRechargeRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.recharge_amount AS "rechargeAmount",
+        a.recharge_time AS "rechargeTime",
+        a.recharge_state AS "rechargeState",
+        a.recharge_success_time AS "rechargeSuccessTime",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pAccountRechargeRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pAccountRechargeRecord">
+        SELECT
+        <include refid="p2pAccountRechargeRecordColumns"/>
+        FROM p2p_account_recharge_record a
+        <include refid="p2pAccountRechargeRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAccountRechargeRecord">
+        SELECT
+        <include refid="p2pAccountRechargeRecordColumns"/>
+        FROM p2p_account_recharge_record a
+        <include refid="p2pAccountRechargeRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pAccountRechargeRecord">
+        SELECT
+        <include refid="p2pAccountRechargeRecordColumns"/>
+        FROM p2p_account_recharge_record a
+        <include refid="p2pAccountRechargeRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_account_recharge_record(
+        id,
+        user_id,
+        recharge_amount,
+        recharge_time,
+        recharge_state,
+        recharge_success_time
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{rechargeAmount},
+        #{rechargeTime},
+        #{rechargeState},
+        #{rechargeSuccessTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_account_recharge_record SET
+        user_id = #{user.id},
+        recharge_amount = #{rechargeAmount},
+        recharge_time = #{rechargeTime},
+        recharge_state = #{rechargeState},
+        recharge_success_time = #{rechargeSuccessTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_account_recharge_record
+        WHERE id = #{id}
+    </update>
+    <!-- Chace 根据userId查询充值记录 -->
+    <select id="getByUserId" resultType="P2pAccountRechargeRecord" parameterType="P2pAccountRechargeRecord">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.recharge_amount AS "rechargeAmount",
+        a.recharge_time AS "rechargeTime",
+        a.recharge_state AS "rechargeState",
+        a.recharge_success_time AS "rechargeSuccessTime",
+        b.bank_account AS "p2pAccount.bankAccount"
+        FROM p2p_account_recharge_record a
+        INNER JOIN p2p_account b ON b.user_id = a.user_id
+        WHERE a.user_id = #{userId}
+    </select>
+</mapper>

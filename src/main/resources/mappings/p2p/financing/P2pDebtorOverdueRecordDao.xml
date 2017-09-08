@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pDebtorOverdueRecordDao">
+
+    <sql id="p2pDebtorOverdueRecordColumns">
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.total_overdue_number AS "totalOverdueNumber",
+        a.total_overdue_amount AS "totalOverdueAmount",
+        a.total_overdue_days AS "totalOverdueDays",
+        a.continue_overdue_days AS "continueOverdueDays",
+        a.last_overdue_time AS "lastOverdueTime",
+        a.repay_amount AS "repayAmount",
+        a.stay_overdue_amount AS "stayOverdueAmount",
+        a.overdue_faxi AS "overdueFaxi",
+        a.faxi_repay_amount AS "faxiRepayAmount",
+        a.overdue_level AS "overdueLevel",
+        a.is_docking_firm AS "isDockingFirm",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pDebtorOverdueRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pDebtorOverdueRecord">
+        SELECT
+        <include refid="p2pDebtorOverdueRecordColumns"/>
+        FROM p2p_debtor_overdue_record a
+        <include refid="p2pDebtorOverdueRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pDebtorOverdueRecord">
+        SELECT
+        <include refid="p2pDebtorOverdueRecordColumns"/>
+        FROM p2p_debtor_overdue_record a
+        <include refid="p2pDebtorOverdueRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pDebtorOverdueRecord">
+        SELECT
+        <include refid="p2pDebtorOverdueRecordColumns"/>
+        FROM p2p_debtor_overdue_record a
+        <include refid="p2pDebtorOverdueRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_debtor_overdue_record(
+        id,
+        user_id,
+        total_overdue_number,
+        total_overdue_amount,
+        total_overdue_days,
+        continue_overdue_days,
+        last_overdue_time,
+        repay_amount,
+        stay_overdue_amount,
+        overdue_faxi,
+        faxi_repay_amount,
+        overdue_level,
+        is_docking_firm
+        ) VALUES (
+        #{id},
+        #{userId},
+        #{totalOverdueNumber},
+        #{totalOverdueAmount},
+        #{totalOverdueDays},
+        #{continueOverdueDays},
+        #{lastOverdueTime},
+        #{repayAmount},
+        #{stayOverdueAmount},
+        #{overdueFaxi},
+        #{faxiRepayAmount},
+        #{overdueLevel},
+        #{isDockingFirm}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_debtor_overdue_record SET
+        user_id = #{userId},
+        total_overdue_number = #{totalOverdueNumber},
+        total_overdue_amount = #{totalOverdueAmount},
+        total_overdue_days = #{totalOverdueDays},
+        continue_overdue_days = #{continueOverdueDays},
+        last_overdue_time = #{lastOverdueTime},
+        repay_amount = #{repayAmount},
+        stay_overdue_amount = #{stayOverdueAmount},
+        overdue_faxi = #{overdueFaxi},
+        faxi_repay_amount = #{faxiRepayAmount},
+        overdue_level = #{overdueLevel},
+        is_docking_firm = #{isDockingFirm}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_debtor_overdue_record
+        WHERE id = #{id}
+    </update>
+
+    <!-- 债务人逾期记录表 -->
+    <select id="getDebtorOverdueList" resultType="P2pDebtorOverdueRecord">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.total_overdue_number AS "totalOverdueNumber",
+        a.total_overdue_amount AS "totalOverdueAmount",
+        a.total_overdue_days AS "totalOverdueDays",
+        a.continue_overdue_days AS "continueOverdueDays",
+        a.last_overdue_time AS "lastOverdueTime",
+        a.repay_amount AS "repayAmount",
+        a.stay_overdue_amount AS "stayOverdueAmount",
+        a.overdue_faxi AS "overdueFaxi",
+        a.faxi_repay_amount AS "faxiRepayAmount",
+        a.overdue_level AS "overdueLevel",
+        a.is_docking_firm AS "isDockingFirm",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        COUNT(a.user_id) AS "debtNum"
+
+        FROM
+        p2p_debtor_overdue_record a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.user_id
+
+
+        <where>
+            <if test="userId != null and userId != ''">
+                AND a.user_id LIKE CONCAT(CONCAT('%',#{userId}),'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+        </where>
+        GROUP BY a.user_id
+    </select>
+
+    <!-- 根据userId计算当前债务人逾期数据 -->
+    <select id="calcByUserId" resultType="P2pDebtorOverdueRecord">
+        SELECT
+        a.user_id AS "userId",
+        SUM(a.total_overdue_number) AS "totalOverdueNumber",
+        SUM(a.total_overdue_amount) AS "totalOverdueAmount",
+        SUM(a.total_overdue_days) AS "totalOverdueDays",
+        MAX(a.continue_overdue_days) AS "continueOverdueDays",
+        MAX(a.last_overdue_time) AS "lastOverdueTime",
+        SUM(a.repay_amount) AS "repayAmount",
+        SUM(a.stay_overdue_amount) AS "stayOverdueAmount",
+        SUM(a.overdue_faxi) AS "overdueFaxi",
+        SUM(a.faxi_repay_amount) AS "faxiRepayAmount"
+        FROM
+        p2p_debt_overdue_record a
+        WHERE
+        a.user_id = #{userId}
+        GROUP BY a.user_id
+
+    </select>
+
+    <!-- 根据userId查询当前债务人逾期记录 -->
+    <select id="getByUserId" resultType="P2pDebtorOverdueRecord">
+        SELECT
+        *
+        FROM
+        p2p_debtor_overdue_record a
+        WHERE
+        a.user_id = #{userId}
+    </select>
+</mapper>

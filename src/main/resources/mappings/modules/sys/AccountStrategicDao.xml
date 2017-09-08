@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.AccountStrategicDao">
+
+    <sql id="accountStrategicColumns">
+        a.id AS "id",
+        a.pwd_length AS "pwdLength",
+        a.pwd_encry_mode AS "pwdEncryMode",
+        a.pwd_minimum_age AS "pwdMinimumAge",
+        a.pwd_maximum_age AS "pwdMaximumAge",
+        a.pwd_strength AS "pwdStrength",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="accountStrategicJoins">
+    </sql>
+
+    <select id="get" resultType="AccountStrategic">
+        SELECT
+        <include refid="accountStrategicColumns"/>
+        FROM account_strategic a
+        <include refid="accountStrategicJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="AccountStrategic">
+        SELECT
+        <include refid="accountStrategicColumns"/>
+        FROM account_strategic a
+        <include refid="accountStrategicJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="pwdLength != null and pwdLength != ''">
+                AND a.pwd_length = #{pwdLength}
+            </if>
+            <if test="pwdEncryMode != null and pwdEncryMode != ''">
+                AND a.pwd_encry_mode = #{pwdEncryMode}
+            </if>
+            <if test="pwdMinimumAge != null and pwdMinimumAge != ''">
+                AND a.pwd_minimum_age = #{pwdMinimumAge}
+            </if>
+            <if test="pwdMaximumAge != null and pwdMaximumAge != ''">
+                AND a.pwd_maximum_age = #{pwdMaximumAge}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="AccountStrategic">
+        SELECT
+        <include refid="accountStrategicColumns"/>
+        FROM account_strategic a
+        <include refid="accountStrategicJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO account_strategic(
+        id,
+        pwd_length,
+        pwd_encry_mode,
+        pwd_minimum_age,
+        pwd_maximum_age,
+        pwd_strength,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{pwdLength},
+        #{pwdEncryMode},
+        #{pwdMinimumAge},
+        #{pwdMaximumAge},
+        #{pwdStrength},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE account_strategic SET
+        pwd_length = #{pwdLength},
+        pwd_encry_mode = #{pwdEncryMode},
+        pwd_minimum_age = #{pwdMinimumAge},
+        pwd_maximum_age = #{pwdMaximumAge},
+        pwd_strength = #{pwdStrength},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE account_strategic SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

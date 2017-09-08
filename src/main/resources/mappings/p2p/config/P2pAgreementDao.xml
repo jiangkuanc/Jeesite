@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.config.dao.P2pAgreementDao">
+
+    <sql id="p2pAgreementColumns">
+        a.id AS "id",
+        a.agreement_type AS "agreementType",
+        a.agreement_main_title AS "agreementMainTitle",
+        a.agreement_sub_title AS "agreementSubTitle",
+        a.agreement_content AS "agreementContent",
+        a.agreement_file AS "agreementFile",
+        a.is_enable AS "isEnable",
+        a.success_time AS "successTime",
+        a.failure_time AS "failureTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="p2pAgreementJoins">
+    </sql>
+
+    <select id="get" resultType="P2pAgreement">
+        SELECT
+        <include refid="p2pAgreementColumns"/>
+        FROM p2p_agreement a
+        <include refid="p2pAgreementJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pAgreement">
+        SELECT
+        <include refid="p2pAgreementColumns"/>
+        FROM p2p_agreement a
+        <include refid="p2pAgreementJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="agreementType != null and agreementType != ''">
+                AND a.agreement_type = #{agreementType}
+            </if>
+            <if test="agreementMainTitle != null and agreementMainTitle != ''">
+                AND a.agreement_main_title LIKE
+                <if test="dbName == 'oracle'">'%'||#{agreementMainTitle}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{agreementMainTitle}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{agreementMainTitle},'%')</if>
+            </if>
+            <if test="agreementSubTitle != null and agreementSubTitle != ''">
+                AND a.agreement_sub_title LIKE
+                <if test="dbName == 'oracle'">'%'||#{agreementSubTitle}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{agreementSubTitle}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{agreementSubTitle},'%')</if>
+            </if>
+            <if test="isEnable != null and isEnable != ''">
+                AND a.is_enable = #{isEnable}
+            </if>
+        </where>
+        ORDER BY a.agreement_type ,a.update_date DESC
+    </select>
+
+    <select id="findAllList" resultType="P2pAgreement">
+        SELECT
+        <include refid="p2pAgreementColumns"/>
+        FROM p2p_agreement a
+        <include refid="p2pAgreementJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_agreement(
+        id,
+        agreement_type,
+        agreement_main_title,
+        agreement_sub_title,
+        agreement_content,
+        agreement_file,
+        is_enable,
+        success_time,
+        failure_time,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{agreementType},
+        #{agreementMainTitle},
+        #{agreementSubTitle},
+        #{agreementContent},
+        #{agreementFile},
+        #{isEnable},
+        #{successTime},
+        #{failureTime},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_agreement SET
+        agreement_type = #{agreementType},
+        agreement_main_title = #{agreementMainTitle},
+        agreement_sub_title = #{agreementSubTitle},
+        agreement_content = #{agreementContent},
+        agreement_file = #{agreementFile},
+        is_enable = #{isEnable},
+        success_time = #{successTime},
+        failure_time = #{failureTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_agreement SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+
+    <update id="deleteAgreement">
+        DELETE FROM p2p_agreement
+    </update>
+
+    <select id="getAgreement" resultType="P2pAgreement" parameterType="P2pAgreement">
+        SELECT * FROM p2p_agreement a
+        <where>
+            a.is_enable = '1'
+            AND a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="agreementType != null and agreementType != ''">
+                and a.agreement_type = #{agreementType}
+            </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 查找是否有相同类型协议已经启用  -->
+    <select id="validateIsEnable" resultType="P2pAgreement">
+        SELECT
+        *
+        FROM
+        p2p_agreement a
+        WHERE
+        a.agreement_type = #{agreementType}
+        AND a.is_enable = '1'
+        AND a.del_flag = '0'
+        LIMIT 1
+    </select>
+
+    <!-- 协议启用 -->
+    <update id="qiyong">
+        UPDATE p2p_agreement SET
+        is_enable = '1',
+        success_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 协议停用 -->
+    <update id="tingyong">
+        UPDATE p2p_agreement SET
+        is_enable = '0' ,
+        failure_time = now()
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 协议展示（根据协议类型查询正在启用的协议）  -->
+    <select id="getAgreementEnableByType" resultType="P2pAgreement" parameterType="String">
+        SELECT
+        *
+        FROM
+        p2p_agreement a
+        WHERE
+        a.agreement_type = #{agreementType}
+        AND a.is_enable = '1'
+        AND a.del_flag = '0'
+    </select>
+
+</mapper>

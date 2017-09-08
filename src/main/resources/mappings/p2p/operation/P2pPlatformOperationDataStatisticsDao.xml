@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.operation.dao.P2pPlatformOperationDataStatisticsDao">
+
+    <sql id="p2pPlatformOperationDataStatisticsColumns">
+        a.id AS "id",
+        a.history_date AS "historyDate",
+        a.trade_total_amount AS "tradeTotalAmount",
+        a.trade_total_number AS "tradeTotalNumber",
+        a.financing_total_people AS "financingTotalPeople",
+        a.investment_total_people AS "investmentTotalPeople",
+        a.compensatory_amount AS "compensatoryAmount",
+        a.overdue_amount AS "overdueAmount",
+        a.project_overdue_rate AS "projectOverdueRate",
+        a.amount_overdue_rate AS "amountOverdueRate",
+        a.overdue_project_number AS "overdueProjectNumber",
+        a.renjun_financing_amount AS "renjunFinancingAmount",
+        a.renjun_investment_amount AS "renjunInvestmentAmount",
+        a.bijun_financing_amount AS "bijunFinancingAmount",
+        a.max_single_rzye AS "maxSingleRzye",
+        a.max_ten_rzye AS "maxTenRzye",
+        a.max_single_rzyezb AS "maxSingleRzyezb",
+        a.max_ten_rzyezb AS "maxTenRzyezb"
+    </sql>
+
+    <sql id="p2pPlatformOperationDataStatisticsJoins">
+    </sql>
+
+    <select id="get" resultType="P2pPlatformOperationDataStatistics">
+        SELECT
+        <include refid="p2pPlatformOperationDataStatisticsColumns"/>
+        FROM p2p_platform_operation_data_statistics a
+        <include refid="p2pPlatformOperationDataStatisticsJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pPlatformOperationDataStatistics">
+        SELECT
+        <include refid="p2pPlatformOperationDataStatisticsColumns"/>
+        FROM p2p_platform_operation_data_statistics a
+        <include refid="p2pPlatformOperationDataStatisticsJoins"/>
+        <!-- <where> -->
+        <if test="beginDate !=null and endDate !=null">
+            WHERE a.history_date BETWEEN #{beginDate} AND #{endDate}
+        </if>
+        <!-- </where> -->
+        ORDER BY a.history_date DESC
+    </select>
+
+    <select id="findAllList" resultType="P2pPlatformOperationDataStatistics">
+        SELECT
+        <include refid="p2pPlatformOperationDataStatisticsColumns"/>
+        FROM p2p_platform_operation_data_statistics a
+        ORDER BY a.history_date ASC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_platform_operation_data_statistics(
+        id,
+        history_date,
+        trade_total_amount,
+        trade_total_number,
+        financing_total_people,
+        investment_total_people,
+        compensatory_amount,
+        overdue_amount,
+        project_overdue_rate,
+        amount_overdue_rate,
+        overdue_project_number,
+        renjun_financing_amount,
+        renjun_investment_amount,
+        bijun_financing_amount,
+        max_single_rzye,
+        max_ten_rzye,
+        max_single_rzyezb,
+        max_ten_rzyezb
+        ) VALUES (
+        #{id},
+        #{historyDate},
+        #{tradeTotalAmount},
+        #{tradeTotalNumber},
+        #{financingTotalPeople},
+        #{investmentTotalPeople},
+        #{compensatoryAmount},
+        #{overdueAmount},
+        #{projectOverdueRate},
+        #{amountOverdueRate},
+        #{overdueProjectNumber},
+        #{renjunFinancingAmount},
+        #{renjunInvestmentAmount},
+        #{bijunFinancingAmount},
+        #{maxSingleRzye},
+        #{maxTenRzye},
+        #{maxSingleRzyezb},
+        #{maxTenRzyezb}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_platform_operation_data_statistics SET
+        history_date = #{historyDate},
+        trade_total_amount = #{tradeTotalAmount},
+        trade_total_number = #{tradeTotalNumber},
+        financing_total_people = #{financingTotalPeople},
+        investment_total_people = #{investmentTotalPeople},
+        compensatory_amount = #{compensatoryAmount},
+        overdue_amount = #{overdueAmount},
+        project_overdue_rate = #{projectOverdueRate},
+        amount_overdue_rate = #{amountOverdueRate},
+        overdue_project_number = #{overdueProjectNumber},
+        renjun_financing_amount = #{renjunFinancingAmount},
+        renjun_investment_amount = #{renjunInvestmentAmount},
+        bijun_financing_amount = #{bijunFinancingAmount},
+        max_single_rzye = #{maxSingleRzye},
+        max_ten_rzye = #{maxTenRzye},
+        max_single_rzyezb = #{maxSingleRzyezb},
+        max_ten_rzyezb = #{maxTenRzyezb}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_platform_operation_data_statistics
+        WHERE id = #{id}
+    </update>
+    <!-- Chace 运营数据分析查询 -->
+    <select id="findByTimes" resultType="P2pPlatformOperationDataStatistics"
+            parameterType="P2pPlatformOperationDataStatistics">
+        SELECT
+        a.id AS "id",
+        a.history_date AS "historyDate",
+        a.trade_total_amount AS "tradeTotalAmount",
+        a.trade_total_number AS "tradeTotalNumber",
+        a.financing_total_people AS "financingTotalPeople",
+        a.investment_total_people AS "investmentTotalPeople",
+        a.compensatory_amount AS "compensatoryAmount",
+        a.overdue_amount AS "overdueAmount",
+        a.project_overdue_rate AS "projectOverdueRate",
+        a.amount_overdue_rate AS "amountOverdueRate",
+        a.overdue_project_number AS "overdueProjectNumber",
+        a.renjun_financing_amount AS "renjunFinancingAmount",
+        a.renjun_investment_amount AS "renjunInvestmentAmount",
+        a.bijun_financing_amount AS "bijunFinancingAmount",
+        a.max_single_rzye AS "maxSingleRzye",
+        a.max_ten_rzye AS "maxTenRzye",
+        a.max_single_rzyezb AS "maxSingleRzyezb",
+        a.max_ten_rzyezb AS "maxTenRzyezb"
+        FROM p2p_platform_operation_data_statistics a
+        <where>
+            <choose>
+                <when test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                    a.history_date <![CDATA[   >=  ]]> #{beginTime} AND a.history_date <![CDATA[   <  ]]> #{endTime}
+                </when>
+                <otherwise>
+                    <if test="beginTime != '' and beginTime != null">
+                        a.history_date <![CDATA[   >=  ]]> #{beginTime}
+                    </if>
+                    <if test="endTime != '' and endTime != null">
+                        a.history_date <![CDATA[   <  ]]> #{endTime}
+                    </if>
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY a.history_date ASC
+    </select>
+</mapper>

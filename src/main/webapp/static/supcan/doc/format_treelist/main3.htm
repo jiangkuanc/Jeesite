@@ -1,0 +1,308 @@
+<HTML>
+<meta http-equiv="content-type" content="text/html; charset=gb2312">
+<head>
+    <link rel="stylesheet" href="../temp1.css" type="text/css">
+    <style>
+        table {
+            font-family: ΢���ź�, Consolas, Arial, ����;
+        }
+    </style>
+    <script type="text/javascript" src="../proptable.js"></script>
+    <script>
+        function gentable() {
+            var xmlDoc = getXMLDoc("cols.col.xml?81");
+            genproptable('Tag121', xmlDoc, "#e2e2e2");
+            xmlDoc = getXMLDoc("droplists.droplist.xml?81");
+            genproptable('Tag161', xmlDoc, "");
+        }
+    </script>
+</head>
+
+<body onload="gentable()" bgcolor=#ffffff vlink=#0000ff>
+
+<div id="Tag12"/>
+<b>Cols</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:���е���Ϣ������: 1</td>
+    </tr>
+</table>
+<br>
+
+<div id="Tag121"></div>
+<br>
+<div id="Memo1"/>
+<b>��ע1</b>: �����б��⡢buttonText��������"|"�ָ���Ӣ��(������Ӣ���л�);<br>
+<div id="Memo2"/>
+<b>��ע2</b>: isHyperLink��isImage���У�������صĵ�Ԫ�������������� ��<b>[NoEffect]</b>��
+��ͷ(��Сд����)����ʾ�õ�Ԫ������ͨ������ʾ�������� <b>[NoEffect]</b> ʹ�÷�ΧΪ:<br>
+����1.�����ڳ�ʼ����;<br>
+����2.�� SetCellData( ) �������õ�ֵ��Ч;<br>
+����3.���������ڼ���ʱ�ܱ��Զ�ʶ��ժ������������ڵ�Ԫ����;<br>
+<br>
+
+
+<div id="Tag122"/>
+<br>
+<b>Group</b>����<img src='document.bmp' title='��μ���ʾҳ: 3.����ͷ'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�����ͷ������:0 - n;</td>
+    </tr>
+    <tr bgcolor=#f1f1f1>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+    <tr>
+        <td>title(��name)</td>
+        <td>��ʾ������</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>headerFontIndex(��fontIndex)</td>
+        <td>���õ�����, ǰ�涨���&lt;Font&gt;�����</td>
+        <td>����</td>
+        <td>-1</td>
+    </tr>
+    <tr>
+        <td>textColor(��color)</td>
+        <td>������ɫ</td>
+        <td>��ɫ��</td>
+        <td>#000000</td>
+    </tr>
+    <tr>
+        <td>align</td>
+        <td>���ֶ���</td>
+        <td>left/center/right</td>
+        <td>center</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>�����id�������ڼ��ز��ø�id����������XML/JSON����</td>
+        <td>��</td>
+        <td>(��)</td>
+    </tr>
+</table>
+��ע: 1.Group���԰���Col��Ҳ���԰�����Group��Ҳ���Ժ�Col���У��൱����������辣�<br>
+���� 2.title������"|"�ָ���Ӣ��(������Ӣ���л�);<br>
+<br>
+
+
+<div id="Tag14"/>
+<b>FreeformRes</b>����<img src='document.bmp' title='��μ���ʾҳ: 29.��ѯ����(һ)��30.��ѯ����(��)'> ��<img src='document.bmp'
+                                                                                                      title='��μ�Freeform����ʾҳ: 15.����Treelist����(2)'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:���ɱ�ͷ��Դ��������:0 - 1;</td>
+    </tr>
+</table>
+<br>
+<div id="Tag141"/>
+<b>Freeform</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgColor=#e4e4e4>
+        <td colspan=5>����:�����Freeform������:0 - n��</td>
+    </tr>
+    <tr bgcolor=#eaeaea>
+        <td>���</td>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+    <tr>
+        <td rowspan=2>����</td>
+        <td>id</td>
+        <td>��freeform��id, �����ж��Freeformʱ</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>url</td>
+        <td>���õ�freeform��URL (����ע)</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+
+    <tr>
+        <td rowspan=11>������Ƕ����</td>
+        <td>idOk</td>
+        <td>��freeform��"ȷ��"��ť��id</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>idCancel</td>
+        <td>��freeform��"ȡ��"��ť��id</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>Width</td>
+        <td>�Ի�����</td>
+        <td>����(����)����ٷֱ�</td>
+        <td>80%</td>
+    </tr>
+    <tr>
+        <td>Height</td>
+        <td>�Ի���߶�</td>
+        <td>����(����)����ٷֱ�</td>
+        <td>80%</td>
+    </tr>
+    <tr>
+        <td>extW �� extWidth</td>
+        <td>�Ի������Ҳ���չ�Ŀ��</td>
+        <td>����(����)</td>
+        <td>20</td>
+    </tr>
+    <tr>
+        <td>extH �� extHeight</td>
+        <td>�Ի������²���չ�ĸ߶�</td>
+        <td>����(����)</td>
+        <td>14</td>
+    </tr>
+    <tr>
+        <td>idFocus �� focusId</td>
+        <td>���㶨λ��input��id</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>border</td>
+        <td>�߽��߿�</td>
+        <td>����(����)</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>borderColor</td>
+        <td>�߽���ɫ</td>
+        <td>��ɫ��</td>
+        <td>#96B4C4</td>
+    </tr>
+    <tr>
+        <td>bgColor �� backColor</td>
+        <td>����ɫ</td>
+        <td>��ɫ��</td>
+        <td>#C8C8C8</td>
+    </tr>
+    <tr>
+        <td>alpha</td>
+        <td>����͸����</td>
+        <td>1-255</td>
+        <td>70</td>
+    </tr>
+
+    <tr>
+        <td rowspan=6>������Ƕ����<br>(��̬����)</td>
+        <td>ZN</td>
+        <td>�����̬���ɶ��ж��е�&lt;input&gt;����ô�ǰ���"Z"����, ���ǰ������µߵ���"N"��������</td>
+        <td>Z��N</td>
+        <td>Z</td>
+    </tr>
+    <tr>
+        <td>hiddenCol</td>
+        <td>�����еĶ�̬����ģʽ��������3��ѡ��<br><b>edit �� editable</b> - �ɱ༭;<br><b>disp �� display</b> -
+            ���ɱ༭������ʾ;<br><b>hide</b> - ������
+        </td>
+        <td>��������</td>
+        <td>hide</td>
+    </tr>
+    <tr>
+        <td>unEditAbleCol</td>
+        <td>editAble=false���еĶ�̬����ģʽ��������3��ѡ��<br><b>edit �� editable</b> - �ɱ༭;<br><b>disp �� display</b> -
+            ���ɱ༭������ʾ;<br><b>hide</b> - ����
+        </td>
+        <td>��������</td>
+        <td>edit</td>
+    </tr>
+    <tr>
+        <td>includeCol</td>
+        <td>��̬���ɵ�input, ������ĳЩ��.<br>��ע��includeCol��excludeCol����ͬʱ����</td>
+        <td>���������ŷָ�</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>excludeCol</td>
+        <td>��̬���ɵ�input, ����ĳЩ�����⣬������.<br>��ע��includeCol��excludeCol����ͬʱ����</td>
+        <td>���������ŷָ�</td>
+        <td>��</td>
+    </tr>
+    <tr>
+        <td>GroupSep</td>
+        <td>����������ķָ���.<br>�������硰����1 \ ����2 \ ������������������������</td>
+        <td>���⴮���մ���ʾ����Ҫ������</td>
+        <td> \ (���Ҷ����ո�)</td>
+    </tr>
+</table>
+��ע�����Բ�����url�������ڲ�(�ӽڵ�)ֱ��Ƕ����һ��������Freeform XML��Freeform���﷨��μ�ͷ���ġ�Freeform XML�ĵ��淶��;<br>
+<br>
+<br>
+<div id="Tag16"/>
+<b>DropLists</b>����<img src='document.bmp' title='��μ���ʾҳ: 9.����������10.�ɱ༭������27.����: ��������'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����:�������ֵ���Դ������:0 - 1;</td>
+    </tr>
+</table>
+<br>
+
+<div id="Tag161"></div>
+<br>
+
+<div id="Tag1611"/>
+<b>item</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgColor=#e4e4e4>
+        <td colspan=4>����:�������ֵ���Ŀ������:1 - n�����ݣ�����Ŀ����ʾ��</td>
+    </tr>
+    <tr bgcolor=#f1f1f1>
+        <td>��������</td>
+        <td>����</td>
+        <td>����ֵ</td>
+        <td>Ĭ��ֵ</td>
+    </tr>
+    <tr>
+        <td>key</td>
+        <td>��Ŀ��ֵ</td>
+        <td>��</td>
+        <td>��</td>
+    </tr>
+</table>
+��ע������Ѿ�������dataURL���ԣ���û��Ҫ�ٶ���itemԪ���ˣ�dataURL���ȼ�����itemԪ��;<br>
+<br>
+
+<div id="Tag19"/>
+<b>Table</b>����<img src='document.bmp' title='��μ���ʾҳ: 7.�����кϼ��С�27.����: ��������'>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����: ���ʼ���صĴ����ݣ�����:0 - 1;<br>ע��һ�㲻����д�������.</td>
+    </tr>
+</table>
+<br>
+
+<div id="Tag191"/>
+<b>TR</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����: ��ʼ�������У�����:0 - n;</td>
+    </tr>
+</table>
+<br>
+
+<div id="Tag1911"/>
+<b>TD</b>
+<table width=100% cellpadding=4 cellspacing=0 border=1 borderColorLight=#999999 borderColorDark=#999999 align="center">
+    <tr bgcolor=#e4e4e4>
+        <td colspan=4>����: �����У�����:1 - n;<br>��ע��Ҳ���Բ�����TD�����ǲ���&lt;Cols&gt;�о��������(name)</td>
+    </tr>
+</table>
+<br>
+
+
+<br><br><br><br><br><br><br>
+<script type='text/javascript' src='../dev/nstd.js'></script>
+</body>
+</html>

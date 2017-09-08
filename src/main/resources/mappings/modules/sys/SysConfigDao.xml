@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.SysConfigDao">
+
+    <sql id="sysConfigColumns">
+        a.id AS "id",
+        a.sys_id AS "sysId",
+        a.constant_name AS "constantName",
+        a.constant_key AS "constantKey",
+        a.constant_value AS "constantValue",
+        a.constant_comment AS "constantComment",
+        a.sort AS "sort"
+    </sql>
+
+    <sql id="sysConfigJoins">
+    </sql>
+
+    <select id="get" resultType="SysConfig">
+        SELECT
+        <include refid="sysConfigColumns"/>
+        FROM sys_config a
+        <include refid="sysConfigJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <update id="update">
+        UPDATE sys_config SET
+        sys_id = #{sysId},
+        constant_name = #{constantName},
+        constant_key = #{constantKey},
+        constant_value = #{constantValue},
+        constant_comment = #{constantComment},
+        sort = #{sort}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据系统编号，查询所有符合条件的配置集合 -->
+    <select id="getListBySysId" resultType="SysConfig" parameterType="SysConfig">
+        SELECT
+        a.id AS "id",
+        a.sys_id AS "sysId",
+        a.constant_name AS "constantName",
+        a.constant_key AS "constantKey",
+        a.constant_value AS "constantValue",
+        a.constant_comment AS "constantComment",
+        a.sort AS "sort"
+        FROM sys_config a
+        WHERE sys_id = #{sysId}
+        ORDER BY a.sort ASC
+    </select>
+
+    <!-- 根据系统编号和Key，查询所有符合条件的配置值 -->
+    <select id="getValueBySysIdAndKey" resultType="String" parameterType="String">
+        SELECT
+        constant_value AS "constantValue"
+        FROM sys_config
+        WHERE
+        sys_id = #{0}
+        and constant_key = #{1}
+    </select>
+</mapper>

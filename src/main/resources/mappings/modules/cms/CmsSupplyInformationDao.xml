@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsSupplyInformationDao">
+
+    <sql id="cmsSupplyInformationColumns">
+        a.id AS "id",
+        a.product_id AS "productId",
+        c.product_name AS "informationName",
+        a.product_price AS "productPrice",
+        a.contacts AS "contacts",
+        a.duty AS "duty",
+        a.phone AS "phone",
+        a.company_name AS "companyName",
+        a.validity AS "validity",
+        a.company_enterprise AS "companyEnterprise",
+        a.company_display AS "companyDisplay",
+        a.min_order AS "minOrder"
+    </sql>
+
+    <sql id="cmsSupplyInformationJoins">
+        JOIN p2p_product_info c ON c.id = a.product_id
+    </sql>
+
+    <select id="get" resultType="CmsSupplyInformation">
+        SELECT
+        <include refid="cmsSupplyInformationColumns"/>
+        FROM cms_supply_information a
+        <include refid="cmsSupplyInformationJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+
+    <!-- 查询当前供给信息的详情 -->
+
+    <select id="selectCurrentSupplyInformation" parameterType="String" resultType="CmsSupplyInformation">
+        SELECT
+        <include refid="cmsSupplyInformationColumns"/>
+        FROM cms_supply_information a
+        <include refid="cmsSupplyInformationJoins"/>
+        WHERE a.product_id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsSupplyInformation">
+        SELECT
+        <include refid="cmsSupplyInformationColumns"/>
+        FROM cms_supply_information a
+        <include refid="cmsSupplyInformationJoins"/>
+        <where>
+            <if test="informationName != null and informationName != ''">
+                AND c.product_name LIKE CONCAT('%', #{informationName}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsSupplyInformation">
+        SELECT
+        <include refid="cmsSupplyInformationColumns"/>
+        FROM cms_supply_information a
+        <include refid="cmsSupplyInformationJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_supply_information(
+        id,
+        product_id,
+        information_name,
+        product_price,
+        contacts,
+        duty,
+        phone,
+        company_name,
+        validity,
+        company_enterprise,
+        company_display,
+        min_order
+        ) VALUES (
+        #{id},
+        #{productId},
+        #{informationName},
+        #{productPrice},
+        #{contacts},
+        #{duty},
+        #{phone},
+        #{companyName},
+        #{validity},
+        #{companyEnterprise},
+        #{companyDisplay},
+        #{minOrder}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_supply_information SET
+        product_id=#{productId},
+        information_name=#{informationName},
+        product_price=#{productPrice},
+        contacts=#{contacts},
+        duty=#{duty},
+        phone=#{phone},
+        company_name=#{companyName},
+        validity=#{validity},
+        company_enterprise=#{companyEnterprise},
+        company_display=#{companyDisplay},
+        min_order=#{minOrder}
+        WHERE id =#{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_supply_information
+        WHERE id = #{id}
+    </update>
+
+</mapper>

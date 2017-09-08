@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditreport.dao.P2pReportInformationAuditDao">
+
+    <sql id="p2pReportInformationAuditColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.index_id AS "indexId",
+        a.report_category AS "reportCategory",
+        a.report_category_details AS "reportCategoryDetails",
+        a.report_content AS "reportContent",
+        a.report_time AS "reportTime",
+        a.upload_file AS "uploadFile",
+        a.first_opinion AS "firstOpinion",
+        a.first_staff AS "firstStaff",
+        a.first_explain AS "firstExplain",
+        a.first_time AS "firstTime",
+        a.review_opinion AS "reviewOpinion",
+        a.review_officer AS "reviewOfficer",
+        a.review_explain AS "reviewExplain",
+        a.review_time AS "reviewTime",
+        a.report_audit_state AS "reportAuditState",
+        a.is_notice_reported AS "isNoticeReported",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pReportInformationAuditJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pReportInformationAudit">
+        SELECT
+        <include refid="p2pReportInformationAuditColumns"/>
+        FROM p2p_report_information_audit a
+        <include refid="p2pReportInformationAuditJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pReportInformationAudit">
+        SELECT
+        <include refid="p2pReportInformationAuditColumns"/>
+        FROM p2p_report_information_audit a
+        <include refid="p2pReportInformationAuditJoins"/>
+        <where>
+
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id LIKE
+                <if test="dbName == 'oracle'">'%'||#{user.id}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.id}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{user.id},'%')</if>
+            </if>
+            <if test="creditReportId != null and creditReportId != ''">
+                AND a.credit_report_id LIKE
+                <if test="dbName == 'oracle'">'%'||#{creditReportId}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{creditReportId}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{creditReportId},'%')</if>
+            </if>
+            <if test="creditInfoType != null and creditInfoType != ''">
+                AND a.credit_info_type = #{creditInfoType}
+            </if>
+            <if test="indexId != null and indexId != ''">
+                AND a.index_id = #{indexId}
+            </if>
+            <if test="reportCategory != null and reportCategory != ''">
+                AND a.report_category = #{reportCategory}
+            </if>
+            <if test="reportCategoryDetails != null and reportCategoryDetails != ''">
+                AND a.report_category_details = #{reportCategoryDetails}
+            </if>
+            <if test="beginReportTime != null and endReportTime != null and beginReportTime != '' and endReportTime != ''">
+                AND a.report_time BETWEEN #{beginReportTime} AND #{endReportTime}
+            </if>
+            <if test="reportAuditState != null and reportAuditState != ''">
+                AND a.report_audit_state = #{reportAuditState}
+            </if>
+            <if test="isNoticeReported != null and isNoticeReported != ''">
+                AND a.is_notice_reported = #{isNoticeReported}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <select id="ssList" resultType="P2pReportInformationAudit" parameterType="java.lang.String">
+        SELECT
+        <include refid="p2pReportInformationAuditColumns"/>
+        FROM p2p_report_information_audit a
+        <include refid="p2pReportInformationAuditJoins"/>
+        <where>
+            user_id = #{_parameter}
+        </where>
+    </select>
+
+    <select id="findAllList" resultType="P2pReportInformationAudit">
+        SELECT
+        <include refid="p2pReportInformationAuditColumns"/>
+        FROM p2p_report_information_audit a
+        <include refid="p2pReportInformationAuditJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+        group by a.credit_report_id
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_report_information_audit(
+        id,
+        user_id,
+        credit_report_id,
+        credit_info_type,
+        index_id,
+        report_category,
+        report_category_details,
+        report_content,
+        report_time,
+        upload_file,
+        first_opinion,
+        first_staff,
+        first_explain,
+        first_time,
+        review_opinion,
+        review_officer,
+        review_explain,
+        review_time,
+        report_audit_state,
+        is_notice_reported
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{creditReportId},
+        #{creditInfoType},
+        #{indexId},
+        #{reportCategory},
+        #{reportCategoryDetails},
+        #{reportContent},
+        #{reportTime},
+        #{uploadFile},
+        #{firstOpinion},
+        #{firstStaff},
+        #{firstExplain},
+        #{firstTime},
+        #{reviewOpinion},
+        #{reviewOfficer},
+        #{reviewExplain},
+        #{reviewTime},
+        #{reportAuditState},
+        #{isNoticeReported}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_report_information_audit SET
+        user_id = #{user.id},
+        credit_report_id = #{creditReportId},
+        credit_info_type = #{creditInfoType},
+        index_id = #{indexId},
+        report_category = #{reportCategory},
+        report_category_details = #{reportCategoryDetails},
+        report_content = #{reportContent},
+        report_time = #{reportTime},
+        upload_file = #{uploadFile},
+        first_opinion = #{firstOpinion},
+        first_staff = #{firstStaff},
+        first_explain = #{firstExplain},
+        first_time = #{firstTime},
+        review_opinion = #{reviewOpinion},
+        review_officer = #{reviewOfficer},
+        review_explain = #{reviewExplain},
+        review_time = #{reviewTime},
+        report_audit_state = #{reportAuditState},
+        is_notice_reported = #{isNoticeReported}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_report_information_audit
+        WHERE id = #{id}
+    </update>
+
+    <!-- 举报初审列表 -->
+    <select id="getReportFirstAuditList" resultType="P2pReportInformationAudit">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.index_id AS "indexId",
+        a.report_category AS "reportCategory",
+        a.report_category_details AS "reportCategoryDetails",
+        a.report_content AS "reportContent",
+        a.report_time AS "reportTime",
+        a.upload_file AS "uploadFile",
+        a.first_opinion AS "firstOpinion",
+        a.first_staff AS "firstStaff",
+        a.first_explain AS "firstExplain",
+        a.first_time AS "firstTime",
+        a.review_opinion AS "reviewOpinion",
+        a.review_officer AS "reviewOfficer",
+        a.review_explain AS "reviewExplain",
+        a.review_time AS "reviewTime",
+        a.report_audit_state AS "reportAuditState",
+        a.is_notice_reported AS "isNoticeReported",
+
+        b.user_id AS "p2pCreditReport.userId",
+        b.enterprise_name AS "p2pCreditReport.enterpriseName",
+        b.industry_code AS "p2pCreditReport.industryCode",
+        c.name AS "user.name"
+        FROM
+        p2p_report_information_audit a
+        LEFT JOIN p2p_credit_report b ON b.id = a.credit_report_id
+        LEFT JOIN sys_user c ON c.id = a.user_id
+        <where>
+            <if test="p2pCreditReport != null and p2pCreditReport.userId != null and p2pCreditReport.userId != ''">
+                AND b.user_id LIKE CONCAT(CONCAT('%',#{p2pCreditReport.userId}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.enterpriseName != null and p2pCreditReport.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pCreditReport.enterpriseName}),'%')
+            </if>
+            <if test="reportCategory != null and reportCategory != ''">
+                AND a.report_category = #{reportCategory}
+            </if>
+            <if test="user != null and user.name != null and user.name != ''">
+                AND c.name LIKE CONCAT(CONCAT('%',#{user.name}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.industryCode != null and p2pCreditReport.industryCode != ''">
+                AND b.industry_code = #{p2pCreditReport.industryCode}
+            </if>
+        </where>
+        order by a.report_audit_state,a.first_time desc
+    </select>
+
+
+    <!-- 举报复审列表 -->
+    <select id="getReportReviewAuditList" resultType="P2pReportInformationAudit">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.credit_report_id AS "creditReportId",
+        a.credit_info_type AS "creditInfoType",
+        a.index_id AS "indexId",
+        a.report_category AS "reportCategory",
+        a.report_category_details AS "reportCategoryDetails",
+        a.report_content AS "reportContent",
+        a.report_time AS "reportTime",
+        a.upload_file AS "uploadFile",
+        a.first_opinion AS "firstOpinion",
+        a.first_staff AS "firstStaff",
+        a.first_explain AS "firstExplain",
+        a.first_time AS "firstTime",
+        a.review_opinion AS "reviewOpinion",
+        a.review_officer AS "reviewOfficer",
+        a.review_explain AS "reviewExplain",
+        a.review_time AS "reviewTime",
+        a.report_audit_state AS "reportAuditState",
+        a.is_notice_reported AS "isNoticeReported",
+
+        b.user_id AS "p2pCreditReport.userId",
+        b.enterprise_name AS "p2pCreditReport.enterpriseName",
+        b.industry_code AS "p2pCreditReport.industryCode",
+        c.name AS "user.name"
+        FROM
+        p2p_report_information_audit a
+        LEFT JOIN p2p_credit_report b ON b.id = a.credit_report_id
+        LEFT JOIN sys_user c ON c.id = a.user_id
+        <where>
+            a.report_audit_state != 1
+            <if test="p2pCreditReport != null and p2pCreditReport.userId != null and p2pCreditReport.userId != ''">
+                AND b.user_id LIKE CONCAT(CONCAT('%',#{p2pCreditReport.userId}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.enterpriseName != null and p2pCreditReport.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pCreditReport.enterpriseName}),'%')
+            </if>
+            <if test="reportCategory != null and reportCategory != ''">
+                AND a.report_category = #{reportCategory}
+            </if>
+            <if test="user != null and user.name != null and user.name != ''">
+                AND c.name LIKE CONCAT(CONCAT('%',#{user.name}),'%')
+            </if>
+            <if test="p2pCreditReport != null and p2pCreditReport.industryCode != null and p2pCreditReport.industryCode != ''">
+                AND b.industry_code = #{p2pCreditReport.industryCode}
+            </if>
+        </where>
+        order by a.report_audit_state,a.review_time desc
+    </select>
+</mapper>

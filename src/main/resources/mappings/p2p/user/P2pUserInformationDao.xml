@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pUserInformationDao">
+
+    <sql id="p2pUserInformationColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.user_body_type AS "userBodyType",
+        a.userpic AS "userpic",
+        a.reg_time AS "regTime",
+        a.certificate_state AS "certificateState",
+        a.lock_state AS "lockState",
+        a.lock_time AS "lockTime",
+        a.is_bind_bank_card AS "isBindBankCard",
+        a.bankname AS "bankname",
+        a.bankAddress AS "bankaddress",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.company_address AS "companyAddress",
+        a.cooperation_plan AS "cooperationPlan",
+        a.business_license AS "businessLicense",
+        a.legal_person_idcard AS "legalPersonIdcard",
+        a.docking_sex AS "dockingSex",
+        a.docking_department AS "dockingDepartment",
+        a.docking_job AS "dockingJob",
+        a.docking_idscanning AS "dockingIdscanning",
+        a.user_from AS "userFrom",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        u.login_name AS "user.loginName",
+        u.name AS "user.name",
+        u.email AS "user.email",
+        u.phone AS "user.phone",
+        u.login_ip AS "user.loginIp",
+        u.login_Date AS "user.loginDate",
+        ruc.audit_state AS "p2pRegUserCertify.auditState"
+    </sql>
+
+    <sql id="p2pUserInformationJoins">
+        LEFT JOIN sys_user u ON u.id = a.user_id
+        LEFT JOIN p2p_reg_user_certify ruc ON ruc.user_id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pUserInformation">
+        SELECT
+        <include refid="p2pUserInformationColumns"/>
+        FROM p2p_user_information a
+        <include refid="p2pUserInformationJoins"/>
+        WHERE a.user_id = #{user_id}
+    </select>
+
+    <select id="findList" resultType="P2pUserInformation">
+        SELECT
+        <include refid="p2pUserInformationColumns"/>
+        FROM p2p_user_information a
+        <include refid="p2pUserInformationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id = #{user.id}
+            </if>
+            <if test="userBodyType != null and userBodyType != ''">
+                AND a.user_body_type = #{userBodyType}
+            </if>
+            <if test="userpic != null and userpic != ''">
+                AND a.userpic = #{userpic}
+            </if>
+            <if test="regTime != null and regTime != ''">
+                AND a.reg_time = #{regTime}
+            </if>
+            <if test="certificateState != null and certificateState != ''">
+                AND a.certificate_state = #{certificateState}
+            </if>
+            <if test="lockState != null and lockState != ''">
+                AND a.lock_state = #{lockState}
+            </if>
+            <if test="lockTime != null and lockTime != ''">
+                AND a.lock_time = #{lockTime}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pUserInformation">
+        SELECT
+        <include refid="p2pUserInformationColumns"/>
+        FROM p2p_user_information a
+        <include refid="p2pUserInformationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_user_information(
+        id,
+        user_id,
+        user_body_type,
+        userpic,
+        reg_time,
+        certificate_state,
+        lock_state,
+        lock_time,
+        is_bind_bank_card,
+        company_address,
+        cooperation_plan,
+        business_license,
+        legal_person_idcard,
+        docking_sex,
+        docking_department,
+        docking_job,
+        docking_idscanning,
+        user_from,
+        bankName,
+        bankAddress,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{userBodyType},
+        #{userpic},
+        #{regTime},
+        #{certificateState},
+        #{lockState},
+        #{lockTime},
+        #{isBindBankCard},
+        #{companyAddress},
+        #{cooperationPlan},
+        #{businessLicense},
+        #{legalPersonIdcard},
+        #{dockingSex},
+        #{dockingDepartment},
+        #{dockingJob},
+        #{dockingIdscanning},
+        #{userFrom},
+        #{bankname},
+        #{bankaddress},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_user_information SET
+        user_id = #{user.id},
+        user_body_type = #{userBodyType},
+        userpic = #{userpic},
+        reg_time = #{regTime},
+        certificate_state = #{certificateState},
+        lock_state = #{lockState},
+        lock_time = #{lockTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_user_information SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 用户注册时添加用户其他信息 -->
+    <insert id="userRegister" parameterType="P2pUserInformation">
+        INSERT INTO p2p_user_information(
+        id,
+        user_id,
+        user_body_type,
+        reg_time,
+        certificate_state,
+        userpic
+        )VALUES(
+        #{id},
+        #{user.id},
+        #{userBodyType},
+        #{regTime},
+        #{certificateState},
+        #{userpic}
+        )
+    </insert>
+
+    <!-- 後台銀行賬戶添加时添加用户其他信息 -->
+    <insert id="bankRegister" parameterType="P2pUserInformation">
+        INSERT INTO p2p_user_information(
+        id,
+        user_id,
+        user_body_type,
+        userpic,
+        reg_time,
+        certificate_state,
+        lock_state,
+        is_bind_bank_card,
+        company_address,
+        cooperation_plan,
+        business_license,
+        legal_person_idcard,
+        docking_sex,
+        docking_department,
+        docking_job,
+        docking_idscanning,
+        user_from,
+        bankName,
+        bankAddress
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{userBodyType},
+        #{userpic},
+        #{regTime},
+        #{certificateState},
+        #{lockState},
+        #{isBindBankCard},
+        #{companyAddress},
+        #{cooperationPlan},
+        #{businessLicense},
+        #{legalPersonIdcard},
+        #{dockingSex},
+        #{dockingDepartment},
+        #{dockingJob},
+        #{dockingIdscanning},
+        #{userFrom},
+        #{bankname},
+        #{bankaddress}
+        )
+    </insert>
+
+    <!-- 根据用户账号ID查询用户认证状态 -->
+    <select id="findCertificateState" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT certificate_state FROM p2p_user_information WHERE user_id = #{userId}
+    </select>
+
+    <!-- 通过用户ID修改用户账号认证状态 -->
+    <update id="updateCertificateState" parameterType="P2pUserInformation">
+        UPDATE p2p_user_information SET certificate_state = #{certificateState} WHERE user_id = #{user.id}
+    </update>
+
+    <!-- 通过用户ID修改银行卡绑定状态状态 -->
+    <update id="updateBindState" parameterType="P2pUserInformation">
+        UPDATE p2p_user_information SET is_bind_bank_card = #{isBindBankCard} WHERE user_id = #{user.id}
+    </update>
+
+    <!-- 通过用户ID查询密码锁定状态 -->
+    <select id="findLockState" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT lock_state FROM p2p_user_information WHERE user_id = #{userId}
+    </select>
+
+    <!-- 通过用户ID修改密码锁定状态 -->
+    <update id="updateLockState" parameterType="P2pUserInformation">
+        UPDATE p2p_user_information SET lock_state = #{lockState} WHERE user_id = #{user.id}
+    </update>
+
+    <!-- 通过用户ID修改密码锁定时间 -->
+    <update id="updateLockTime" parameterType="P2pUserInformation">
+        UPDATE p2p_user_information SET lock_time = #{lockTime} WHERE user_id = #{user.id}
+    </update>
+
+    <!-- 通过用户主体类型查询用户数量 -->
+    <select id="findMaxIdByUserBodyType" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT count(id) FROM p2p_user_information
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                user_body_type = #{_parameter}
+            </if>
+        </where>
+    </select>
+
+    <!-- 定时解锁用户账号锁定状态 -->
+    <update id="clearLockState">
+        UPDATE p2p_user_information SET lock_state = 0,lock_time = null
+    </update>
+
+    <!-- 查询投资机构列表 -->
+    <select id="findBankList" resultType="P2pUserInformation">
+        SELECT
+        <include refid="p2pUserInformationColumns"/>
+        FROM p2p_user_information a
+        <include refid="p2pUserInformationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+            </if>
+            <if test="bankname != null and bankname != ''">
+                AND a.bankname LIKE CONCAT(CONCAT('%',#{bankname}),'%')
+            </if>
+            <if test="user != null and user.name != null and user.name != ''">
+                AND u.name LIKE CONCAT(CONCAT('%',#{user.name}),'%')
+            </if>
+            AND a.user_body_type = '3'
+        </where>
+        ORDER BY a.id
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                , ${page.orderBy}
+            </when>
+            <otherwise>
+                , a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findP2pUserInformationByUser" parameterType="User" resultType="P2pUserInformation">
+        SELECT *
+        FROM p2p_user_information
+        WHERE user_id = #{id}
+    </select>
+
+    <!-- 查询今日注册的用户数量 -->
+    <select id="selectTodayRegUsersCount" resultType="Integer">
+        select count(id) from p2p_user_information where date(reg_time)=CURDATE();
+    </select>
+
+
+    <!-- 添加用户头像 -->
+    <insert id="saveUserPic">
+        INSERT INTO p2p_user_information userpic
+        VALUES #{userpic}
+        WHERE user_id = #{user.id}
+    </insert>
+    <!-- 更新用户头像 -->
+    <update id="updateUserPic">
+        UPDATE p2p_user_information SET userpic=#{userpic} WHERE user_id = #{user.id}
+    </update>
+
+    <!-- 查询用户头像 -->
+    <select id="findUserPicByUserId" parameterType="User" resultType="P2pUserInformation">
+        SELECT userpic FROM p2p_user_information WHERE user_id = #{user.id}
+    </select>
+
+    <!-- 查询用户头像 -->
+    <select id="findFinancingUserPicById" resultType="P2pUserInformation">
+        SELECT userpic FROM
+        p2p_user_information a
+        LEFT JOIN p2p_financing_information b
+        ON a.user_id = b.applicants_id
+        WHERE b.id = #{id}
+    </select>
+
+    <select id="getByUserId" resultType="P2pUserInformation">
+        SELECT * FROM p2p_user_information a
+        WHERE a.user_id = #{userId}
+    </select>
+
+    <!-- 根据userid修改状态 -->
+    <update id="updateState">
+        UPDATE p2p_user_information SET certificate_state=#{certificateState} WHERE user_id = #{userId}
+    </update>
+
+    <!-- Quincy 根据用户ID修改联系人信息 -->
+    <update id="updateContactInfo" parameterType="P2pUserInformation">
+        UPDATE
+        p2p_user_information
+        SET
+        contact_name = #{contactName},
+        contact_phone = #{contactPhone},
+        contact_address = #{contactAddress},
+        contact_post = #{contactPost}
+        WHERE
+        user_id = #{user.id}
+    </update>
+
+    <!-- Quincy 查询融资企业联系人信息 -->
+    <select id="findContactInfo" parameterType="java.lang.String" resultType="P2pUserInformation">
+        SELECT
+        contact_name AS "contactName",
+        contact_phone AS "contactPhone",
+        contact_address AS "contactAddress",
+        contact_post AS "contactPost"
+        FROM
+        p2p_user_information
+        WHERE
+        user_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 根据用户ID修改对接人信息 -->
+    <update id="updateDockedInfo" parameterType="P2pUserInformation">
+        UPDATE
+        p2p_user_information
+        SET
+        docking_sex = #{dockingSex},
+        docking_department = #{dockingDepartment},
+        docking_job = #{dockingJob}
+        WHERE
+        user_id = #{user.id}
+    </update>
+
+    <!-- Quincy 根据用户ID修改对接人姓名 -->
+    <update id="updateDockedName" parameterType="user">
+        UPDATE
+        sys_user
+        SET
+        name = #{name}
+        WHERE
+        id = #{id}
+    </update>
+    <!-- Chace 查询机构用户对接人信息 -->
+    <select id="findDockedInfo" parameterType="P2pUserInformation" resultType="P2pUserInformation">
+        SELECT
+        a.docking_sex AS "dockingSex",
+        a.docking_department AS "dockingDepartment",
+        a.docking_job AS "dockingJob"
+        FROM p2p_user_information a
+        WHERE a.user_id = #{user.id}
+    </select>
+
+    <!-- Chace 根据用户id查询机构用户联系方式 -->
+    <select id="getContactByUserId" parameterType="P2pUserInformation" resultType="P2pUserInformation">
+        SELECT
+        a.bankName,
+        a.bankAddress,
+        b.name AS "user.name",
+        a.docking_department,
+        a.docking_job,
+        b.phone AS "user.phone"
+        FROM p2p_user_information a
+        LEFT JOIN sys_user b ON a.user_id = b.id
+        WHERE a.user_id = #{user.id}
+    </select>
+</mapper>

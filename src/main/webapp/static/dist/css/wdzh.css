@@ -1,0 +1,545 @@
+/*右侧上方左侧*/
+.zh-right-top-left {
+    width: 60%;
+}
+
+.zh-right-top-left-left {
+    width: 21%;
+}
+
+.zh-right-top-left-left img {
+    width: 100%;
+}
+
+.zh-right-top-left-left h2 {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+}
+
+.zh-right-top-left-right {
+    width: 79%;
+    padding-left: 11%;
+}
+
+.zh-right-top-left-right p span {
+    color: #8c8c8c;
+}
+
+.zh-right-top-left-right p span.strong_w {
+    margin-right: 5%;
+}
+
+.zh-right-top-left-right p span.red {
+    color: #bf1a20;
+}
+
+.zh-right-top-left-right p a {
+    color: #2481e0;
+}
+
+.zh-right-top-left-right p span strong.strong_wd {
+    margin: 0 1%;
+}
+
+/*右侧上方右侧*/
+.zh-right-top-right {
+    width: 40%;
+    text-align: center;
+    border-left: 1px solid #cccccc;
+    padding: 0 2%;
+}
+
+.zh-right-top-right strong {
+    color: #bf1a20;
+    font-size: 20px;
+}
+
+.zh-right-top-right-top {
+    width: 81%;
+    border-bottom: 1px solid #cccccc;
+}
+
+/*右侧下方*/
+.zh-right-bot {
+    padding-top: 20px;
+}
+
+.zh-right-bot-table {
+    text-align: center;
+}
+
+.zh-right-bot-table thead tr {
+    height: 50px;
+    word-break: keep-all;
+    background: #ebeaea;
+}
+
+.zh-right-bot-table tbody tr td:first-child {
+    font-size: 12px;
+    color: #4896e5;
+}
+
+.zh-right-bot-table tbody tr td:nth-child(2) {
+    font-size: 12px;
+    color: #4896e5;
+}
+
+.zh-right-bot-table tbody tr td:nth-child(5) {
+    color: #bf1a20;
+}
+
+.zh-right-bot-table tbody tr td:nth-child(6) {
+    color: #4896e5;
+}
+
+/*立即投资*/
+.wdzh-ljt {
+    display: block;
+    font-size: 12px;
+    padding: 5px;
+    background: #bf1a20;
+    color: #FFFFFF;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/*已认证*/
+.zh-right-top-left-right span.wdzh-yrz {
+    color: #4896e5;
+}
+
+/*已绑定*/
+.zh-right-top-left-right span.wdzh-ybd {
+
+    color: #05c228;
+}
+
+/*我的账户-会员管理*/
+.zh-right-div {
+    width: 67%;
+    margin-bottom: 500px;
+}
+
+.zh-right-div h3 {
+    color: #bf1a20;
+}
+
+.zh-right-div h3 span {
+    color: #c6c5c5;
+}
+
+.zh-right-div h4 button {
+    background: #529ffd;
+    border: 0;
+    margin-left: 15%;
+    margin-bottom: 1%;
+    padding: 1% 6%;
+}
+
+.zh-right-div h4 span {
+    color: #bf1a20;
+}
+
+.zh-right-div h4 span.date {
+    color: #666666;
+}
+
+.zh-right-div h4, .zh-right-div h5 {
+    margin: 18px 0 0 21%;
+    color: #333333;
+}
+
+.zh-right-div h5 {
+    color: #8c8c8c;
+}
+
+.zh-right-div h5 span {
+    color: #bf1a20;
+}
+
+.zh-right-hygl {
+    text-align: center;
+    font-size: 16px;
+    padding-top: 130px;
+    margin-bottom: 234px;
+}
+
+/*免费开通*/
+.zh-right-hygl .mfhy {
+    display: inline-block;
+    background: url("../images/wdzh_xl.png") no-repeat;
+    padding-left: 80px;
+    color: #333333;
+    font-weight: 700;
+    line-height: 60px;
+    margin-bottom: 38px;
+}
+
+.zh-right-hygl .qd_btn, .zh-right-div .mfkt_btn {
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    background: #f2434a;
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+.zh-right-div .mfkt_btn {
+    text-align: center;
+    font-size: 16px;
+    margin: 60px 0 0 200px;
+}
+
+/*我的账户-管理银行卡*/
+.zh-right-div-wdyhk h3 {
+    color: #bf1a20;
+    font-weight: 600;
+}
+
+.zh-right-div-wdyhk h4 {
+    color: #000000;
+}
+
+.zh-right-div-wdyhk h4 span {
+    color: #8c8c8c;
+}
+
+/*分页*/
+.zh-right-bot-fenye {
+    padding-bottom: 50px;
+}
+
+.xxzx_bot_rt .holder {
+    margin: 0;
+}
+
+.holder a {
+    padding: 5px;
+    background: #ffffff;
+    border: 1px solid #ebeaea;
+}
+
+.holder a.jp-previous {
+    background: #ffffff;
+    margin: 0;
+}
+
+/*投资引导页*/
+.zh-right-tzydy {
+    padding-bottom: 150px;
+}
+
+.bg {
+    background-image: url("../images/icn-xbt.png");
+    background-repeat: no-repeat;
+}
+
+.rzbz_box .active_red {
+    color: #bf1a20;
+}
+
+.zh-left ul.zhzl .tz-active a {
+    color: #C1181D;
+}
+
+.rzbz_list1 {
+    padding-top: 10px;
+}
+
+.rzbz_list1 li {
+    font-size: 18px;
+    color: #909090;
+    line-height: 42px;
+}
+
+.rzbz_list1 li:not(:last-of-type) {
+    margin-right: 6%;
+}
+
+.rzbz_list2 .icn_lis {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-position: -58px 0;
+    position: relative;
+    margin: 0 3.5%;
+}
+
+.rzbz_list2 .active_bgred {
+    background-position: 0 0;
+}
+
+.rzbz_list2 .icn_lis span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.rzbz_list2 .icn_lis:nth-of-type(1) span {
+    width: 28px;
+    height: 37px;
+    margin: -18px -14px;
+    background-position: 0px -56px;
+
+}
+
+.rzbz_list2 .icn_lis:nth-of-type(3) span {
+    width: 40px;
+    height: 38px;
+    margin: -20px -22px;
+    background-position: -143px -56px;
+}
+
+.rzbz_list2 .icn_lis:nth-of-type(5) span {
+    width: 46px;
+    height: 28px;
+    margin: -14px -22px;
+    background-position: -87px -56px;
+}
+
+.rzbz_list2 .icn_lis:nth-of-type(7) span {
+    width: 28px;
+    height: 36px;
+    margin: -18px -14px;
+    background-position: -43px -56px;
+}
+
+.hx_lis {
+    width: 92px;
+    height: 10px;
+    border-radius: 10px;
+    border: 1px solid #909090;
+    margin-top: 22px;
+}
+
+.input-group {
+    width: 90%;
+}
+
+.form-group > span {
+    font-size: 16px;
+    color: #909090;
+    width: 22%;
+    text-align: right;
+}
+
+.form-group .btn-default {
+    margin-left: 0;
+}
+
+.kv-fileinput-upload {
+    height: 34px;
+    width: 49%;
+    margin-bottom: 5px;
+}
+
+.fileinput-remove-button {
+    height: 34px;
+    width: 49%;
+}
+
+.kv-fileinput-upload {
+    display: none;
+}
+
+.btn-primary {
+    background-color: #f2434a;
+    border-color: #ccc;
+    color: #fff;
+    width: 49%;
+}
+
+.form-horizontal .has-feedback .form-control-feedback {
+    right: 15px;
+}
+
+.btn-primary:hover {
+    background-color: #909090;
+    border-color: #909090;
+    color: #fff;
+}
+
+.btn-primary:focus {
+    background-color: #909090;
+    border-color: #909090;
+    color: #fff;
+}
+
+.btn-primary.active.focus, .btn-primary.active:focus, .btn-primary.active:hover, .btn-primary:active.focus, .btn-primary:active:focus, .btn-primary:active:hover, .open > .dropdown-toggle.btn-primary.focus, .open > .dropdown-toggle.btn-primary:focus, .open > .dropdown-toggle.btn-primary:hover {
+    background-color: #909090;
+    border-color: #909090;
+    color: #fff;
+}
+
+.file-thumbnail-footer {
+    display: none;
+}
+
+.form-horizontal {
+    margin-top: 50px;
+    width: 99%;
+    position: relative;
+}
+
+.btn-info {
+    margin-left: 20px
+}
+
+#input1 {
+    width: 30%;
+}
+
+.has-feedback .form-control {
+    height: 30px;
+    padding: 0 12px;
+}
+
+/*rzzb*/
+.breadcrumb .wdwz + li:before {
+    padding: 0;
+    content: "";
+}
+
+.zh-con .rzsq_box {
+    width: 76.39%;
+    margin: 56px auto 80px;
+}
+
+.rzsq_box .yhxz {
+    text-align: center;
+    padding-bottom: 58px;
+    background: #ededed;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, .2);
+    margin-bottom: 18px;
+    border-radius: 5px;
+}
+
+.rzsq_box h3, .rzsq_box h4, .rzsq_box p {
+    margin: 0;
+}
+
+.yhxz h4 {
+    color: #333333;
+    line-height: 50px;
+}
+
+.yhxz p {
+    color: #999999;
+    line-height: 28px;
+}
+
+.padTop {
+    padding-top: 42px;
+}
+
+.rzsq_box h3 {
+    color: #bf1a20;
+    font-size: 22px;
+    line-height: 40px;
+    padding: 0 0 0 16px;
+    background: url("../../dist/images/index-xinyong-bg_07.png") repeat-x left bottom;
+    margin-bottom: 10px;
+}
+
+.table {
+    margin-bottom: 0px;
+}
+
+.rzsq_box .table > thead > tr > th {
+    border-bottom: none;
+    text-align: center;
+    background: #d5dbde;
+    font-size: 16px;
+}
+
+.rzsq_box .table > thead > tr > th:nth-of-type(1) {
+    width: 13%;
+}
+
+.rzsq_box .table > thead > tr > th:nth-of-type(2) {
+    width: 22%;
+}
+
+.rzsq_box .table > tbody > tr:nth-of-type(1) > th, .rzsq_box .table > tbody > tr:nth-of-type(1) > td {
+    border-top: none;
+}
+
+.rzsq_box .table > tbody > tr > th {
+    text-align: center;
+    font-size: 16px;
+    font-weight: normal;
+    border: 1px solid #999999;
+}
+
+.rzsq_box .table > tbody > tr > td {
+    font-size: 16px;
+    border: 1px solid #999999;
+    padding: 10px 0 10px 14px;
+}
+
+.rztj p {
+    line-height: 30px;
+    font-size: 18px;
+    padding-left: 8%;
+    color: #8c8c8c;
+}
+
+.rztj p:nth-of-type(3) {
+    color: #333333;
+    font-size: 16px;
+    line-height: 34px;
+    margin-top: 24px;
+}
+
+.fysm h4 {
+    margin: 14px 0 0 0;
+    line-height: 34px;
+    padding-left: 16px;
+}
+
+.fysm p {
+    line-height: 34px;
+    font-size: 16px;
+    padding-left: 16px;
+    color: #999999;
+}
+
+.rzsq_box .xxpl .table > tbody > tr > td {
+    width: 33.3%;
+    font-size: 18px;
+    border: none;
+    padding: 8px 0 8px 12%;
+
+}
+
+.rzsq_box .xxpl .table > tbody > tr:nth-of-type(odd) {
+    background: #e4e4e4;
+}
+
+.checkBox {
+    font-size: 18px;
+    padding-top: 140px;
+    text-align: center;
+}
+
+.checkBox label {
+    font-weight: normal;
+}
+
+.checkBox label span {
+    margin-left: 10px;
+}
+
+.btn_box {
+    text-align: center;
+    margin-top: 120px;
+}
+
+.btn_box .btn {
+    width: 86px;
+    font-size: 16px;
+    padding: 0;
+    line-height: 30px;
+}

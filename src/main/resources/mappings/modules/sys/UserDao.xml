@@ -1,0 +1,1078 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.UserDao">
+
+    <!-- <resultMap id="userResult" type="User">
+        <id property="id" column="id" />
+        <result property="company.id" column="company.id" />
+        <result property="office.id" column="office.id" />
+        <result property="loginName" column="login_name" />
+        <result property="password" column="password" />
+        <result property="no" column="no" />
+        <result property="name" column="name" />
+        <result property="email" column="email" />
+        <result property="phone" column="phone" />
+        <result property="mobile" column="mobile" />
+        <result property="userType" column="user_type" />
+        <result property="loginIp" column="login_ip" />
+        <result property="loginDate" column="login_date" />
+        <result property="remarks" column="remarks" />
+        <result property="loginFlag" column="loginFlag" />
+        <result property="photo" column="photo" />
+        <result property="createBy.id" column="createBy.id" />
+        <result property="createDate" column="create_date" />
+        <result property="updateBy.id" column="updateBy.id" />
+        <result property="updateDate" column="update_date" />
+        <result property="company.name" column="company.name" />
+        <result property="company.parentId" column="company.parentId" />
+        <result property="company.parentIds" column="company.parentIds" />
+        <result property="company.area.id" column="company.area.id" />
+        <result property="company.area.name" column="company.area.name" />
+        <result property="company.area.parentId" column="company.area.parentId" />
+        <result property="company.area.parentIds" column="company.area.parentIds" />
+        <result property="company.primaryPerson.id" column="company.primaryPerson.id" />
+        <result property="company.primaryPerson.name" column="company.primaryPerson.name" />
+        <result property="company.deputyPerson.id" column="company.deputyPerson.id" />
+        <result property="company.deputyPerson.name" column="company.deputyPerson.name" />
+        <result property="office.name" column="office.name" />
+        <result property="office.parentId" column="office.parentId" />
+        <result property="office.parentIds" column="office.parentIds" />
+        <result property="office.area.id" column="office.area.id" />
+        <result property="office.area.name" column="office.area.name" />
+        <result property="office.area.parentId" column="office.area.parentId" />
+        <result property="office.area.parentIds" column="office.area.parentIds" />
+        <result property="office.primaryPerson.id" column="office.primaryPerson.id" />
+        <result property="office.primaryPerson.name" column="office.primaryPerson.name" />
+        <result property="office.deputyPerson.id" column="office.deputyPerson.id" />
+        <result property="office.deputyPerson.name" column="office.deputyPerson.name" />
+        <collection property="roleList" ofType="Role">
+            <id property="id" column="roleList.id" />
+            <result property="office.id" column="roleList.office.id" />
+            <result property="name" column="roleList.name" />
+            <result property="enname" column="roleList.enname" />
+            <result property="roleType" column="roleList.roleType" />
+            <result property="dataScope" column="roleList.dataScope" />
+            <collection property="officeList" ofType="Office">
+                <id property="id" column="roleList.officeList.id" />
+            </collection>
+        </collection>
+    </resultMap> -->
+
+    <sql id="userColumns">
+        a.id,
+        a.relation_id AS "relationId",
+        a.company_id AS "company.id",
+        a.office_id AS "office.id",
+        a.login_name,
+        a.password,
+        a.no,
+        a.name,
+        a.email,
+        a.phone,
+        a.mobile,
+        a.user_type,
+        a.login_ip,
+        a.login_date,
+        a.remarks,
+        a.login_flag,
+        a.photo,
+        a.create_by AS "createBy.id",
+        a.create_date,
+        a.update_by AS "updateBy.id",
+        a.update_date,
+        a.del_flag,
+        a.password_modify_date,
+        c.name AS "company.name",
+        c.parent_id AS "company.parent.id",
+        c.parent_ids AS "company.parentIds",
+        ca.id AS "company.area.id",
+        ca.name AS "company.area.name",
+        ca.parent_id AS "company.area.parent.id",
+        ca.parent_ids AS "company.area.parentIds",
+        o.name AS "office.name",
+        o.parent_id AS "office.parent.id",
+        o.parent_ids AS "office.parentIds",
+        oa.id AS "office.area.id",
+        oa.name AS "office.area.name",
+        oa.parent_id AS "office.area.parent.id",
+        oa.parent_ids AS "office.area.parentIds",
+        cu.id AS "company.primaryPerson.id",
+        cu.name AS "company.primaryPerson.name",
+        cu2.id AS "company.deputyPerson.id",
+        cu2.name AS "company.deputyPerson.name",
+        ou.id AS "office.primaryPerson.id",
+        ou.name AS "office.primaryPerson.name",
+        ou2.id AS "office.deputyPerson.id",
+        ou2.name AS "office.deputyPerson.name"<!-- ,
+        r.id AS "roleList.id",
+        r.office_id AS "roleList.office.id",
+        r.name AS "roleList.name",
+        r.enname AS "roleList.enname",
+        r.role_type AS "roleList.roleType",
+        r.data_scope AS "roleList.dataScope" -->
+    </sql>
+
+    <sql id="userColumnsTwo">
+        a.id,
+        a.relation_id AS "relationId",
+        a.company_id AS "company.id",
+        a.office_id AS "office.id",
+        a.login_name,
+        a.password,
+        a.no,
+        a.name,
+        a.email,
+        a.phone,
+        a.mobile,
+        a.user_type,
+        a.login_ip,
+        a.login_date,
+        a.remarks,
+        a.login_flag,
+        a.photo,
+        a.create_by AS "createBy.id",
+        a.create_date,
+        a.update_by AS "updateBy.id",
+        a.update_date,
+        a.del_flag,
+        a.password_modify_date
+    </sql>
+
+    <sql id="userJoins">
+        LEFT JOIN sys_office c ON c.id = a.company_id
+        LEFT JOIN sys_area ca ON ca.id = c.area_id
+        LEFT JOIN sys_office o ON o.id = a.office_id
+        LEFT JOIN sys_area oa ON oa.id = o.area_id
+        LEFT JOIN sys_user cu ON cu.id = c.primary_person
+        LEFT JOIN sys_user cu2 ON cu2.id = c.deputy_person
+        LEFT JOIN sys_user ou ON ou.id = o.primary_person
+        LEFT JOIN sys_user ou2 ON ou2.id = o.deputy_person<!--
+		LEFT JOIN sys_user_role ur ON ur.user_id = a.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id -->
+    </sql>
+
+    <!-- 更新User表的email字段 -->
+    <update id="updateByEmail" parameterType="User">
+        UPDATE sys_user
+        SET email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据编号获得用户 -->
+    <select id="get" resultType="User">
+        SELECT
+        <include refid="userColumns"/><!-- ,
+			ro.office_id AS "roleList.officeList.id" -->
+        FROM sys_user a
+        <include refid="userJoins"/><!--
+		LEFT JOIN sys_role_office ro ON ro.role_id = r.id -->
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="get2" resultType="User">
+        SELECT
+        <include refid="userColumnsTwo"/>
+        FROM sys_user a
+        WHERE a.id= #{id}
+    </select>
+
+    <!-- 根据登录名查询用户 -->
+    <select id="getByLoginName" resultType="User" parameterType="User">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        WHERE a.login_name = #{loginName} AND a.del_flag = '0'
+    </select>
+
+    <!-- 分页查询用户信息 -->
+    <select id="findList" resultType="User">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        <if test="role != null and role.id != null and role.id != ''">
+            JOIN sys_user_role ur ON ur.user_id = a.id AND ur.role_id = #{role.id}
+        </if>
+        WHERE a.del_flag = 0
+        <if test="company != null and company.id != null and company.id != ''">
+            AND (c.id = #{company.id} OR c.parent_ids LIKE
+            <if test="dbName == 'oracle'">'%,'||#{company.id}||',%')</if>
+            <if test="dbName == 'mssql'">'%,'+#{company.id}+',%')</if>
+            <if test="dbName == 'mysql'">CONCAT('%,', #{company.id}, ',%'))</if>
+        </if>
+        <if test="office != null and office.id != null and office.id != ''">
+            AND (o.id = #{office.id} OR o.parent_ids LIKE
+            <if test="dbName == 'oracle'">'%,'||#{office.id}||',%')</if>
+            <if test="dbName == 'mssql'">'%,'+#{office.id}+',%')</if>
+            <if test="dbName == 'mysql'">CONCAT('%,', #{office.id}, ',%'))</if>
+        </if>
+        <!-- 如果不是超级管理员，则不显示超级管理员用户 -->
+        <if test="!currentUser.admin">
+            AND a.id != '1'
+        </if>
+        <if test="loginName != null and loginName != ''">
+            AND a.login_name like
+            <if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+            <if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+            <if test="dbName == 'mysql'">CONCAT('%', #{loginName}, '%')</if>
+        </if>
+        <if test="name != null and name != ''">
+            AND a.name like
+            <if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+            <if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+            <if test="dbName == 'mysql'">CONCAT('%', #{name}, '%')</if>
+        </if>
+        <!-- 数据范围过滤 -->
+        ${sqlMap.dsf}
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY c.code, o.code, a.name
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 根据OfficeId获取用户（树查询用户时用） -->
+    <select id="findUserByOfficeId" resultType="User" useCache="true">
+        SELECT
+        a.id, a.name, a.login_name
+        FROM sys_user a
+        WHERE a.del_flag = 0
+        AND a.office_id = #{office.id}
+        ORDER BY a.name
+    </select>
+
+    <!-- 查询全部用户 -->
+    <select id="findAllList" resultType="User">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        WHERE a.del_flag = 0
+        ORDER BY c.code, o.code, a.name
+    </select>
+
+    <!-- 查询全部前台用户 -->
+    <select id="findAllPersonal" resultType="User">
+        SELECT
+        <include refid="userColumnsTwo"/>
+        FROM sys_user a
+        WHERE a.office_id='100'
+    </select>
+    <!-- 查询偿债分析师和准入分析师的name -->
+    <select id="findThePersonNameList" resultType="User" parameterType="User">
+        select b.name from sys_user_role a join sys_user b on b.id=a.user_id join sys_role c on a.role_id=c.id where
+        c.name=#{name}
+    </select>
+
+    <!-- 查询全部用户数目 -->
+    <select id="findAllCount" resultType="long">
+        SELECT
+        COUNT(*)
+        FROM sys_user a
+        WHERE a.del_flag = 0
+    </select>
+
+    <!-- 插入用户 -->
+    <insert id="insert">
+        INSERT INTO sys_user(
+        id,
+        relation_id,
+        company_id,
+        office_id,
+        login_name,
+        password,
+        no,
+        name,
+        email,
+        phone,
+        mobile,
+        user_type,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        login_flag,
+        photo,
+        del_flag,
+        password_modify_date
+        ) VALUES (
+        #{id},
+        #{relationId},
+        #{company.id},
+        #{office.id},
+        #{loginName},
+        #{password},
+        #{no},
+        #{name},
+        #{email},
+        #{phone},
+        #{mobile},
+        #{userType},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{loginFlag},
+        #{photo},
+        #{delFlag},
+        NOW()
+        )
+    </insert>
+
+    <!-- 更新用户 -->
+    <update id="update">
+        UPDATE sys_user SET
+        relation_id = #{relationId},
+        company_id = #{company.id},
+        office_id = #{office.id},
+        login_name = #{loginName},
+        password = #{password},
+        no = #{no},
+        name = #{name},
+        email = #{email},
+        phone = #{phone},
+        mobile = #{mobile},
+        user_type = #{userType},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks},
+        login_flag = #{loginFlag},
+        photo = #{photo},
+        password_modify_date = now()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除用户和角色关联表数据 -->
+    <delete id="deleteUserRole">
+        DELETE FROM sys_user_role WHERE user_id = #{id}
+    </delete>
+
+    <!-- 插入用户和角色关联表数据 -->
+    <insert id="insertUserRole">
+        INSERT INTO sys_user_role(user_id, role_id)
+        <foreach collection="roleList" item="role" separator=" union all ">
+            SELECT #{id}, #{role.id}
+            <if test="dbName != 'mssql'">
+                FROM dual
+            </if>
+        </foreach>
+    </insert>
+
+    <!-- 更新用户信息  -->
+    <update id="updateUserInfo">
+        UPDATE sys_user SET
+        email = #{email},
+        phone = #{phone},
+        mobile = #{mobile},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 更新用户密码 -->
+    <update id="updatePasswordById">
+        UPDATE sys_user SET
+        password = #{password},
+        password_modify_date = now()
+        WHERE id = #{id}
+    </update>
+
+    <!-- 更新登录信息，如登录IP、登录时间 -->
+    <update id="updateLoginInfo">
+        UPDATE sys_user SET
+        login_ip = #{loginIp},
+        login_Date = #{loginDate}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 逻辑删除用户 -->
+    <update id="delete">
+        UPDATE sys_user SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 验证用户名是否被注册 -->
+    <select id="getLoginName" parameterType="User" resultType="User">
+        SELECT id
+        FROM sys_user
+        where login_name=#{loginName}
+    </select>
+
+    <!-- 验证手机号是否被注册 -->
+    <select id="getPhone" parameterType="User" resultType="User">
+        SELECT id
+        FROM sys_user
+        WHERE phone = #{phone}
+    </select>
+
+    <!-- 前台用户登录验证 -->
+    <select id="userLogin" parameterType="User" resultType="User">
+        SELECT id,login_name,password,phone,user_type
+        FROM sys_user
+        WHERE
+        login_name = #{loginName}
+        AND user_type = #{userType}
+        AND del_flag = 0
+    </select>
+
+    <!-- 修改登录时间 -->
+    <update id="updateLoginDate" parameterType="User">
+        UPDATE sys_user SET login_date = #{loginDate} WHERE id = #{id}
+    </update>
+
+
+    <select id="getUserFromId" resultType="User" parameterType="String">
+        SELECT
+        a.id AS id,
+        a.login_name AS "loginName",
+        a.password AS "password"
+        FROM sys_user a
+        WHERE a.id = #{id}
+    </select>
+    <!-- 查询今日登录的前台用户数量 -->
+    <select id="selectTodayLoginedUsersCount" resultType="Integer">
+        SELECT
+        count(*)
+        FROM
+        sys_user a
+        INNER JOIN p2p_user_information b ON a.id = b.user_id
+        WHERE
+        date(login_date) = CURDATE()
+    </select>
+    <!-- 查询前台总注册用户数量 -->
+    <select id="selectUsersCount" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        sys_user a
+        INNER JOIN p2p_user_information b ON a.id = b.user_id
+    </select>
+    <!-- 更换用户绑定手机 -->
+    <update id="updatePhoneById">
+        UPDATE sys_user SET phone = #{phone} WHERE id=#{id}
+    </update>
+
+
+    <!-- 获取用户id前缀为prefix的最大值 -->
+    <select id="getMaxId" resultType="java.lang.String">
+        SELECT id FROM sys_user WHERE id LIKE '${_parameter}%' ORDER BY id DESC LIMIT 1
+    </select>
+
+    <!-- 获取企业用户列表  -->
+    <select id="getEnterpriseList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        c.id AS "p2pEnterpriseCertify.id",
+        a.login_name AS "loginName",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.is_bind_bank_card AS "p2pUserInformation.isBindBankCard",
+        d.real_name AS "p2pRegUserCertify.realName",
+        d.audit_state AS "p2pRegUserCertify.auditState",
+        c.is_ent_legal_rep AS "p2pEnterpriseCertify.isEntLegalRep",
+        c.name_of AS "p2pEnterpriseCertify.nameOf",
+        a.phone AS "phone",
+        c.audit_state AS "p2pEnterpriseCertify.auditState",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        b.certificate_state AS "p2pUserInformation.certificateState"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_enterprise_certify c ON c.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify d ON d.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 1
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.auditState != null and p2pEnterpriseCertify.auditState != ''">
+            <if test="p2pEnterpriseCertify.auditState == 1">
+                AND c.audit_state = #{p2pEnterpriseCertify.auditState}
+            </if>
+            <if test="p2pEnterpriseCertify.auditState == 2">
+                AND (c.audit_state = #{p2pEnterpriseCertify.auditState}
+                OR c.audit_state = '3'
+                OR c.audit_state is null)
+            </if>
+        </if>
+        <if test="phone != null and phone != ''">
+            AND a.phone LIKE CONCAT(CONCAT('%',#{phone}),'%')
+        </if>
+        ORDER BY a.id desc
+    </select>
+
+
+    <!-- 获取企业其他基本信息 -->
+    <select id="getOtherBaseInfo" resultType="User">
+        SELECT
+        a.id,
+        a.login_name,
+        a.name,
+        a.email,
+        a.phone,
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.userpic AS "p2pUserInformation.userpic",
+        b.contact_name AS "p2pUserInformation.contactName",
+        b.contact_phone AS "p2pUserInformation.contactPhone",
+        b.contact_address AS "p2pUserInformation.contactAddress",
+        b.contact_post AS "p2pUserInformation.contactPost",
+        d.audit_state AS "p2pRegUserCertify.auditState",
+        d.real_name AS "p2pRegUserCertify.realName",
+        d.id_number AS "p2pRegUserCertify.idNumber",
+        c.audit_state AS "p2pEnterpriseCertify.auditState"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_enterprise_certify c ON c.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify d ON d.user_id = a.id
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 获取企业认证列表  -->
+    <select id="getEnterpriseCertifyList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        c.id AS "p2pEnterpriseCertify.id",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.user_body_type AS "p2pUserInformation.userBodyType",
+        c.unit_type AS "p2pEnterpriseCertify.unitType",
+        d.real_name AS "p2pRegUserCertify.realName",
+        d.audit_state AS "p2pRegUserCertify.auditState",
+        c.is_ent_legal_rep AS "p2pEnterpriseCertify.isEntLegalRep",
+        c.name_of AS "p2pEnterpriseCertify.nameOf",
+        c.audit_state AS "p2pEnterpriseCertify.auditState"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_enterprise_certify c ON c.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify d ON d.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 1
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="p2pRegUserCertify != null and p2pRegUserCertify.auditState != null and p2pRegUserCertify.auditState != ''">
+            AND d.audit_state = #{p2pRegUserCertify.auditState}
+        </if>
+        <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.auditState != null and p2pEnterpriseCertify.auditState != ''">
+            AND c.audit_state = #{p2pEnterpriseCertify.auditState}
+        </if>
+        ORDER BY d.audit_state desc,c.audit_state desc,a.id desc
+    </select>
+
+    <!-- 投机机构用户列表 -->
+    <select id="getAgencyList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        b.bankname AS "p2pUserInformation.bankname",
+        b.bankaddress AS "p2pUserInformation.bankaddress",
+        b.cooperation_plan AS "p2pUserInformation.cooperationPlan",
+        b.user_from AS "p2pUserInformation.userFrom",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 3
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="p2pUserInformation != null and p2pUserInformation.bankname != null and p2pUserInformation.bankname != ''">
+            AND b.bankname LIKE CONCAT(CONCAT('%',#{p2pUserInformation.bankname}),'%')
+        </if>
+        <if test="p2pUserInformation != null and p2pUserInformation.userFrom != null and p2pUserInformation.userFrom != ''">
+            AND b.user_from = #{p2pUserInformation.userFrom}
+        </if>
+        ORDER BY a.id desc
+    </select>
+
+    <!-- 投机机构基本信息  -->
+    <select id="getAgencyBaseInfo" parameterType="String" resultType="User">
+        SELECT
+        a.id AS "id",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+
+        b.user_body_type AS "p2pUserInformation.userBodyType",
+        b.userpic AS "p2pUserInformation.userpic",
+        b.reg_time AS "p2pUserInformation.regTime",
+        b.certificate_state AS "p2pUserInformation.certificateState",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        b.is_bind_bank_card AS "p2pUserInformation.isBindBankCard",
+        b.bankname AS "p2pUserInformation.bankname",
+        b.bankAddress AS "p2pUserInformation.bankaddress",
+        b.company_address AS "p2pUserInformation.companyAddress",
+        b.cooperation_plan AS "p2pUserInformation.cooperationPlan",
+        b.business_license AS "p2pUserInformation.businessLicense",
+        b.legal_person_idcard AS "p2pUserInformation.legalPersonIdcard",
+        b.docking_sex AS "p2pUserInformation.dockingSex",
+        b.docking_department AS "p2pUserInformation.dockingDepartment",
+        b.docking_job AS "p2pUserInformation.dockingJob",
+        b.docking_idscanning AS "p2pUserInformation.dockingIdscanning",
+        b.user_from AS "p2pUserInformation.userFrom"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        WHERE
+        a.id = #{userid}
+    </select>
+
+    <!-- 个人用户列表 -->
+    <select id="getPersonalList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        a.login_name AS "loginName",
+        a.name AS "name",
+        b.is_bind_bank_card AS "p2pUserInformation.isBindBankCard",
+        a.phone AS "phone",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        c.audit_state AS "p2pRegUserCertify.auditState",
+        d.total_score AS "p2pRiskRecord.totalScore",
+        b.certificate_state AS "p2pUserInformation.certificateState"
+        FROM
+        sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify c ON c.user_id = a.id
+        LEFT JOIN (select * from p2p_risk_record GROUP BY user_id) d ON d.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 2
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="name != null and name != ''">
+            AND a.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        <if test="p2pRegUserCertify != null and p2pRegUserCertify.auditState != null and p2pRegUserCertify.auditState != ''">
+            <if test="p2pRegUserCertify.auditState == 1">
+                AND c.audit_state = #{p2pRegUserCertify.auditState}
+            </if>
+            <if test="p2pRegUserCertify.auditState == 2">
+                AND (c.audit_state = #{p2pRegUserCertify.auditState}
+                OR c.audit_state = 3
+                OR c.audit_state is null)
+            </if>
+        </if>
+        ORDER BY a.id desc
+    </select>
+
+    <!-- 个人基本信息  -->
+    <select id="getPersonalBaseInfo" parameterType="String" resultType="User">
+        SELECT
+        a.id AS "id",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+
+        b.user_body_type AS "p2pUserInformation.userBodyType",
+        b.userpic AS "p2pUserInformation.userpic",
+        b.reg_time AS "p2pUserInformation.regTime",
+        b.certificate_state AS "p2pUserInformation.certificateState",
+        b.business_license AS "p2pUserInformation.businessLicense",
+        b.legal_person_idcard AS "p2pUserInformation.legalPersonIdcard",
+        b.docking_idscanning AS "p2pUserInformation.dockingIdscanning",
+        b.bankName AS "p2pUserInformation.bankname",
+        b.bankAddress AS "p2pUserInformation.bankaddress",
+        b.company_address AS "p2pUserInformation.companyAddress",
+        b.docking_department AS "p2pUserInformation.dockingDepartment",
+        b.docking_job AS "p2pUserInformation.dockingJob",
+        b.docking_sex AS "p2pUserInformation.dockingSex",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        b.is_bind_bank_card AS "p2pUserInformation.isBindBankCard",
+        c.audit_state AS "p2pRegUserCertify.auditState",
+        c.id_number AS "p2pRegUserCertify.idNumber",
+        d.bank_account AS "bankAccount"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify c ON c.user_id = a.id
+        LEFT JOIN p2p_account d ON d.user_id = a.id
+        WHERE
+        a.id = #{userid}
+    </select>
+
+    <!-- 获取个人认证列表 -->
+    <select id="getPersonalCertifyList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        a.login_name AS "loginName",
+        a.name AS "name",
+        b.is_bind_bank_card AS "p2pUserInformation.isBindBankCard",
+        a.phone AS "phone",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        c.audit_state AS "p2pRegUserCertify.auditState",
+        c.id_number AS "p2pRegUserCertify.idNumber",
+
+        d.id AS "p2pAccount.id",
+        d.zj_account AS "p2pAccount.zjAccount",
+        d.open_account_name AS "p2pAccount.openAccountName",
+        d.bank_name AS "p2pAccount.bankName",
+        d.branch_bank_name AS "p2pAccount.branchBankName",
+        d.bank_account AS "p2pAccount.bankAccount",
+        d.certificate_status AS "p2pAccount.certificateStatus",
+        d.bind_time AS "p2pAccount.bindTime"
+        FROM
+        sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify c ON c.user_id = a.id
+        LEFT JOIN p2p_account d ON d.user_id = a.id
+
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 2
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="name != null and name != ''">
+            AND a.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        <if test="p2pRegUserCertify != null and p2pRegUserCertify.auditState != null and p2pRegUserCertify.auditState != ''">
+            AND c.audit_state = #{p2pRegUserCertify.auditState}
+        </if>
+        <if test="p2pRegUserCertify != null and p2pRegUserCertify.idNumber != null and p2pRegUserCertify.idNumber != ''">
+            AND c.id_number LIKE CONCAT(CONCAT('%',#{p2pRegUserCertify.idNumber}),'%')
+        </if>
+        ORDER BY a.id desc
+    </select>
+
+    <!-- 获取投资收益列表 -->
+    <select id="getInvestmentIncomeList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        a.name AS "name",
+        b.user_body_type AS "p2pUserInformation.userBodyType",
+        max(c.last_investment_time) AS "p2pInvestmentInformation.lastInvestmentTime",
+        count(c.id) AS "p2pInvestmentInformation.count",
+        SUM(c.investment_sum_amount) AS "p2pInvestmentInformation.investmentSumAmount",
+        SUM(c.expect_earn) AS "p2pInvestmentInformation.expectEarn"
+        FROM
+        sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_investment_information c ON c.user_id = a.id
+        WHERE
+        b.user_body_type IN (2, 3)
+        AND (c.investment_debt_state NOT IN (901) OR c.investment_debt_state IS NUll)
+        <if test="name != null and name != ''">
+            AND a.name LIKE CONCAT(CONCAT('%',#{name}),'%')
+        </if>
+        <if test="p2pUserInformation != null and p2pUserInformation.userBodyType != null and p2pUserInformation.userBodyType != ''">
+            AND b.user_body_type = #{p2pUserInformation.userBodyType}
+        </if>
+        GROUP BY a.id
+        HAVING true
+        <if test="p2pInvestmentInformation != null and p2pInvestmentInformation.beginTime != null and p2pInvestmentInformation.beginTime != ''">
+            AND max(c.last_investment_time) &gt; #{p2pInvestmentInformation.beginTime}
+        </if>
+        <if test="p2pInvestmentInformation != null and p2pInvestmentInformation.endTime != null and p2pInvestmentInformation.endTime != ''">
+            AND max(c.last_investment_time) &lt; #{p2pInvestmentInformation.endTime}
+        </if>
+        <if test="p2pInvestmentInformation != null and p2pInvestmentInformation.beginTime != null and p2pInvestmentInformation.endTime != null and p2pInvestmentInformation.beginTime != '' and p2pInvestmentInformation.endTime != ''">
+            AND max(c.last_investment_time) BETWEEN #{p2pInvestmentInformation.beginTime} AND
+            #{p2pInvestmentInformation.endTime}
+        </if>
+        ORDER BY max(c.last_investment_time) desc
+    </select>
+
+    <!-- 企业待身份认证数量 -->
+    <select id="getEnterpriseIdentityCertifyNum" resultType="Integer">
+        SELECT
+        count(*)
+        FROM
+        sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify c ON c.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 1
+        AND c.audit_state = 3
+    </select>
+
+    <!-- 企业待认证数量 -->
+    <select id="getEnterpriseCertifyNum" resultType="Integer">
+        SELECT
+        count(*)
+        FROM
+        sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_enterprise_certify c ON c.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 1
+        AND c.audit_state = 3
+    </select>
+
+    <!-- 个人待认证数量 -->
+    <select id="getPersonalCertifyNum" resultType="Integer">
+        SELECT
+        count(*)
+        FROM
+        sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_reg_user_certify c ON c.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 2
+        AND c.audit_state = 3
+    </select>
+
+    <!--Chace 根据id查询用户信息 -->
+    <select id="getById" parameterType="User" resultType="User">
+        SELECT *
+        FROM sys_user
+        WHERE id = #{id}
+    </select>
+    <!-- Sora 根据用户ID查询OfficeID-->
+    <select id="findOfficeIdById" resultType="java.lang.String">
+        SELECT
+        office_id
+        FROM sys_user
+        WHERE id=#{id};
+    </select>
+
+    <!-- Quincy 根据手机号查询用户信息 -->
+    <select id="getUserByPhone" parameterType="java.lang.String" resultType="User">
+        SELECT
+        <include refid="userColumns"/>
+        FROM sys_user a
+        <include refid="userJoins"/>
+        WHERE a.phone = #{_parameter}
+    </select>
+
+    <!-- 评估公司用户列表 -->
+    <select id="getAssetList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        b.user_from AS "p2pUserInformation.userFrom",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        c.name AS "p2pAssetValuation.name",
+        c.address AS "p2pAssetValuation.address",
+        c.cooperation_plan AS "p2pAssetValuation.cooperationPlan",
+        c.is_certify AS "p2pAssetValuation.isCertify",
+        c.business_scope AS "p2pAssetValuation.businessScope"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_asset_valuation c ON c.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 4
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="p2pAssetValuation != null and p2pAssetValuation.name != null and p2pAssetValuation.name != ''">
+            AND c.name LIKE CONCAT(CONCAT('%',#{p2pAssetValuation.name}),'%')
+        </if>
+        <if test="p2pUserInformation != null and p2pUserInformation.userFrom != null and p2pUserInformation.userFrom != ''">
+            AND b.user_from = #{p2pUserInformation.userFrom}
+        </if>
+        ORDER BY a.id desc
+    </select>
+
+    <!-- 担保公司用户列表 -->
+    <select id="getGuaranteeList" parameterType="User" resultType="User">
+        SELECT
+        a.id AS "id",
+        b.user_from AS "p2pUserInformation.userFrom",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        c.name AS "p2pGuarantee.name",
+        c.address AS "p2pGuarantee.address",
+        c.cooperation_plan AS "p2pGuarantee.cooperationPlan",
+        c.is_certify AS "p2pGuarantee.isCertify",
+        c.business_scope AS "p2pGuarantee.businessScope",
+        c.web_site AS "p2pGuarantee.webSite"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_guarantee c ON c.user_id = a.id
+        WHERE
+        a.del_flag = 0
+        AND b.user_body_type = 5
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="p2pGuarantee != null and p2pGuarantee.name != null and p2pGuarantee.name != ''">
+            AND c.name LIKE CONCAT(CONCAT('%',#{p2pGuarantee.name}),'%')
+        </if>
+        <if test="p2pUserInformation != null and p2pUserInformation.userFrom != null and p2pUserInformation.userFrom != ''">
+            AND b.user_from = #{p2pUserInformation.userFrom}
+        </if>
+        ORDER BY a.id desc
+    </select>
+
+    <!-- 评估公司基本信息  -->
+    <select id="getAssetBaseInfo" parameterType="String" resultType="User">
+        SELECT
+        a.id AS "id",
+        b.user_from AS "p2pUserInformation.userFrom",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+        d.business_license AS "p2pGuarantee.businessLicense",
+        d.legal_person_idcard AS "p2pGuarantee.legalPersonIdcard",
+        d.cooperation_plan AS "p2pGuarantee.cooperationPlan",
+        d.docking_idscanning AS "p2pGuarantee.dockingIdscanning",
+        d.name AS "p2pGuarantee.name",
+        d.address AS "p2pGuarantee.address",
+        d.phone AS "p2pGuarantee.phone",
+        d.address_detail AS "p2pGuarantee.addressDetail",
+        d.business_scope AS "p2pGuarantee.businessScope",
+        d.web_site AS "p2pGuarantee.webSite",
+        d.introduce AS "p2pGuarantee.introduce",
+        d.guarantee_limit AS "p2pGuarantee.guaranteeLimit",
+        d.guarantee_amount AS "p2pGuarantee.guaranteeAmount",
+        d.docking_department AS "p2pGuarantee.dockingDepartment",
+        d.docking_job AS "p2pGuarantee.dockingJob",
+        d.docking_sex AS "p2pGuarantee.dockingSex",
+
+        c.id AS "p2pAssetValuation.id",
+        c.user_id AS "p2pAssetValuation.userId",
+        c.is_certify AS "p2pAssetValuation.isCertify",
+        c.name AS "p2pAssetValuation.name",
+        c.phone AS "p2pAssetValuation.phone",
+        c.address AS "p2pAssetValuation.address",
+        c.address_detail AS "p2pAssetValuation.addressDetail",
+        c.business_scope AS "p2pAssetValuation.businessScope",
+        c.introduce AS "p2pAssetValuation.introduce",
+        c.web_site AS "p2pAssetValuation.webSite",
+        c.cooperation_plan AS "p2pAssetValuation.cooperationPlan",
+        c.business_license AS "p2pAssetValuation.businessLicense",
+        c.legal_person_idcard AS "p2pAssetValuation.legalPersonIdcard",
+        c.docking_sex AS "p2pAssetValuation.dockingSex",
+        c.docking_department AS "p2pAssetValuation.dockingDepartment",
+        c.docking_job AS "p2pAssetValuation.dockingJob",
+        c.docking_idscanning AS "p2pAssetValuation.dockingIdscanning"
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_asset_valuation c ON c.user_id = a.id
+        LEFT JOIN p2p_guarantee d ON d.user_id = a.id
+        WHERE
+        a.id = #{userid}
+    </select>
+
+    <!-- 担保公司基本信息  -->
+    <select id="getGuaranteeBaseInfo" parameterType="String" resultType="User">
+        SELECT
+        a.id AS "id",
+        b.user_from AS "p2pUserInformation.userFrom",
+        a.name AS "name",
+        a.phone AS "phone",
+        a.email AS "email",
+        a.login_name AS "loginName",
+        b.reg_time AS "p2pUserInformation.regTime",
+        a.login_date AS "loginDate",
+        b.lock_state AS "p2pUserInformation.lockState",
+        b.lock_time AS "p2pUserInformation.lockTime",
+
+        c.id AS "p2pGuarantee.id",
+        c.user_id AS "p2pGuarantee.userId",
+        c.is_certify AS "p2pGuarantee.isCertify",
+        c.name AS "p2pGuarantee.name",
+        c.phone AS "p2pGuarantee.phone",
+        c.address AS "p2pGuarantee.address",
+        c.address_detail AS "p2pGuarantee.addressDetail",
+        c.business_scope AS "p2pGuarantee.businessScope",
+        c.guarantee_limit AS "p2pGuarantee.guaranteeLimit",
+        c.guarantee_amount AS "p2pGuarantee.guaranteeAmount",
+        c.guarantee_proportion AS "p2pGuarantee.guaranteeProportion",
+        c.introduce AS "p2pGuarantee.introduce",
+        c.web_site AS "p2pGuarantee.webSite",
+        c.cooperation_plan AS "p2pGuarantee.cooperationPlan",
+        c.business_license AS "p2pGuarantee.businessLicense",
+        c.legal_person_idcard AS "p2pGuarantee.legalPersonIdcard",
+        c.docking_sex AS "p2pGuarantee.dockingSex",
+        c.docking_department AS "p2pGuarantee.dockingDepartment",
+        c.docking_job AS "p2pGuarantee.dockingJob",
+        c.docking_idscanning AS "p2pGuarantee.dockingIdscanning"
+
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        LEFT JOIN p2p_guarantee c ON c.user_id = a.id
+        WHERE
+        a.id = #{userid}
+    </select>
+
+    <!-- 累计注册会员 -->
+    <select id="findAllCountMembers" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM sys_user a
+        LEFT JOIN p2p_user_information b ON b.user_id = a.id
+        WHERE b.certificate_state = '1040'
+
+    </select>
+
+    <!-- 根据手机号查用户id -->
+    <select id="getIdByPhone" parameterType="String" resultType="String">
+        SELECT
+        a.id AS "id"
+        FROM sys_user a
+        WHERE a.phone = #{_parameter}
+    </select>
+
+    <update id="updateRelationId" parameterType="String">
+        update sys_user set relation_id=#{0} where phone=#{1}
+    </update>
+    <select id="selectUserByPhone" parameterType="String" resultType="User">
+        select * from sys_user where phone=#{0}
+    </select>
+
+    <update id="updateUserForRelationId" parameterType="String">
+        update sys_user set relation_Id=#{1} where id=#{0}
+    </update>
+
+    <!-- 更新User表的真实姓名name字段 -->
+    <update id="updateByName" parameterType="User">
+        UPDATE sys_user
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditreport.dao.P2pCreditReportDataDao">
+
+    <sql id="p2pCreditReportDataColumns">
+        a.id AS "id",
+        a.credit_report_id AS "creditReportId",
+        a.index_id AS "indexId",
+        a.good AS "good",
+        a.normal AS "normal",
+        a.risk AS "risk"
+    </sql>
+
+    <sql id="p2pCreditReportDataJoins">
+    </sql>
+
+    <select id="get" resultType="P2pCreditReportData">
+        SELECT
+        <include refid="p2pCreditReportDataColumns"/>
+        FROM p2p_credit_report_data a
+        <include refid="p2pCreditReportDataJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getCreditReprotId" resultType="P2pCreditReportData">
+        SELECT
+        <include refid="p2pCreditReportDataColumns"/>
+        FROM
+        p2p_credit_report_data a
+        WHERE a.credit_report_id = #{creditReportId}
+        ORDER BY CAST(id AS DECIMAL)
+    </select>
+
+    <select id="findList" resultType="P2pCreditReportData">
+        SELECT
+        <include refid="p2pCreditReportDataColumns"/>
+        FROM p2p_credit_report_data a
+        <include refid="p2pCreditReportDataJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pCreditReportData">
+        SELECT
+        <include refid="p2pCreditReportDataColumns"/>
+        FROM p2p_credit_report_data a
+        <include refid="p2pCreditReportDataJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_credit_report_data(
+        id,
+        credit_report_id,
+        index_id,
+        good,
+        normal,
+        risk
+        ) VALUES (
+        #{id},
+        #{creditReportId},
+        #{indexId},
+        #{good},
+        #{normal},
+        #{risk}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_credit_report_data SET
+        credit_report_id = #{creditReportId},
+        index_id = #{indexId},
+        good = #{good},
+        normal = #{normal},
+        risk = #{risk}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_credit_report_data
+        WHERE id = #{id}
+    </update>
+
+</mapper>

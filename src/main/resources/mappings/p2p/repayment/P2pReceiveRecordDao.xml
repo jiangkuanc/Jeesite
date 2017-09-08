@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.repayment.dao.P2pReceiveRecordDao">
+
+    <sql id="p2pReceiveRecordColumns">
+        a.id AS "id",
+        a.receive_plan_id AS "receivePlanId",
+        a.real_receive_date AS "realReceiveDate",
+        a.real_receive_principal AS "realReceivePrincipal",
+        a.real_receive_interest AS "realReceiveInterest",
+        a.real_receive_fine AS "realReceiveFine",
+        a.receive_account AS "receiveAccount"
+    </sql>
+
+    <sql id="p2pReceiveRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pReceiveRecord">
+        SELECT
+        <include refid="p2pReceiveRecordColumns"/>
+        FROM p2p_receive_record a
+        <include refid="p2pReceiveRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pReceiveRecord">
+        SELECT
+        <include refid="p2pReceiveRecordColumns"/>
+        FROM p2p_receive_record a
+        <include refid="p2pReceiveRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pReceiveRecord">
+        SELECT
+        <include refid="p2pReceiveRecordColumns"/>
+        FROM p2p_receive_record a
+        <include refid="p2pReceiveRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_receive_record(
+        id,
+        receive_plan_id,
+        real_receive_date,
+        real_receive_principal,
+        real_receive_interest,
+        real_receive_fine,
+        receive_account
+        ) VALUES (
+        #{id},
+        #{receivePlanId},
+        #{realReceiveDate},
+        #{realReceivePrincipal},
+        #{realReceiveInterest},
+        #{realReceiveFine},
+        #{receiveAccount}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_receive_record SET
+        receive_plan_id = #{receivePlanId},
+        real_receive_date = #{realReceiveDate},
+        real_receive_principal = #{realReceivePrincipal},
+        real_receive_interest = #{realReceiveInterest},
+        real_receive_fine = #{realReceiveFine},
+        receive_account = #{receiveAccount}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_receive_record
+        WHERE id = #{id}
+    </update>
+    <!-- 累计收益查询
+            select sum(real_receive_principal+real_receive_interest) from p2p_receive_record record left join p2p_receive_plan plan on record.receive_plan_id=plan.id
+            where plan.user_id=?;
+    -->
+    <select id="queryAccIncome" resultType="double" parameterType="string">
+        SELECT sum(real_receive_principal+real_receive_interest)
+        FROM p2p_receive_record record left join p2p_receive_plan plan
+        ON record.receive_plan_id=plan.id
+        WHERE plan.user_id=#{userId};
+    </select>
+
+    <!-- 根据receivePlanId修改实际收款罚金 -->
+    <update id="updateFineByReceivePlanId">
+        UPDATE p2p_receive_record SET
+        real_receive_fine = #{realReceiveFine}
+        WHERE receive_plan_id = #{receivePlanId}
+    </update>
+</mapper>

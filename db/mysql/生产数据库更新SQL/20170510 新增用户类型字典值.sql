@@ -1,0 +1,3 @@
+delete from sys_dict where id in ('TBAR195', 'TBAR196');
+insert  into sys_dict (`id`,`value`,`label`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) VALUES ('TBAR195', '1', '前台用户', 'user_type', '用户类型', 1, '0', '1', NOW(), '1', NOW(), '', '0');
+insert  into sys_dict (`id`,`value`,`label`,`type`,`description`,`sort`,`parent_id`,`create_by`,`create_date`,`update_by`,`update_date`,`remarks`,`del_flag`) VALUES ('TBAR196', '2', '后台用户', 'user_type', '用户类型', 2, '0', '1', NOW(), '1', NOW(), '', '0');

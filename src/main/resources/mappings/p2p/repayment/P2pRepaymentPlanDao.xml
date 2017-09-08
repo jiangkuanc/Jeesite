@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.repayment.dao.P2pRepaymentPlanDao">
+
+    <sql id="p2pRepaymentPlanColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.overdue_days AS "overdueDays",
+        a.overdue_level AS "overdueLevel",
+        a.fine AS "fine",
+        a.repayment_state AS "repaymentState"
+    </sql>
+
+    <sql id="p2pRepaymentPlanJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRepaymentPlan">
+        SELECT
+        <include refid="p2pRepaymentPlanColumns"/>
+        FROM p2p_repayment_plan a
+        <include refid="p2pRepaymentPlanJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findAllPlanRepaymentPrincipal" resultType="java.math.BigDecimal">
+        SELECT
+        SUM(a.plan_repayment_principal)
+        FROM p2p_repayment_plan a;
+    </select>
+
+    <select id="findAllCountDistinctFid" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT DISTINCT (a.financing_information_id) FROM p2p_repayment_plan a ) b;
+    </select>
+
+    <select id="findFiNumber" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM
+        (SELECT DISTINCT(a.applicants_id)
+        FROM p2p_financing_information a INNER JOIN p2p_repayment_plan b
+        ON a.id=b.financing_information_id) c;
+    </select>
+
+
+    <select id="findList" resultType="P2pRepaymentPlan">
+        SELECT
+        <include refid="p2pRepaymentPlanColumns"/>
+        FROM p2p_repayment_plan a
+        <include refid="p2pRepaymentPlanJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRepaymentPlan">
+        SELECT
+        <include refid="p2pRepaymentPlanColumns"/>
+        FROM p2p_repayment_plan a
+        <include refid="p2pRepaymentPlanJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="SumPlanRepaymentPrincipal" resultType="java.math.BigDecimal">
+        SELECT SUM(a.plan_repayment_principal) FROM p2p_repayment_plan a
+        WHERE a.repayment_state != 3
+    </select>
+
+    <select id="OverDueTotal" resultType="java.math.BigDecimal">
+        SELECT SUM(plan_repayment_principal) FROM p2p_repayment_plan WHERE repayment_state='2';
+    </select>
+
+    <select id="findDaichangHuan" resultType="java.math.BigDecimal">
+        SELECT
+        MAX(c.daihuan)
+        FROM
+        (
+        SELECT
+        SUM(a.plan_repayment_principal) AS "daihuan"
+        FROM
+        p2p_repayment_plan a
+        INNER JOIN p2p_financing_information b
+        ON b.id = a.financing_information_id
+        WHERE
+        a.repayment_state != 3
+        GROUP BY
+        b.applicants_id
+        ) c
+
+    </select>
+
+    <select id="findDaichangHuanTopTen" resultType="java.math.BigDecimal">
+        SELECT
+        SUM(c.daihuan)
+        FROM
+        (
+        SELECT
+        SUM(a.plan_repayment_principal) AS "daihuan"
+        FROM
+        p2p_repayment_plan a
+        INNER JOIN p2p_financing_information b ON b.id = a.financing_information_id
+        WHERE
+        a.repayment_state != 3
+        GROUP BY
+        b.applicants_id
+        ORDER BY daihuan DESC
+        LIMIT 10
+        )c
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_repayment_plan(
+        id,
+        financing_information_id,
+        phase,
+        plan_repayment_date,
+        plan_repayment_principal,
+        plan_repayment_interest,
+        overdue_days,
+        overdue_level,
+        fine,
+        repayment_state
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{phase},
+        #{planRepaymentDate},
+        #{planRepaymentPrincipal},
+        #{planRepaymentInterest},
+        #{overdueDays},
+        #{overdueLevel},
+        #{fine},
+        #{repaymentState}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_repayment_plan SET
+        financing_information_id = #{financingInformationId},
+        phase = #{phase},
+        plan_repayment_date = #{planRepaymentDate},
+        plan_repayment_principal = #{planRepaymentPrincipal},
+        plan_repayment_interest = #{planRepaymentInterest},
+        overdue_days = #{overdueDays},
+        overdue_level = #{overdueLevel},
+        fine = #{fine},
+        repayment_state = #{repaymentState}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_repayment_plan
+        WHERE id = #{id}
+    </update>
+
+    <!-- Quincy 查询还款明细 -->
+    <select id="findRepaymentDetailsByFid" parameterType="java.lang.String" resultType="p2pRepaymentPlan">
+        SELECT
+        a.id AS "id",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.fine AS "fine",
+        a.repayment_state AS "repaymentState",
+        b.id AS "p2pRepaymentRecord.id",
+        b.real_repayment_date AS "p2pRepaymentRecord.realRepaymentDate",
+        b.repayment_audit_state AS "p2pRepaymentRecord.repaymentAuditState"
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN
+        p2p_repayment_record b
+        ON
+        a.id = b.repayment_plan_id
+        WHERE
+        a.financing_information_id = #{_parameter}
+        ORDER BY a.plan_repayment_date
+    </select>
+
+    <!-- Quincy 查询未还款总额 -->
+    <select id="findNotPaidAmountByFid" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT
+        SUM(plan_repayment_principal+plan_repayment_interest+fine)
+        FROM
+        p2p_repayment_plan
+        WHERE
+        (repayment_state = 1
+        OR
+        repayment_state = 2)
+        AND
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 查询已还款总额 -->
+    <select id="findHasPaidAmountByFid" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT
+        SUM(plan_repayment_principal+plan_repayment_interest+fine)
+        FROM
+        p2p_repayment_plan
+        WHERE
+        repayment_state = 3
+        AND
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 查询逾期罚金总额 -->
+    <select id="findOverdueFineByFid" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT
+        SUM(fine)
+        FROM
+        p2p_repayment_plan
+        WHERE
+        (repayment_state = 2
+        OR
+        repayment_state = 3)
+        AND
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- Quincy 根据ID修改还款状态 -->
+    <update id="updateRepaymentStateById" parameterType="p2pRepaymentPlan">
+        UPDATE
+        p2p_repayment_plan
+        SET
+        repayment_state = #{repaymentState}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- Quincy 根据债项ID查询待还款列表 -->
+    <select id="findNoPaidListByFid" parameterType="p2pRepaymentPlan" resultType="p2pRepaymentPlan">
+        SELECT
+        a.id AS "id",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.fine AS "fine",
+        a.repayment_state AS "repaymentState",
+        b.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        <where>
+            (a.repayment_state = 1
+            OR
+            a.repayment_state = 2 )
+            AND
+            b.applicants_id = #{p2pFinancingInformation.applicantsId}
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND a.plan_repayment_date <![CDATA[   >=  ]]> #{beginTime} AND a.plan_repayment_date <![CDATA[   <=  ]]>
+                #{endTime}
+            </if>
+        </where>
+        ORDER BY plan_repayment_date
+    </select>
+
+    <!-- Quincy 根据债项ID查询已还款列表 -->
+    <select id="findHasPaidListByFid" parameterType="p2pRepaymentPlan" resultType="p2pRepaymentPlan">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.fine AS "fine",
+        a.repayment_state AS "repaymentState",
+        b.real_repayment_date AS "p2pRepaymentRecord.realRepaymentDate",
+        b.real_repayment_principal AS "p2pRepaymentRecord.realRepaymentPrincipal",
+        b.real_repayment_interest AS "p2pRepaymentRecord.realRepaymentInterest",
+        b.real_repayment_fine AS "p2pRepaymentRecord.realRepaymentFine",
+        c.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN
+        p2p_repayment_record b
+        ON
+        a.id = b.repayment_plan_id
+        LEFT JOIN
+        p2p_financing_information c
+        ON
+        a.financing_information_id = c.id
+        <where>
+            a.repayment_state = 3
+            AND
+            c.applicants_id = #{p2pFinancingInformation.applicantsId}
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND a.real_repayment_date <![CDATA[   >=  ]]> #{beginTime} AND a.real_repayment_date <![CDATA[   <=  ]]>
+                #{endTime}
+            </if>
+        </where>
+        ORDER BY plan_repayment_date
+    </select>
+
+    <!-- Quincy 根据用户ID查询逾期列表 -->
+    <select id="findOverdueListByUserId" parameterType="java.lang.String" resultType="p2pRepaymentPlan">
+        SELECT
+        a.id AS "id",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.fine AS "fine",
+        a.overdue_days AS "overdueDays",
+        a.repayment_state AS "repaymentState",
+        b.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        a.financing_information_id
+        IN
+        (SELECT
+        id
+        FROM
+        p2p_financing_information
+        WHERE
+        applicants_id = #{_parameter})
+        AND overdue_days > 0
+        ORDER BY a.plan_repayment_date
+    </select>
+
+
+    <!-- Zeus 根据债项id查询债项逾期次数 -->
+    <select id="getDebtOverdueNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(a.id) FROM p2p_repayment_plan a WHERE financing_information_id = #{financingInformationId} AND
+        overdue_days <![CDATA[   >  ]]> 0
+    </select>
+
+    <!-- Zeus 根据债项id查询债项已还总期数 -->
+    <select id="getDebtRepaymentPhaseNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        count(c.id)
+        FROM
+        p2p_repayment_plan b
+        LEFT JOIN p2p_repayment_record c ON c.repayment_plan_id = b.id
+        WHERE
+        b.financing_information_id = #{financingInformationId}
+        <!-- 还款审核状态 1 审核成功 -->
+        AND c.repayment_audit_state = '2'
+    </select>
+
+    <!-- Zeus 根据债项id和当前期数查询当前期数还款信息 -->
+    <select id="getCurrentPhaseRepaymentPlan" resultType="p2pRepaymentPlan">
+        SELECT
+        *
+        FROM
+        p2p_repayment_plan b
+        WHERE
+        b.financing_information_id = #{financingInformationId}
+        AND b.phase = #{phase}
+    </select>
+
+    <!-- Zeus 根据债项id查询还款计划 -->
+    <select id="getRepaymentPlanByFid" resultType="p2pRepaymentPlan">
+        SELECT
+        *
+        FROM
+        p2p_repayment_plan a
+        WHERE
+        a.financing_information_id = #{financingInformationId}
+        ORDER BY a.plan_repayment_date
+    </select>
+
+    <!-- Zeus 根据债项id查询还款记录 -->
+    <select id="getRepaymentRecordByFid" resultType="p2pRepaymentPlan">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.overdue_days AS "overdueDays",
+        a.overdue_level AS "overdueLevel",
+        a.fine AS "fine",
+        a.repayment_state AS "repaymentState",
+        b.real_repayment_date AS "p2pRepaymentRecord.realRepaymentdate",
+        b.real_repayment_principal AS "p2pRepaymentRecord.realRepaymentPrincipal",
+        b.real_repayment_interest AS "p2pRepaymentRecord.realRepaymentInterest",
+        b.real_repayment_fine AS "p2pRepaymentRecord.realRepaymentFine",
+        b.repayment_account AS "p2pRepaymentRecord.repaymentAccount",
+        b.repayment_voucher AS "p2pRepaymentRecord.repaymentVoucher"
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN p2p_repayment_record b ON a.id = b.repayment_plan_id
+        WHERE a.financing_information_id = #{financingInformationId}
+        ORDER BY a.plan_repayment_date
+    </select>
+
+
+    <!-- Quincy 根据期数查询每笔款项信息 -->
+    <select id="findPaymentDetailsByPhase" parameterType="p2pRepaymentPlan" resultType="p2pRepaymentPlan">
+        SELECT
+        a.id AS "id",
+        a.phase AS "phase",
+        a.plan_repayment_date AS "planRepaymentDate",
+        a.plan_repayment_principal AS "planRepaymentPrincipal",
+        a.plan_repayment_interest AS "planRepaymentInterest",
+        a.fine AS "fine",
+        a.repayment_state AS "repaymentState",
+        b.real_repayment_date AS "p2pRepaymentRecord.realRepaymentDate",
+        b.real_repayment_principal AS "p2pRepaymentRecord.realRepaymentPrincipal",
+        b.real_repayment_interest AS "p2pRepaymentRecord.realRepaymentInterest",
+        b.real_repayment_fine AS "p2pRepaymentRecord.realRepaymentFine",
+        c.finacing_name AS "p2pFinancingInformation.finacingName"
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN
+        p2p_repayment_record b
+        ON
+        a.id = b.repayment_plan_id
+        LEFT JOIN
+        p2p_financing_information c
+        ON
+        a.financing_information_id = c.id
+        WHERE
+        a.phase = #{phase}
+        AND
+        a.financing_information_id = #{financingInformationId}
+    </select>
+
+    <!-- Zeus 查询逾期罚金总额 -->
+    <select id="getDebtOverdueAmount" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT
+        SUM(fine)
+        FROM
+        p2p_repayment_plan
+        WHERE
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- 查询处于还款预警状态的融资项目 -->
+    <select id="findRepaymentAndWarning" parameterType="Date" resultType="p2pRepaymentPlan">
+        <![CDATA[
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					b.finacing_name AS "p2pFinancingInformation.finacingName",
+					c.`name` AS "p2pFinancingInformation.user.name",
+					c.phone AS "p2pFinancingInformation.user.phone",
+					TIME_TO_SEC(
+						TIMEDIFF(
+							DATE_ADD(
+								a.plan_repayment_date,
+								INTERVAL '23:59:59' DAY_SECOND
+							),
+							#{date}
+						)
+					) / (24 * 60 * 60) AS "p2pFinancingInformation.WARNDAYS",
+					a.phase AS "phase",
+					a.plan_repayment_principal AS "planRepaymentPrincipal",
+					a.plan_repayment_interest AS "planRepaymentInterest",
+					b.publish_time AS "p2pFinancingInformation.publishTime"
+				FROM
+					p2p_repayment_plan a
+				LEFT JOIN p2p_financing_information b ON b.id = a.financing_information_id
+				LEFT JOIN sys_user c ON c.id = b.applicants_id
+				WHERE
+					a.repayment_state != 3
+			) d
+		WHERE
+			d.`p2pFinancingInformation.WARNDAYS` <= 5
+		AND d.`p2pFinancingInformation.WARNDAYS` >= 0
+	]]>
+    </select>
+
+    <!-- 获得每一期未还完债项集合 -->
+    <select id="getNotRepaymentDebt" resultType="p2pRepaymentPlan">
+        SELECT
+        *
+        FROM
+        p2p_repayment_plan a
+        WHERE
+        a.repayment_state IN ('1', '2')
+    </select>
+</mapper>

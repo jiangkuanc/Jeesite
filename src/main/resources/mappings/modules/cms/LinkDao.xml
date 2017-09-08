@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.LinkDao">
+
+    <sql id="cmsLinkColumns">
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.theme AS "theme",
+        a.color AS "color",
+        a.image AS "image",
+        a.speaker AS "speaker",
+        a.hits AS "hits",
+        a.mobile_video_address AS "mobileVideoAddress",
+        a.mobile_video_name AS "mobileVideoName",
+        a.href AS "href",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "user.name"
+    </sql>
+
+    <sql id="cmsLinkJoins">
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_user u ON u.id = a.create_by
+    </sql>
+
+    <select id="get" resultType="Link">
+        SELECT
+        <include refid="cmsLinkColumns"/>
+        FROM cms_link a
+        <include refid="cmsLinkJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="Link">
+        SELECT
+        <include refid="cmsLinkColumns"/>
+        FROM cms_link a
+        <include refid="cmsLinkJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="title != null and title != ''">
+                AND a.title LIKE
+                <if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="Link">
+        SELECT
+        <include refid="cmsLinkColumns"/>
+        FROM cms_link a
+        <include refid="cmsLinkJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_link(
+        id,
+        category_id,
+        title,
+        theme,
+        color,
+        speaker,
+        image,
+        hits,
+        mobile_video_address,
+        mobile_video_name,
+        href,
+        weight,
+        weight_date,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{category.id},
+        #{title},
+        #{theme},
+        #{color},
+        #{speaker},
+        #{image},
+        #{hits},
+        #{mobileVideoAddress},
+        #{mobileVideoName},
+        #{href},
+        #{weight},
+        #{weightDate},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_link SET
+        category_id = #{category.id},
+        title = #{title},
+        theme = #{theme},
+        color = #{color},
+        speaker = #{speaker},
+        <if test="image != null and image != ''">
+            image = #{image},
+        </if>
+        href = #{href},
+        hits = #{hits},
+        mobile_video_address = #{mobileVideoAddress},
+        mobile_video_name = #{mobileVideoName},
+        weight = #{weight},
+        weight_date = #{weightDate},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks},
+        del_flag = #{delFlag}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_link
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByIdIn" resultType="Link">
+        SELECT
+        <include refid="cmsLinkColumns"/>
+        from cms_link a where
+        <where>
+            id in (${id});
+        </where>
+    </select>
+
+    <update id="updateExpiredWeight">
+        update cms_link SET
+        weight=0
+        WHERE weight &gt; 0 AND weight_date &lt;
+        <if test="dbName == 'oracle'">sysdate</if>
+        <if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,GETDATE()))</if>
+        <if test="dbName == 'mysql'">CURDATE()</if>
+    </update>
+
+    <update id="updateHitsAddOne">
+        update cms_link set
+        hits = hits+1
+        WHERE id = #{id}
+    </update>
+
+    <!-- 查询分页。教育视频 -->
+    <select id="findPaListShiPin" resultType="Link">
+        SELECT
+        <include refid="cmsLinkColumns"/>
+        FROM cms_Link a
+        <include refid="cmsLinkJoins"/>
+        ORDER BY a.weight DESC, a.update_date DESC
+
+    </select>
+
+    <!-- 查询当前视频的详情 -->
+    <select id="selectCurrentVideoDetail" parameterType="Link" resultType="Link">
+        SELECT
+        a.*,
+        b.id AS "category.id",
+        b.allow_comment AS "category.allowComment",
+        c.theme AS "category.site.theme"
+        FROM cms_Link a
+        INNER JOIN cms_category b
+        INNER JOIN cms_site c
+        ON b.id = a.category_id
+        AND b.site_id = c.id
+        WHERE a.id = #{id}
+        AND b.site_id = #{category.site.id}
+    </select>
+</mapper>

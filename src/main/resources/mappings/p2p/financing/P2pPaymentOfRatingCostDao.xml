@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pPaymentOfRatingCostDao">
+
+    <sql id="p2pPaymentOfRatingCostColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.order_no AS "orderNo",
+        a.order_time AS "orderTime",
+        a.batch_no AS "batchNo",
+        a.charging_item AS "chargingItem",
+        a.payment_id AS "paymentId",
+        a.payment_status AS "paymentStatus",
+        a.payment_amount AS "paymentAmount",
+        a.time_of_payment AS "timeOfPayment",
+        a.operator_id AS "operatorId",
+        a.operator_time AS "operatorTime"
+    </sql>
+
+    <sql id="p2pPaymentOfRatingCostJoins">
+    </sql>
+
+    <select id="get" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        <include refid="p2pPaymentOfRatingCostColumns"/>
+        FROM p2p_payment_of_rating_cost a
+        <include refid="p2pPaymentOfRatingCostJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        <include refid="p2pPaymentOfRatingCostColumns"/>
+        FROM p2p_payment_of_rating_cost a
+        <include refid="p2pPaymentOfRatingCostJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        <include refid="p2pPaymentOfRatingCostColumns"/>
+        FROM p2p_payment_of_rating_cost a
+        <include refid="p2pPaymentOfRatingCostJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>	 -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_payment_of_rating_cost(
+        id,
+        financing_information_id,
+        order_no,
+        order_time,
+        payment_status,
+        payment_amount,
+        time_of_payment,
+        charging_item,
+        operator_id,
+        operator_time,
+        payment_id,
+        batch_no,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{orderNo},
+        #{orderTime},
+        #{paymentStatus},
+        #{paymentAmount},
+        #{timeOfPayment},
+        #{chargingItem},
+        #{operatorId},
+        #{operatorTime},
+        #{paymentId},
+        #{batchNo},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_payment_of_rating_cost SET
+        financing_information_id = #{financingInformationId},
+        order_no=#{orderNo},
+        order_time=#{orderTime},
+        payment_status = #{paymentStatus},
+        payment_amount = #{paymentAmount},
+        time_of_payment = #{timeOfPayment},
+        operator_id = #{operatorId},
+        operator_time=#{operatorTime},
+        del_flag=#{delFlag}
+        WHERE id = #{id}
+    </update>
+
+    <!-- <update id="delete">
+        UPDATE p2p_payment_of_rating_cost SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update> -->
+
+    <!-- 根据financingInformationId查找评级缴费 -->
+    <select id="getByFiId" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        <include refid="p2pPaymentOfRatingCostColumns"/>
+        FROM p2p_payment_of_rating_cost a
+        <include refid="p2pPaymentOfRatingCostJoins"/>
+        WHERE a.financing_information_id = #{financingInformationId}
+    </select>
+
+    <!-- Quincy 根据债项ID查询评级费订单信息 -->
+    <select id="findOrderInfoByFid" resultType="P2pPaymentOfRatingCost" parameterType="java.lang.String">
+        SELECT
+        id,
+        financing_information_id,
+        order_no,
+        order_time,
+        payment_status,
+        payment_amount,
+        time_of_payment,
+        del_flag
+        FROM
+        p2p_payment_of_rating_cost
+        WHERE
+        financing_information_id = #{0}
+        AND
+        charging_item = '1'
+        AND
+        payment_id = #{1}
+        AND
+        (del_flag is null OR del_flag = 0)
+        ORDER BY
+        order_time DESC
+        LIMIT 1
+    </select>
+
+    <!-- Quincy 根据债项ID修改评级费订单信息 -->
+    <update id="updateOrderInfoByFid" parameterType="P2pPaymentOfRatingCost">
+        UPDATE
+        p2p_payment_of_rating_cost
+        SET
+        time_of_payment = #{timeOfPayment},
+        payment_status = 1,
+        charging_item = #{chargingItem}
+        WHERE
+        financing_information_id = #{financingInformationId}
+    </update>
+
+    <!-- Chace 企业订单查询 -->
+    <select id="findBusinessOrderList" resultType="P2pPaymentOfRatingCost" parameterType="P2pPaymentOfRatingCost">
+        SELECT
+        a.id,
+        a.order_no AS "orderNo",
+        a.batch_no AS "batchNo",
+        a.time_of_payment AS "timeOfPayment",
+        a.charging_item AS "chargingItem",
+        a.payment_amount AS "paymentAmount",
+        a.payment_status AS "paymentStatus",
+        b.id AS "p2pFinancingInformation.id",
+        b.finacing_name AS "p2pFinancingInformation.finacingName",
+        c.user_id AS "p2pEnterpriseCertify.userId",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+        FROM p2p_payment_of_rating_cost a
+        LEFT JOIN p2p_financing_information b ON b.id = a.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.payment_id = c.user_id
+        <where>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND c.enterprise_name LIKE CONCAT('%',#{p2pEnterpriseCertify.enterpriseName},'%')
+            </if>
+            <if test="p2pFinancingInformation != null and p2pFinancingInformation.finacingName != null and p2pFinancingInformation.finacingName != ''">
+                AND b.finacing_name LIKE CONCAT('%',#{p2pFinancingInformation.finacingName},'%')
+            </if>
+            <if test="chargingItem != null and chargingItem != ''">
+                AND a.charging_item = #{chargingItem}
+            </if>
+            <if test="paymentStatusStr != null and paymentStatusStr != ''">
+                AND a.payment_status IN ( ${paymentStatusStr} )
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                AND a.time_of_payment <![CDATA[   >=  ]]> #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND a.time_of_payment <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+        ORDER BY a.order_time DESC
+    </select>
+
+    <!-- Chace 查询订单详情 -->
+    <select id="findBusinessOrderDetail" parameterType="string" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        a.order_no AS "orderNo",
+        a.order_time AS "orderTime",
+        a.batch_no AS "batchNo",
+        a.time_of_payment AS "timeOfPayment",
+        a.charging_item AS "chargingItem",
+        a.payment_amount AS "paymentAmount",
+        a.payment_status AS "paymentStatus",
+        a.financing_information_id AS "financingInformationId",
+        b.id AS "p2pFinancingInformation.id",
+        b.finacing_name AS "p2pFinancingInformation.finacingName",
+        c.user_id AS "p2pEnterpriseCertify.userId",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+        FROM p2p_payment_of_rating_cost a
+        LEFT JOIN p2p_financing_information b ON b.id = a.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.payment_id = c.user_id
+        WHERE a.id = #{_parameter}
+    </select>
+
+    <!-- Chace 清算文件管理列表 -->
+    <select id="settlementDocumentList" resultType="P2pPaymentOfRatingCost" parameterType="P2pPaymentOfRatingCost">
+        SELECT
+        a.order_no AS "orderNo",
+        a.payment_amount AS "paymentAmount",
+        a.payment_id AS "paymentId",
+        a.time_of_payment AS "timeOfPayment"
+        FROM p2p_payment_of_rating_cost a
+        <where>
+            a.payment_status = 1
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id = #{financingInformationId}
+            </if>
+            <if test="beginTime != null and beginTime != ''">
+                AND a.time_of_payment <![CDATA[   >=  ]]> #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                AND a.time_of_payment <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+        ORDER BY a.time_of_payment desc
+    </select>
+
+    <!-- Zeus 根据债项ID查询评级费订单信息 -->
+    <select id="getRatingPaydetails" resultType="P2pPaymentOfRatingCost" parameterType="java.lang.String">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.order_no AS "orderNo",
+        a.order_time AS "orderTime",
+        a.batch_no AS "batchNo",
+        a.charging_item AS "chargingItem",
+        a.payment_id AS "paymentId",
+        a.payment_status AS "paymentStatus",
+        a.payment_amount AS "paymentAmount",
+        a.time_of_payment AS "timeOfPayment",
+        a.operator_id AS "operatorId",
+        a.operator_time AS "operatorTime"
+        FROM
+        p2p_payment_of_rating_cost a
+        WHERE
+        financing_information_id = #{_parameter}
+        AND a.charging_item = 1
+    </select>
+
+    <!-- Chace 根据债项id修改订单支付状态 -->
+    <update id="updateStatusByFinancingId" parameterType="P2pPaymentOfRatingCost">
+        UPDATE p2p_payment_of_rating_cost a
+        SET a.payment_status = 2
+        WHERE a.charging_item = 1
+        AND a.financing_information_id = #{financingInformationId}
+    </update>
+
+    <update id="updateStatusByorderNo" parameterType="P2pPaymentOfRatingCost">
+        UPDATE
+        p2p_payment_of_rating_cost
+        SET
+        payment_status = #{paymentStatus},
+        time_of_payment = #{timeOfPayment},
+        batch_no = #{batchNo}
+        WHERE
+        order_no = #{orderNo}
+    </update>
+
+    <select id="getInfoByOrderNo" parameterType="java.lang.String" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        a.*,
+        b.id AS "p2pFinancingRatingInfo.id"
+        FROM
+        p2p_payment_of_rating_cost a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.financing_information_id = b.financing_information_id
+        WHERE
+        a.order_no = #{_parameter}
+    </select>
+
+    <select id="findIsPaying" parameterType="P2pPaymentOfRatingCost" resultType="P2pPaymentOfRatingCost">
+        SELECT *
+        FROM
+        p2p_payment_of_rating_cost
+        WHERE
+        financing_information_id = #{financingInformationId}
+        AND
+        charging_item = #{chargingItem}
+        AND
+        payment_status = #{paymentStatus}
+        AND
+        payment_id = #{paymentId}
+    </select>
+    <!-- 获取203，250，600的非删除状态(支付节点)，未支付债项的评级费的企业list,关联市场确认表 -->
+    <select id="getPaymentPointProjectList" resultType="java.util.Map">
+        SELECT
+        a.id,
+        a.financing_information_id AS financingInformationId,
+        a.order_no AS orderNo,
+        a.order_time AS orderTime,
+        a.user_order_time AS userOrderTime,
+        b.applicants_id AS applicantsId ,
+        b.current_stage AS currentStage,
+        b.finacing_name AS finacingName,
+        c.is_pass AS pass,
+        c.confirm_stage AS confirmStage
+        FROM p2p_payment_of_rating_cost a
+        LEFT JOIN p2p_financing_information b ON a.payment_status=0 AND (a.del_flag IS NULL OR a.del_flag=0) AND
+        a.financing_information_id=b.id
+        LEFT JOIN p2p_market_confirm_record c ON c.financing_information_id=a.financing_information_id
+        WHERE
+        b.current_stage IN (203,250,600)
+    </select>
+
+    <update id="deleteFlag">
+        UPDATE p2p_payment_of_rating_cost
+        SET del_flag=1 ,payment_id = null
+        WHERE order_no=#{orderNo}
+    </update>
+
+    <select id="findOrderInfoListByFid" resultType="P2pPaymentOfRatingCost">
+        SELECT
+        id,
+        financing_information_id,
+        order_no,
+        order_time,
+        payment_status,
+        payment_amount,
+        time_of_payment,
+        del_flag
+        FROM
+        p2p_payment_of_rating_cost
+        WHERE
+        financing_information_id = #{0}
+        AND
+        charging_item = '1'
+        order by order_time DESC
+        LIMIT 2
+    </select>
+
+
+</mapper>

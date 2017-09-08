@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditreport.dao.P2pCreditReportIndexDao">
+
+    <sql id="p2pCreditReportIndexColumns">
+        a.id AS "id",
+        a.credit_info_type AS "creditInfoType",
+        a.index_name AS "indexName",
+        a.sort AS "sort",
+        a.is_use AS "isUse"
+    </sql>
+
+    <sql id="p2pCreditReportIndexJoins">
+    </sql>
+
+    <select id="get" resultType="P2pCreditReportIndex">
+        SELECT
+        <include refid="p2pCreditReportIndexColumns"/>
+        FROM p2p_credit_report_index a
+        <include refid="p2pCreditReportIndexJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getIndexId" resultType="P2pCreditReportIndex">
+        SELECT
+        <include refid="p2pCreditReportIndexColumns"/>
+        FROM
+        p2p_credit_report_index a
+        ORDER BY CAST(id AS DECIMAL)
+    </select>
+
+    <select id="findList" resultType="P2pCreditReportIndex">
+        SELECT
+        <include refid="p2pCreditReportIndexColumns"/>
+        FROM p2p_credit_report_index a
+        <include refid="p2pCreditReportIndexJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pCreditReportIndex">
+        SELECT
+        <include refid="p2pCreditReportIndexColumns"/>
+        FROM p2p_credit_report_index a
+        <include refid="p2pCreditReportIndexJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_credit_report_index(
+        id,
+        credit_info_type,
+        index_name,
+        sort,
+        is_use
+        ) VALUES (
+        #{id},
+        #{creditInfoType},
+        #{indexName},
+        #{sort},
+        #{isUse}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_credit_report_index SET
+        credit_info_type = #{creditInfoType},
+        index_name = #{indexName},
+        sort = #{sort},
+        is_use = #{isUse}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_credit_report_index
+        WHERE id = #{id}
+    </update>
+
+</mapper>

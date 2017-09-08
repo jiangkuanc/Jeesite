@@ -1,0 +1,1127 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+HTML5 display-role reset for older browsers
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    font-family: "Microsoft YaHei", "Arial";
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    background: #f6f6f6;
+}
+
+.header {
+    width: 100%;
+    height: 30px;
+    background-color: #f6f6f6;
+}
+
+.header .top-left {
+    height: 30px;
+    line-height: 21px;
+}
+
+.header .top-left img {
+    vertical-align: -9px;
+}
+
+.header .top-left span {
+    display: inline-block;
+    font-size: 14px;
+    color: #666;
+    vertical-align: -4px;
+}
+
+.header .top-right {
+    height: 30px;
+    line-height: 30px;
+}
+
+.header .top-right span {
+    display: inline-block;
+    font-size: 14px;
+    color: #666;
+    padding: 0 5px;
+}
+
+.header .top-right a {
+    display: inline-block;
+    font-size: 14px;
+    color: #666;
+    padding: 0 4px;
+}
+
+.header .top-right a img {
+    vertical-align: -5px;
+    padding: 0 3px;
+}
+
+.header .top-right a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+    cursor: pointer;
+}
+
+.navbars {
+    height: 100px;
+    background-color: #fff;
+    z-index: 999999;
+}
+
+.navbars .nav-left .navbarLogo {
+    height: 100px;
+    display: inline-block;
+}
+
+.navbars .nav-left .navbarLogo img {
+    display: inline-block;
+    padding-top: 20px;
+}
+
+.navbars .nav-right {
+    height: 100px;
+}
+
+.navbars .nav-right .nav-ul {
+    height: 100px;
+    line-height: 100px;
+    display: inline-block;
+}
+
+.navbars .nav-right .nav-ul li {
+    float: left;
+    margin: 0 1px;
+}
+
+.navbars .nav-right .nav-ul li a {
+    font-size: 16px;
+    color: #333333;
+    height: 30px;
+    padding: 5px 10px;
+}
+
+.navbars .nav-right .nav-ul li a:hover {
+    text-decoration: none;
+    color: #333333;
+}
+
+.navbars .nav-right .nav-ul li.active a {
+    background-color: #f47026;
+    color: #fff;
+}
+
+.navbars .nav-right .nav-ul li:hover a {
+    background-color: #f47026;
+    color: #fff;
+}
+
+.navbars .nav-right .dropdown {
+    min-width: 130px;
+    height: 40px;
+    display: inline-block;
+    vertical-align: 45px;
+    padding: 2px 5px;
+    border: 1px solid #FC8D60;
+    margin-left: 15px;
+}
+
+.navbars .nav-right .dropdown .btns {
+    border: none;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    line-height: 34px;
+    padding-left: 5px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.navbars .nav-right .dropdown .btns .carets img {
+    vertical-align: -3px;
+}
+
+.navbars .nav-right .dropdown .meues {
+    min-width: 130px;
+    left: -5px;
+}
+
+.bannerContainer {
+    clear: both;
+    height: 350px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.bannerContainer #full-screen-slider {
+    height: 350px;
+}
+
+.bannerContainer #full-screen-slider #slides {
+    height: 350px;
+}
+
+.bannerContainer #full-screen-slider #slides li {
+    height: 350px;
+    background-size: cover;
+}
+
+.bannerContainer #full-screen-slider #pagination {
+    margin-left: 0 !important;
+    bottom: 20px !important;
+}
+
+.bannerContainer #full-screen-slider #pagination li.current {
+    background-color: #fa8e2c;
+}
+
+.dataContainer {
+    position: relative;
+}
+
+.dataContainer .online {
+    position: fixed;
+    width: 90px;
+    height: 123px;
+    right: 0;
+    z-index: 999;
+}
+
+.dataContainer .online img {
+    width: 100%;
+}
+
+.dataContainer .announce .str_wrap {
+    display: inline-block;
+    width: 49% !important;
+    margin-left: 0px;
+}
+
+.dataContainer .announce .speaker {
+    vertical-align: 25px;
+}
+
+.dataContainer .announce .more {
+    font-size: 16px;
+    color: #333;
+    display: inline-block;
+    vertical-align: 25px;
+}
+
+.dataContainer .announce a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.dataContainer .announce .anTitle {
+    width: 1022px !important;
+    display: inline-block;
+    overflow: hidden;
+    height: 35px;
+    line-height: 35px;
+    margin: 17.5px 0;
+}
+
+.dataContainer .announce .anTitle img {
+    vertical-align: -3px;
+}
+
+.dataContainer .announce .anTitle span {
+    font-size: 16px;
+    color: #333;
+}
+
+.dataContainer .announce .anTitle .spanTwo {
+    color: #999;
+    margin-left: 30px;
+    margin-right: 50px;
+}
+
+.dataContainer .announce .anTitle a {
+    font-size: 16px;
+    color: #333;
+}
+
+.dataContainer .announce .anTitle a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.dataContainer .announce .anCont {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.dataContainer .announce .anCont .anLeft {
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+    width: 285px;
+    height: 167px;
+}
+
+.dataContainer .announce .anCont .anLeft video {
+    width: 100%;
+    height: 100%;
+}
+
+.dataContainer .announce .anCont .anLeft img {
+    width: 285px;
+    height: 167px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.dataContainer .announce .anCont .anRight {
+    width: 74%;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 10px;
+    background-color: #fff;
+}
+
+.dataContainer .announce .anCont .anRight .row {
+    margin-right: 0;
+    padding-left: 3%;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox {
+    height: 167px;
+    padding: 5% 3%;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox .media-left {
+    padding-top: 5px;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox .media-left img {
+    width: auto;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox .media-heading {
+    font-size: 20px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+    cursor: pointer;
+}
+
+.dataContainer .announce .anCont .anRight .mediaBox a:hover h4 {
+    color: #FA8E2C;
+}
+
+.dataContainer .financing .fin-title {
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+}
+
+.dataContainer .financing .fin-title h4 {
+    display: inline-block;
+    font-size: 20px;
+    color: #333;
+    padding-right: 10px;
+}
+
+.dataContainer .financing .fin-title .textBg {
+    vertical-align: -3px;
+}
+
+.dataContainer .financing .fin-title span {
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: -1px;
+    left: 99px;
+}
+
+.dataContainer .financing .fin-title a {
+    color: #333;
+}
+
+.dataContainer .financing .fin-title a img {
+    vertical-align: -3px;
+}
+
+.dataContainer .financing .fin-title a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.dataContainer .financing .financMain {
+    width: 99.8%;
+    height: 190px;
+    background-color: #fff;
+    border: 1px solid transparent;
+}
+
+.dataContainer .financing .financMain ul {
+    height: 190px;
+    padding-top: 20px;
+    display: inline-block;
+}
+
+.dataContainer .financing .financMain ul li {
+    float: left;
+    padding: 0 11px;
+}
+
+.dataContainer .financing .financMain ul li span {
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    display: block;
+    background-color: #44baf1;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+    margin-left: 40px;
+    position: relative;
+    z-index: 9999;
+}
+
+.dataContainer .financing .financMain ul li .rz-num2, .dataContainer .financing .financMain ul li .rz-num4 {
+    margin-top: 20px;
+    margin-left: 38px;
+}
+
+.dataContainer .financing .financMain ul li .rz-num3, .dataContainer .financing .financMain ul li .rz-num5 {
+    margin-left: 38px;
+}
+
+.dataContainer .financing .financMain ul li img {
+    margin-top: -4.8px;
+}
+
+.dataContainer .financing .financMain ul li:hover .rzImg {
+    -webkit-animation: go 1s ease-in-out alternate infinite;
+    animation: go 1s ease-in-out alternate infinite;
+}
+
+.dataContainer .financing .financMain .lastLi {
+    height: 40px;
+    width: 115px;
+    line-height: 28px;
+    float: right;
+    margin: 65px 30px 0 0;
+    border: 1px solid #7EA3CA;
+    padding: 5px 8px;
+    text-align: center;
+}
+
+.dataContainer .financing .financMain .lastLi h4 {
+    vertical-align: 90px;
+    display: inline-block;
+}
+
+.dataContainer .financing .financMain .lastLi:hover {
+    background-color: #FA8E2C;
+    border: 1px solid #FA8E2C;
+}
+
+.dataContainer .financing .financMain .lastLi:hover h4 {
+    color: #fff;
+}
+
+.dataContainer .investment .inv-title {
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+}
+
+.dataContainer .investment .inv-title h4 {
+    display: inline-block;
+    font-size: 20px;
+    color: #333;
+    padding-right: 10px;
+}
+
+.dataContainer .investment .inv-title .textBg {
+    vertical-align: -3px;
+}
+
+.dataContainer .investment .inv-title span {
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: -1px;
+    left: 99px;
+}
+
+.dataContainer .investment .inv-title a {
+    color: #333;
+}
+
+.dataContainer .investment .inv-title a img {
+    vertical-align: -3px;
+}
+
+.dataContainer .investment .inv-title a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.dataContainer .investment .invMain .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.dataContainer .investment .invMain .row .invBox {
+    font-size: 0;
+    width: 251px;
+    height: 335px;
+    padding: 0;
+    margin-right: 44px;
+    background: url("../../dist/img/investmentBlue.png") no-repeat top #f6f6f6;
+    background-size: contain;
+    position: relative;
+}
+
+.dataContainer .investment .invMain .row .invBox .invTop {
+    padding-bottom: 10px;
+}
+
+.dataContainer .investment .invMain .row .invBox .invTop .biao {
+    position: absolute;
+    top: 9px;
+    left: 15px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.dataContainer .investment .invMain .row .invBox .invTop p {
+    color: #fff;
+    font-size: 14px;
+    text-align: right;
+    line-height: 1.5;
+    padding-right: 10px;
+}
+
+.dataContainer .investment .invMain .row .invBox .invTop p b {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.dataContainer .investment .invMain .row .invBox .invTop .first-p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText {
+    height: 225px;
+    background: #fff;
+    margin: 0 auto;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText p {
+    font-size: 16px;
+    color: #333;
+    line-height: 2.2;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText p span {
+    font-size: 16px;
+    color: #57a1e4;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText .line {
+    width: 135px;
+    height: 17px;
+    border: 1px solid #57a1e4;
+    background-color: #fff;
+    position: relative;
+    margin: 0 auto;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText .line span {
+    width: 50%;
+    height: 17px;
+    background-color: #57a1e4;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText .line i {
+    position: absolute;
+    bottom: -9px;
+    right: -46px;
+    font-style: normal;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText b {
+    font-weight: 600;
+    font-size: 34px;
+    color: #004d92;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText .sheng {
+    font-size: 13px;
+    line-height: 3;
+}
+
+.dataContainer .investment .invMain .row .invBox .invText .invBtn {
+    width: 120px;
+    height: 30px;
+    line-height: 18px;
+    background-color: #57a1e4;
+    color: #fff;
+}
+
+.dataContainer .investment .invMain .row .invBox4 {
+    margin-right: 0;
+}
+
+.dataContainer .investment .invMain .row .invBox:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 4px 7px 4px #B2B2B2;
+    -moz-box-shadow: 4px 7px 4px #B2B2B2;
+    position: relative;
+    left: -2px;
+    top: -5px;
+    background: url(../../dist/img/investmentBlue.png) no-repeat;
+    z-index: 99999;
+    background-color: #f6f6f6;
+    border: 1px solid transparent;
+}
+
+.dataContainer .investment .invMain .rowSecond {
+    margin-top: 38px;
+}
+
+.dataContainer .investment .invMain .rowSecond .invBox2 {
+    background: url("../../dist/img/investmentYellow.png") no-repeat top;
+    background-size: contain;
+}
+
+.dataContainer .investment .invMain .rowSecond .invBox2 .invText p span {
+    color: #ea6f15;
+}
+
+.dataContainer .investment .invMain .rowSecond .invBox2 .invText b {
+    color: #ea6f15;
+}
+
+.dataContainer .investment .invMain .rowSecond .invBox2 .invText .line {
+    border: 1px solid #ea6f15;
+}
+
+.dataContainer .investment .invMain .rowSecond .invBox2 .invText .line span {
+    height: 16px;
+    background: #ea6f15;
+}
+
+.dataContainer .investment .invMain .rowSecond .invBox2 .invText .invBtn {
+    background: #ea6f15;
+}
+
+.dataContainer .rating {
+    margin-top: 10px;
+}
+
+.dataContainer .rating .rat-title {
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+}
+
+.dataContainer .rating .rat-title h4 {
+    display: inline-block;
+    font-size: 20px;
+    color: #333;
+    padding-right: 10px;
+}
+
+.dataContainer .rating .rat-title .textBg {
+    vertical-align: -3px;
+}
+
+.dataContainer .rating .rat-title span {
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: -1px;
+    left: 99px;
+}
+
+.dataContainer .rating .rat-title a {
+    color: #333;
+}
+
+.dataContainer .rating .rat-title a img {
+    vertical-align: -3px;
+}
+
+.dataContainer .rating .rat-title a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.dataContainer .rating .ratMain .ratLeft {
+    height: 300px;
+    padding-right: 0;
+}
+
+.dataContainer .rating .ratMain .ratLeft img {
+    width: 100%;
+    height: 100%;
+}
+
+.dataContainer .rating .ratMain .ratRight {
+    padding-right: 0;
+    padding-left: 25px;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox {
+    width: 410px;
+    height: 145px;
+    background-color: #fff;
+    margin-left: 14px;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox a {
+    text-decoration: none;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox a h4 {
+    width: 390px;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 18px;
+    color: #333;
+    line-height: 2.5;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox a:hover h4 {
+    color: #ed7d4e;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox .ratText {
+    width: 90px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #ee7e4e;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox p {
+    line-height: 1.5;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox p b {
+    font-size: 18px;
+    color: #f57c40;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox .ratBtn {
+    width: 92px;
+    height: 32px;
+    border: 1px solid #ed7d4e;
+    margin-top: -25px;
+    background: url("../../dist/img/shopping.png") no-repeat 5px;
+    color: #ed7d4e;
+    padding-left: 28px;
+    border-radius: 0;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox:hover {
+    -webkit-box-shadow: 4px 7px 6px #B2B2B2;
+    -moz-box-shadow: 4px 7px 6px #B2B2B2;
+    box-shadow: 4px 7px 6px #B2B2B2;
+    position: relative;
+    top: -2px;
+    left: 0;
+    z-index: 9999;
+}
+
+.dataContainer .rating .ratMain .ratRight .ratBox:hover .ratBtn {
+    background: url("../../dist/img/btn-bg.png") no-repeat left;
+    color: #fff;
+    padding-left: 28px;
+    border-radius: 0;
+    border: transparent;
+}
+
+.dataContainer .rating .ratMain .ratRight .rowTwo {
+    margin-top: 10px;
+}
+
+.dataContainer .rating .ratMain .ratRight .rowTwo .ratText {
+    background-color: #f9b230;
+    margin-bottom: 40px;
+}
+
+.dataContainer .education .eduLeft {
+    padding-right: 0;
+}
+
+.dataContainer .education .edu-title {
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+}
+
+.dataContainer .education .edu-title h4 {
+    display: inline-block;
+    font-size: 20px;
+    color: #333;
+    padding-right: 2px;
+}
+
+.dataContainer .education .edu-title .textBg {
+    vertical-align: -3px;
+}
+
+.dataContainer .education .edu-title span {
+    font-size: 13px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 90px;
+}
+
+.dataContainer .education .edu-title span a {
+    color: #fff;
+}
+
+.dataContainer .education .edu-title span a:hover {
+    color: #fff;
+}
+
+.dataContainer .education .edu-title a {
+    color: #333;
+}
+
+.dataContainer .education .edu-title a img {
+    vertical-align: -3px;
+}
+
+.dataContainer .education .edu-title a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.dataContainer .education .zx {
+    background-color: #fff;
+    padding-bottom: 27px;
+}
+
+.dataContainer .education .zx img {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.dataContainer .education .zx p {
+    padding: 0 5px 0 15px;
+    line-height: 1.9;
+    width: 260px;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.dataContainer .education .zx p a {
+    color: #333;
+    font-size: 14px;
+}
+
+.dataContainer .education .zx p a:hover {
+    color: #f57c40;
+    text-decoration: none;
+}
+
+.dataContainer .education .eduRight {
+    padding-left: 25px;
+    padding-right: 22px;
+}
+
+.dataContainer .education .eduRight .eduMain2 {
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #fff;
+    padding: 0 5px 0 19px;
+}
+
+.dataContainer .education .eduRight .eduMain2 .col-xs-4 {
+    padding-right: 10px;
+}
+
+.dataContainer .education .eduRight .eduMain2 img {
+    margin: 20px auto 25px;
+    width: 100%;
+}
+
+.dataContainer .education .eduRight .eduMain2 p {
+    width: 240px;
+    line-height: 1.3;
+    margin-bottom: 35px;
+}
+
+.dataContainer .education .eduRight .eduMain2 p a {
+    text-decoration: none;
+    color: #333;
+}
+
+.dataContainer .education .eduRight .eduMain2 p a:hover {
+    text-decoration: none;
+    color: #f57c40;
+}
+
+.dataContainer .education .eduRight .eduMain2 span {
+    color: #999;
+    display: inline-block;
+    margin-top: 0;
+    padding-bottom: 27px;
+}
+
+.cooperation {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.cooperation .coo-title {
+    height: 70px;
+    line-height: 70px;
+}
+
+.cooperation .coo-title h4 {
+    display: inline-block;
+    font-size: 20px;
+    color: #333;
+    padding-right: 2px;
+}
+
+.cooperation .coo-title .textBg {
+    vertical-align: -3px;
+}
+
+.cooperation .coo-title span {
+    font-size: 13px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 90px;
+}
+
+.cooperation .coo-title a {
+    color: #333;
+    padding-right: 5px;
+}
+
+.cooperation .coo-title a img {
+    vertical-align: -3px;
+}
+
+.cooperation .coo-title a:hover {
+    text-decoration: none;
+    color: #FA8E2C;
+}
+
+.cooperation .cooMain {
+    width: 100%;
+    height: 154px;
+    background-color: #fff;
+}
+
+.cooperation .cooMain ul {
+    width: 1140px;
+    margin: 0 auto;
+}
+
+.cooperation .cooMain ul li {
+    float: left;
+    height: 150px;
+    line-height: 207px;
+    margin-right: 15px;
+}
+
+.footer {
+    height: 315px;
+    background: #666666;
+    padding: 30px 0 0;
+}
+
+.footer .footBox p {
+    color: #999;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer .footBox .footerLine {
+    width: 90%;
+    height: 1px;
+    margin: 78px 30px 30px 35px;
+    background-color: #999;
+}
+
+.footer .footBox .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.footer .footBox .row .ul-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    text-align: center;
+}
+
+.footer .footBox img {
+    width: 10%;
+    margin-left: 13px;
+}
+
+.footer .footBox span {
+    color: #fff;
+}
+
+.footer .footBox ul {
+    padding-top: 5px;
+}
+
+.footer .footBox ul li {
+    display: block;
+}
+
+.footer .footBox ul li span {
+    font-size: 16px;
+    display: inline-block;
+    height: 30px;
+}
+
+.footer .footBox ul li a {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer .footBox ul li a:hover {
+    color: #f57c40;
+    text-decoration: none;
+}
+
+.footer .footBox .col-md-7 {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.footer .footBox .footerTel {
+    margin-top: 20px;
+}
+
+.footer .footBox .footerTel img {
+    width: 20%;
+    vertical-align: -24px;
+}
+
+.footer .footBox .footerTel img:hover {
+    -webkit-animation: swing 1.5s;
+    animation: swing 1.5s;
+}
+
+.footer .footBox .footerTel span {
+    color: #fff;
+    font-size: 36px;
+}
+
+@keyframes go {
+    0% {
+        -webkit-transform: rotate(20deg);
+        -webkit-transform-origin: top center;
+        -moz-transform: rotate(20deg);
+        -moz-transform-origin: top center;
+        transform: rotate(20deg);
+        transform-origin: top center;
+    }
+    100% {
+        -webkit-transform: rotate(-20deg);
+        -webkit-transform-origin: top center;
+        -moz-transform: rotate(-20deg);
+        -moz-transform-origin: top center;
+        transform: rotate(-20deg);
+        transform-origin: top center;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        width: 1150px;
+    }
+
+    body {
+        width: 1150px;
+        overflow-x: visible;
+    }
+
+    .dataContainer .investment .invMain .row .invBox {
+        margin-right: 2.5%;
+    }
+
+    .dataContainer .education .edu-title span, .dataContainer .education .edu-title .textBg {
+        display: none;
+    }
+
+    .dataContainer .education .zx {
+        height: 306px;
+    }
+
+    .dataContainer .announce .anCont .anRight {
+        width: 73%;
+    }
+}
+
+  
+  

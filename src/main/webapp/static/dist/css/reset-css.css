@@ -1,0 +1,55 @@
+/*css样式重置代码*/
+
+body, html, div, blockquote, img, label, p, h1, h2, h3, h4, h5, h6, pre, ul, ol,
+li, dl, dt, dd, form, a, fieldset, input, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+}
+
+html {
+    font-size: 625%;
+}
+
+body {
+    line-height: 1;
+    font-size: 14px;
+    font-family: Tahoma, Arial, ”Helvetica Neue“, ”Hiragino Sans GB”, Simsun, sans-self;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.floatLeft {
+    float: left;
+    padding: .5em .5em .5em 0;
+}
+
+.floatRight {
+    float: right;
+    padding: .5em 0 .5em .5em;
+}
+
+.clear:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+
+.clear {
+    zoom: 1
+}
+

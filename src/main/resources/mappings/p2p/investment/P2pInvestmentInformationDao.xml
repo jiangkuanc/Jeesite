@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.investment.dao.P2pInvestmentInformationDao">
+
+    <sql id="p2pInvestmentInformationColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.user_id AS "user.id",
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.last_investment_time AS "lastInvestmentTime",
+        a.investment_debt_state AS "investmentDebtState",
+        a.expect_earn AS "expectEarn",
+        u.name AS "user.name",
+        ui.user_body_type AS "user.p2pUserInformation.userBodyType",
+        ui.id AS "user.p2pUserInformation.id",
+        ui.bankname AS "user.p2pUserInformation.bankname",
+        g.contract_sign_time AS "p2pGivingOutLoans.contractSignTime",
+        g.tripartite_agreement AS "p2pGivingOutLoans.tripartiteAgreement",
+        g.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",
+        g.giving_out_time AS "p2pGivingOutLoans.givingOutTime",
+        f.id AS "p2pFinancingInformation.id",
+        f.finacing_name AS "p2pFinancingInformation.finacingName",
+        r.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate"
+    </sql>
+
+    <sql id="p2pInvestmentInformationJoins">
+        LEFT JOIN sys_user u ON u.id = a.user_id
+        LEFT JOIN p2p_giving_out_loans g ON g.investment_information_id = a.id
+        LEFT JOIN p2p_user_information ui ON ui.user_id = u.id
+        LEFT JOIN p2p_financing_information f ON f.id = a.financing_information_id
+        LEFT JOIN p2p_financing_rating_info r ON r.financing_information_id = a.financing_information_id
+    </sql>
+
+    <select id="get" resultType="P2pInvestmentInformation">
+        SELECT
+        <include refid="p2pInvestmentInformationColumns"/>
+        FROM p2p_investment_information a
+        <include refid="p2pInvestmentInformationJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getByFiId" resultType="P2pInvestmentInformation">
+        SELECT
+        <include refid="p2pInvestmentInformationColumns"/>
+        FROM p2p_investment_information a
+        <include refid="p2pInvestmentInformationJoins"/>
+        WHERE a.financing_information_id = #{financingInformationId}
+    </select>
+
+    <select id="findList" resultType="P2pInvestmentInformation">
+        SELECT
+        <include refid="p2pInvestmentInformationColumns"/>
+        FROM p2p_investment_information a
+        <include refid="p2pInvestmentInformationJoins"/>
+        <where>
+            <!-- a.del_flag = #{DEL_FLAG_NORMAL} -->
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+            </if>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id = #{financingInformationId}
+            </if>
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id = #{user.id}
+            </if>
+            <if test="investmentSumAmount != null and investmentSumAmount != ''">
+                AND a.investment_sum_amount = #{investmentSumAmount}
+            </if>
+            <!-- <if test="investmentAgreement != null and investmentAgreement != ''">
+                AND a.investment_agreement = #{investmentAgreement}
+            </if>
+            <if test="investmentAgreementTime != null and investmentAgreementTime != ''">
+                AND a.investment_agreement_time = #{investmentAgreementTime}
+            </if> -->
+            <if test="lastInvestmentTime !=null and lastInvestmentTime != '' ">
+                AND a.last_investment_time =#{lastInvestmentTime}
+            </if>
+            <if test="investmentDebtState !=null and investmentDebtState != '' ">
+                AND a.investment_debt_state=#{investmentDebtState}
+            </if>
+            <if test="user != null and user.p2pUserInformation != null and user.p2pUserInformation.bankname !=null and user.p2pUserInformation.bankname != ''">
+                AND ui.bankname LIKE CONCAT(CONCAT('%',#{user.p2pUserInformation.bankname}),'%')
+            </if>
+            <if test="user != null and user.p2pUserInformation != null and user.p2pUserInformation.id !=null and user.p2pUserInformation.id != ''">
+                AND ui.id = #{user.p2pUserInformation.id}
+            </if>
+            <if test="p2pGivingOutLoans != null and p2pGivingOutLoans.givingOutAmount != null and p2pGivingOutLoans.givingOutAmount != ''">
+                <if test="p2pGivingOutLoans.givingOutAmount == '111'">
+                    AND NOT ISNULL(giving_out_amount) AND giving_out_amount != 0
+                </if>
+                <if test="p2pGivingOutLoans.givingOutAmount == '222'">
+                    AND ISNULL(giving_out_amount) OR giving_out_amount = 0
+                </if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- 	<otherwise>
+                    a.update_date DESC
+                </otherwise> -->
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pInvestmentInformation">
+        SELECT
+        <include refid="p2pInvestmentInformationColumns"/>
+        FROM p2p_investment_information a
+        <include refid="p2pInvestmentInformationJoins"/>
+        <!-- <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where> -->
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <!-- <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise> -->
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_investment_information(
+        id,
+        financing_information_id,
+        user_id,
+        investment_sum_amount,
+        last_investment_time,
+        investment_debt_state,
+        expect_earn
+        <!-- investment_agreement,
+        investment_agreement_time,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag -->
+
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{userId},
+        #{investmentSumAmount},
+        #{lastInvestmentTime},
+        #{investmentDebtState},
+        #{expectEarn}
+        <!-- #{investmentAgreement},
+        #{investmentAgreementTime},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag} -->
+        )
+    </insert>
+    <insert id="saveP2pInvestmentInformation" parameterType="P2pInvestmentInformation">
+        INSERT INTO p2p_investment_information(
+        id,
+        financing_information_id,
+        user_id,
+        investment_sum_amount,
+        last_investment_time,
+        investment_debt_state,
+        expect_earn
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{userId},
+        #{investmentSumAmount},
+        #{lastInvestmentTime},
+        #{investmentDebtState},
+        #{expectEarn}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_investment_information SET
+        financing_information_id = #{financingInformationId},
+        user_id = #{user.id},
+        investment_sum_amount = #{investmentSumAmount},
+        last_investment_time=#{lastInvestmentTime},
+        investment_debt_state=#{investmentDebtState},
+        expect_earn = #{expectEarn}
+        <!-- investment_agreement = #{investmentAgreement},
+        investment_agreement_time = #{investmentAgreementTime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks} -->
+        WHERE id = #{id}
+    </update>
+    <update id="updateP2pInvestmentInformation">
+        UPDATE p2p_investment_information SET
+        investment_sum_amount = #{investmentSumAmount},
+        last_investment_time=#{lastInvestmentTime},
+        investment_debt_state=#{investmentDebtState},
+        expect_earn = #{expectEarn}
+        WHERE financing_information_id = #{financingInformationId}
+        AND user_id = #{userId}
+    </update>
+    <!-- <update id="delete">
+        UPDATE p2p_investment_information SET
+            del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update> -->
+
+    <!-- 根据投资信息ID查询投资总收益 -->
+    <select id="findAllInvestmentIncome" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT SUM(ii.investment_sum_amount * fri.recommended_rate)
+        FROM p2p_investment_information ii LEFT JOIN p2p_financing_rating_info fri ON ii.financing_information_id =
+        fri.financing_information_id
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                ii.id = #{_parameter}
+            </if>
+        </where>
+    </select>
+    <!-- 投资收益记录查询 -->
+    <select id="investmentEarnRecord" resultType="com.dagongsoft.p2p.investment.entity.P2pInvestmentEarnRecord">
+        select * FROM (
+        SELECT
+        a.id AS "id",
+        a.bankName AS "bankName",
+        MAX(b.last_investment_time) AS "lastInvestmentTime",
+        COUNT(b.user_id) AS "userId",
+        COUNT(c.giving_out_amount) AS "countInvestSuccessItem",
+        SUM(c.giving_out_amount) AS "sumInvestAccount"
+        from
+        p2p_user_information a
+        LEFT JOIN p2p_investment_information b ON b.user_id = a.user_id
+        LEFT JOIN p2p_giving_out_loans c ON c.financing_information_id = b.financing_information_id
+        <where>
+            a.user_body_type = 3
+            <if test="bankName != null and bankName != ''">
+                AND a.bankName LIKE CONCAT(CONCAT('%',#{bankName}),'%')
+            </if>
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+        </where>
+        GROUP BY a.id
+        ) investmentEarnRecord
+        <where>
+            <if test="beginTime != null and endTime != null and beginTime != '' and endTime != ''">
+                AND lastInvestmentTime BETWEEN #{beginTime} AND #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据项目查询投资信息列表 -->
+    <select id="findP2pInvestmentInformationListByFid" parameterType="P2pFinancingInformation"
+            resultType="P2pInvestmentInformation">
+        SELECT
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.last_investment_time AS "lastInvestmentTime",
+        b.login_name AS "user.loginName"
+        FROM
+        p2p_investment_information a,sys_user b
+        WHERE
+        a.user_id = b.id
+        AND
+        a.financing_information_id = #{id}
+    </select>
+
+    <!-- 根据userInformation的id 查询投资人投资的所有项目id -->
+    <select id="getInvestmentAllFinancingId" resultType="java.lang.String">
+        SELECT
+        b.financing_information_id
+        FROM
+        p2p_user_information a,p2p_investment_information b
+        WHERE
+        a.id = #{id}
+        AND b.user_id = a.user_id
+    </select>
+
+    <!-- 查询投资信息表中id的最大值 -->
+    <select id="findMaxId" resultType="java.lang.Integer">
+        SELECT count(id) FROM p2p_investment_information
+    </select>
+    <!-- 根据债项ID和用户id查询投资记录 -->
+    <select id="findInvestmentByids" parameterType="P2pInvestmentInformation" resultType="P2pInvestmentInformation">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.user_id AS "userId",
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.last_investment_time AS "lastInvestmentTime",
+        a.expect_earn AS "expectEarn"
+        FROM p2p_investment_information a
+        WHERE
+        user_id = #{userId}
+        AND financing_information_id = #{financingInformationId}
+    </select>
+    <!-- Quincy 根据债项ID查询投资记录 -->
+    <select id="findInvestmentRecordByFid" parameterType="P2pInvestmentInformation"
+            resultType="P2pInvestmentInformation">
+        SELECT
+        a.id AS "id",
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.last_investment_time AS "lastInvestmentTime",
+        b.bankName AS "p2pUserInformation.bankname",
+        c.real_name AS "p2pRegUserCertify.realName",
+        e.role_id AS "user.role.id"
+        FROM
+        p2p_investment_information a
+        LEFT JOIN
+        p2p_user_information b
+        ON
+        a.user_id = b.user_id
+        LEFT JOIN
+        p2p_reg_user_certify c
+        ON
+        a.user_id = c.user_id
+        LEFT JOIN
+        sys_user d
+        ON
+        a.user_id = d.id
+        LEFT JOIN
+        sys_user_role e
+        ON
+        d.id = e.user_id
+        <where>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id = #{financingInformationId}
+            </if>
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND a.last_investment_time <![CDATA[   >=  ]]> #{beginTime} AND a.last_investment_time
+                <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <!-- Quincy 根据债项ID查询投资总人数 -->
+    <select id="findAllRecordCountByFid" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        count(id)
+        FROM
+        p2p_investment_information
+        WHERE
+        financing_information_id = #{_parameter}
+    </select>
+
+    <!-- 认购记录 -->
+    <select id="getSubscribeRecordList" parameterType="P2pInvestmentInformation" resultType="P2pInvestmentInformation">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.financing_information_id AS "financingInformationId",
+        b.`name` AS "user.name",
+        e.user_body_type AS "p2pUserInformation.userBodyType",
+        c.finacing_name AS "p2pFinancingInformation.finacingName",
+        d.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+
+
+        c.giving_out_time AS "p2pFinancingInformation.givingOutTime",
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.last_investment_time AS "lastInvestmentTime",
+        a.expect_earn AS "expectEarn",
+        c.current_stage AS "p2pFinancingInformation.currentStage"
+
+        FROM
+        p2p_investment_information a
+        LEFT JOIN sys_user b ON b.id = a.user_id
+        LEFT JOIN p2p_financing_information c ON c.id = a.financing_information_id
+        LEFT JOIN p2p_financing_rating_info d ON d.financing_information_id = a.financing_information_id
+        LEFT JOIN p2p_user_information e ON e.user_id = a.user_id
+        <where>
+            <if test="user != null and user.name != null and user.name != ''">
+                AND b.`name` LIKE CONCAT(CONCAT('%',#{user.name}),'%')
+            </if>
+            <if test="id != null and id != ''">
+                AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+            </if>
+            <if test="p2pUserInformation != null and p2pUserInformation.userBodyType != null and p2pUserInformation.userBodyType != ''">
+                AND e.user_body_type = #{p2pUserInformation.userBodyType}
+            </if>
+            <if test="userId != null and  userId != ''">
+                AND a.user_id = #{userId}
+            </if>
+            <if test="p2pFinancingInformation != null and p2pFinancingInformation.currentStage != null and  p2pFinancingInformation.currentStage != ''">
+                AND c.current_stage = #{p2pFinancingInformation.currentStage}
+            </if>
+        </where>
+        ORDER BY e.user_body_type
+        , c.giving_out_time desc ,a.last_investment_time desc
+    </select>
+
+    <!-- 投资人累计投资总数 -->
+    <select id="getUserAccumulativeAmount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        count(a.id)
+        FROM
+        p2p_investment_information a
+        WHERE
+        a.user_id = #{userId}
+        AND (a.investment_debt_state NOT IN (901) OR a.investment_debt_state IS NUll)
+    </select>
+
+    <!-- Quincy 查询投资总览列表 -->
+    <select id="investmentGeneral" parameterType="P2pInvestmentInformation" resultType="P2pInvestmentInformation">
+        SELECT
+        b.finacing_name AS "p2pFinancingInformation.finacingName",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        x.state_time AS "p2pBeforeMatchDebtState.stateTime",
+        c.recommended_rate "p2pFinancingInformation.recommendedRate",
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.last_investment_time AS "lastInvestmentTime",
+        b.current_stage AS "p2pFinancingInformation.currentStage",
+        b.giving_out_time AS "p2pFinancingInformation.givingOutTime",
+        b.id AS "financingInformationId",
+        b.giving_out_state AS "p2pFinancingInformation.givingOutState"
+        FROM
+        p2p_investment_information a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        LEFT JOIN
+        p2p_financing_rating_info c
+        ON
+        b.id = c.financing_information_id
+        LEFT JOIN
+        (SELECT
+        finacing_information_id,state_time
+        FROM
+        p2p_before_match_debt_state
+        WHERE
+        progress_stage = '600') x
+        ON
+        b.id = x.finacing_information_id
+        <where>
+            a.user_id = #{userId}
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND a.last_investment_time <![CDATA[   >=  ]]> #{beginTime} AND a.last_investment_time
+                <![CDATA[   <  ]]> #{endTime}
+            </if>
+        </where>
+    </select>
+    <!-- Quincy 查询投资总额 -->
+    <select id="findInvestmentSumByUid" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        SUM(a.investment_sum_amount)
+        FROM
+        p2p_investment_information a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        a.user_id = #{_parameter}
+        AND
+        b.current_stage IN (500,600,700,800,900)
+    </select>
+
+    <!-- Quincy 根据投资人ID和债项阶段查询投资债项总个数 -->
+    <select id="findInvestmentCountByUid" parameterType="P2pInvestmentInformation" resultType="java.lang.Integer">
+        SELECT
+        COUNT(a.id),b.current_stage
+        FROM
+        p2p_investment_information a
+        LEFT JOIN
+        p2p_financing_information b
+        ON
+        a.financing_information_id = b.id
+        WHERE
+        a.user_id = #{userId}
+        AND
+        b.current_stage = #{p2pFinancingInformation.currentStage}
+    </select>
+    <!-- Chace 根据用户id查询投资记录 -->
+    <select id="findInvestmentByUserId" parameterType="P2pInvestmentInformation" resultType="P2pInvestmentInformation">
+        SELECT *
+        FROM p2p_investment_information
+        WHERE user_id = #{userId};
+    </select>
+
+    <select id="getP2pInvestmentInformationList" parameterType="P2pInvestmentInformation"
+            resultType="P2pInvestmentInformation">
+        SELECT
+        b.name AS "user.name",
+        a.last_investment_time AS "lastInvestmentTime",
+        a.investment_sum_amount AS "investmentSumAmount"
+        FROM p2p_investment_information a
+        LEFT JOIN sys_user b ON b.id = a.user_id
+        <where>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                a.financing_information_id = #{financingInformationId}
+            </if>
+        </where>
+    </select>
+</mapper>

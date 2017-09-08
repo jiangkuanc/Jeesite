@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.risk.dao.P2pRiskRecordDao">
+
+    <sql id="p2pRiskRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.paper_id AS "paperId",
+        a.total_score AS "totalScore",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pRiskRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pRiskRecord">
+        SELECT
+        <include refid="p2pRiskRecordColumns"/>
+        FROM p2p_risk_record a
+        <include refid="p2pRiskRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRiskRecord">
+        SELECT
+        <include refid="p2pRiskRecordColumns"/>
+        FROM p2p_risk_record a
+        <include refid="p2pRiskRecordJoins"/>
+        <where>
+            <if test="user != null and user.id != null and user.id != ''">
+                a.user_id = #{user.id}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRiskRecord">
+        SELECT
+        <include refid="p2pRiskRecordColumns"/>
+        FROM p2p_risk_record a
+        <include refid="p2pRiskRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_risk_record(
+        id,
+        user_id,
+        paper_id,
+        total_score
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{paperId},
+        #{totalScore}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_risk_record SET
+        user_id = #{user.id},
+        paper_id = #{paperId},
+        total_score = #{totalScore}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_risk_record
+        WHERE id = #{id}
+    </update>
+
+</mapper>

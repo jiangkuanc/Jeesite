@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.risk.dao.P2pMemberDao">
+
+    <sql id="p2pMemberColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.join_member_time AS "joinMemberTime",
+        a.end_time AS "endTime",
+        a.last_renewal_time AS "lastRenewalTime",
+        a.member_state AS "memberState",
+        a.member_type AS "memberType",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pMemberJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pMember">
+        SELECT
+        <include refid="p2pMemberColumns"/>
+        FROM p2p_member a
+        <include refid="p2pMemberJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pMember">
+        SELECT
+        <include refid="p2pMemberColumns"/>
+        FROM p2p_member a
+        <include refid="p2pMemberJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pMember">
+        SELECT
+        <include refid="p2pMemberColumns"/>
+        FROM p2p_member a
+        <include refid="p2pMemberJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_member(
+        id,
+        user_id,
+        join_member_time,
+        end_time,
+        last_renewal_time,
+        member_state,
+        member_type
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{joinMemberTime},
+        #{endTime},
+        #{lastRenewalTime},
+        #{memberState},
+        #{memberType}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_member SET
+        user_id = #{user.id},
+        join_member_time = #{joinMemberTime},
+        end_time = #{endTime},
+        last_renewal_time = #{lastRenewalTime},
+        member_state = #{memberState},
+        member_type = #{memberType}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_member
+        WHERE id = #{id}
+    </update>
+
+</mapper>

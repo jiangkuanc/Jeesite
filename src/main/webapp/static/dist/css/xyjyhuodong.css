@@ -1,0 +1,76 @@
+/*信用教育活动*/
+/*Time:2016-7-18 11:45:47*/
+/*Author:Mengwen Zhuang*/
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+@media screen and (max-width: 1360px) {
+    .index-xinyong .indxe-xinyong-top .index-xinyong-top-left h3 {
+        font-size: 20px;
+    }
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-left {
+    width: 24.3%;
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-left ul {
+    padding-left: 0
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-left .index-xinyong-bot-left-bg {
+    width: 100%;
+    height: 8px;
+    background: #fbb458;
+    margin-left: 0;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-center .index-xinyong-bot-center-bg {
+    width: 100%;
+    height: 8px;
+    background: #5886fb;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-center .index-xinyong-bot-center-text {
+    padding-left: 0px;
+    padding-right: 0px;
+
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-center .index-xinyong-bot-center-text ul {
+    margin-top: 20px;
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-right .index-xinyong-bot-right-text a {
+    line-height: 28px;
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-right .index-xinyong-bot-right-text ul {
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.index-xinyong .indxe-xinyong-bot .index-xinyong-bot-right .index-xinyong-bot-right-bg {
+    width: 100%;
+    margin-left: 0
+}
+
+.xyjy-content-bot-bot-content {
+    padding-top: 10px;
+}
+
+.xyjy-content-bot-bot-content li {
+    padding-left: 10px;
+    line-height: 30px;
+    color: #909090;
+}

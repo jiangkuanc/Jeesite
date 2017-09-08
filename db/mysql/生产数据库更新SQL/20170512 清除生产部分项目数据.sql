@@ -1,0 +1,110 @@
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705030002';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705060003';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705060002';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050014';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705030005';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705030004';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705020001';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705060001';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050004';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050001';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705040002';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705040004';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705040003';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705040001';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705030006';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705030003';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705030001';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705020003';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705020002';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705060005';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050011';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050009';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050010';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050013';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050007';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050006';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050015';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050005';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201704260001';
+
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705020001';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705060002';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705060003';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705020002';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705020003';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705030001';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705030002';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705030003';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705050001';
+DELETE FROM p2p_rating_service_info WHERE id = 'DG7201705060001';
+
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705020001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705060002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705060003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705020002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705020003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705030001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705030002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705030003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705050001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG7201705060001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705030002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705060003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705060002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050014';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705030005';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705030004';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705020001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705060001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050004';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705040002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705040004';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705040003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705040001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705030006';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705030003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705030001';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705020003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705020002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705060005';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050011';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050009';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050010';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050013';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050007';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050006';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050015';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050005';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201704260001';
+
+
+DELETE FROM p2p_financing_information WHERE id = 'DG6201704260002';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201704260003';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050012';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050003';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201704260005';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201704260004';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705060004';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050008';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705040005';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201704260002';
+DELETE FROM p2p_financing_information WHERE id = 'DG6201705050002';
+
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201704260002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201704260003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050012';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050003';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201704260005';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201704260004';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705060004';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050008';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705040005';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201704260002';
+DELETE FROM p2p_financing_rating_info WHERE financing_information_id = 'DG6201705050002';
+
+
+
+
+

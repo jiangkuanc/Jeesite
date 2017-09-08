@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.config.dao.P2pFriendshipLinkDao">
+
+    <sql id="p2pFriendshipLinkColumns">
+        a.id AS "id",
+        a.link_unit AS "linkUnit",
+        a.link_state AS "linkState",
+        a.link_icon AS "linkIcon",
+        a.link_address AS "linkAddress",
+        a.sort AS "sort",
+        a.operation_person AS "operationPerson",
+        a.operate_time AS "operateTime"
+    </sql>
+
+    <sql id="p2pFriendshipLinkJoins">
+    </sql>
+
+    <select id="get" resultType="P2pFriendshipLink">
+        SELECT
+        <include refid="p2pFriendshipLinkColumns"/>
+        FROM p2p_friendship_link a
+        <include refid="p2pFriendshipLinkJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pFriendshipLink">
+        SELECT
+        <include refid="p2pFriendshipLinkColumns"/>
+        FROM p2p_friendship_link a
+        <include refid="p2pFriendshipLinkJoins"/>
+        <where>
+            <if test="operationPerson != null and operationPerson != ''">
+                AND a.operation_person LIKE CONCAT(CONCAT('%',#{operationPerson}),'%')
+            </if>
+            <if test="linkState != null and linkState != ''">
+                AND a.link_state LIKE CONCAT(CONCAT('%',#{linkState}),'%')
+            </if>
+        </where>
+        ORDER BY a.operate_time
+    </select>
+
+    <select id="findAllList" resultType="P2pFriendshipLink">
+        SELECT
+        <include refid="p2pFriendshipLinkColumns"/>
+        FROM p2p_friendship_link a
+        <include refid="p2pFriendshipLinkJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_friendship_link(
+        id,
+        link_unit,
+        link_state,
+        link_icon,
+        link_address,
+        sort,
+        operation_person,
+        operate_time
+        ) VALUES (
+        #{id},
+        #{linkUnit},
+        #{linkState},
+        #{linkIcon},
+        #{linkAddress},
+        #{sort},
+        #{operationPerson},
+        #{operateTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_friendship_link SET
+        link_unit = #{linkUnit},
+        link_state = #{linkState},
+        link_icon = #{linkIcon},
+        link_address = #{linkAddress},
+        sort = #{sort}
+        <!-- 			operation_person = #{operationPerson}, -->
+        <!-- 			operate_time = #{operateTime} -->
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_friendship_link
+        WHERE id = #{id}
+    </update>
+    <!-- Chace 友情链接发布 -->
+    <update id="publishLink" parameterType="P2pFriendshipLink">
+        UPDATE p2p_friendship_link a
+        SET
+        <!-- 				operation_person = #{operationPerson}, -->
+        <!-- 				operate_time = #{operateTime}, -->
+        a.link_state = 1
+        WHERE a.id = #{id}
+    </update>
+    <!-- Chace 友情链接取消发布 -->
+    <update id="stopLink" parameterType="P2pFriendshipLink">
+        UPDATE p2p_friendship_link a
+        SET
+        <!-- 				operation_person = #{operationPerson}, -->
+        <!-- 				operate_time = #{operateTime}, -->
+        a.link_state = 0
+        WHERE a.id = #{id}
+    </update>
+
+    <!-- Chace 查询已发布友情链接 -->
+    <select id="findPublish" parameterType="P2pFriendshipLink" resultType="P2pFriendshipLink">
+        SELECT
+        a.id AS "id",
+        a.link_unit AS "linkUnit",
+        a.link_state AS "linkState",
+        a.link_icon AS "linkIcon",
+        a.link_address AS "linkAddress",
+        a.sort AS "sort",
+        a.operation_person AS "operationPerson",
+        a.operate_time AS "operateTime"
+        FROM p2p_friendship_link a
+        WHERE a.link_state = 1
+        ORDER BY a.sort ,a.operate_time
+        <if test="size != null">
+            limit #{size}
+        </if>
+    </select>
+
+</mapper>

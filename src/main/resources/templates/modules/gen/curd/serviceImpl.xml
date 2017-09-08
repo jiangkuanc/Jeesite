@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <name>serviceImpl</name>
+    <filePath>src/main/java/${packageName}/${moduleName}/${subModuleName}/service/Impl</filePath>
+    <fileName>${ClassName}ServiceImpl.java</fileName>
+    <content><![CDATA[
+package ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.service.Impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.thinkgem.jeesite.common.persistence.Page;
+import com.thinkgem.jeesite.common.service.CrudService;
+import org.springframework.transaction.annotation.Transactional;
+import ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.entity.${ClassName};
+import ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.dao.${ClassName}Dao;
+import ${packageName}.${moduleName}<#if subModuleName != "">.${subModuleName}</#if>.service.${ClassName}Service;
+
+/**
+ * ${functionName}ServiceImpl
+ * @author ${functionAuthor}
+ * @version ${functionVersion}
+ */
+@Transactional(readOnly = true)
+@Service("${className}Service")
+public class ${ClassName}ServiceImpl extends CrudService<${ClassName}Dao, ${ClassName}> implements ${ClassName}Service {
+
+	public ${ClassName} get(String id) {
+		return super.get(id);
+	}
+	
+	public List<${ClassName}> findList(${ClassName} ${className}) {
+		return super.findList(${className});
+	}
+	
+	public Page<${ClassName}> findPage(Page<${ClassName}> page, ${ClassName} ${className}) {
+		return super.findPage(page, ${className});
+	}
+	
+	@Transactional(readOnly = false,rollbackFor=Exception.class)
+	public void save(${ClassName} ${className}) {
+		super.save(${className});
+	}
+	
+	@Transactional(readOnly = false,rollbackFor=Exception.class)
+	public void delete(${ClassName} ${className}) {
+		super.delete(${className});
+	}
+	
+}]]>
+    </content>
+</template>

@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.ArticleDao">
+
+    <sql id="cmsArticleColumns">
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.link AS "link",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.custom_content_view AS "customContentView",
+        a.view_config AS "viewConfig",
+        a.create_by AS "createBy.id",
+        a.speaker AS "speaker",       <!-- 讲堂作者 -->
+        a.related_enterprises AS "relatedEnterprises", <!-- 相关企业添加 -->
+        a.project_scale AS "projectScale",           <!-- 规模 -->
+        a.country AS "country",                     <!-- 国别 -->
+        a.audit_opinion AS "auditOpinion",            <!-- 审核意见 -->
+        a.nthrough_reason AS "nthroughReason",       <!-- 不通过原因 -->
+        a.audit_time AS "auditTime",                 <!-- 审核时间 -->
+        a.auditor AS "auditor",                      <!-- 审核人 -->
+        a.review_opinions AS "reviewOpinions",       <!-- 复审意见 -->
+        a.nreview_reason AS "nreviewReason",        <!-- 复审不通过原因 -->
+        a.review_time AS "reviewTime",              <!-- 复审时间 -->
+        a.reauditor AS "reauditor",                <!-- 复审人 -->
+        a.status_code AS "statusCode",             <!-- 状态码 -->
+        a.activity_location AS "activityLocation", <!-- 报名地点 -->
+        a.registration_way AS "registrationWay",  <!-- 报名方式 -->
+        a.event_message AS "eventMessage",        <!-- 活动寄语 -->
+        a.lecture_number AS "lectureNumber",       <!-- 讲堂序号 -->
+        d.copyfrom AS "ArticleData.copyfrom",
+        d.content AS "ArticleData.content",       <!-- 文章内容 -->
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "user.name"
+    </sql>
+
+    <sql id="cmsArticleJoins">
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_office o ON o.id = c.office_id
+        JOIN sys_user u ON u.id = a.create_by
+        JOIN cms_article_data d ON d.id = a.id
+    </sql>
+
+    <select id="get" resultType="Article">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="Article">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        <where>
+            a.del_flag = #{delFlag}
+            <if test="title != null and title != ''">
+                AND a.title LIKE
+                <if test="dbName == 'oracle'">'%'||#{title}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{title}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{title}, '%')</if>
+            </if>
+            <if test="posid != null and posid != ''">
+                AND a.posid LIKE
+                <if test="dbName == 'oracle'">'%'||#{posid}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{posid}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{posid}, '%')</if>
+            </if>
+            <if test="category != null and category!= '' and category.id != null and category.id != ''">
+                AND (a.category_id = #{category.id}
+                <if test="category.parentIds != null and category.parentIds != ''">
+                    or c.parent_ids like
+                    <if test="dbName == 'oracle'">'%'||#{category.id}||'%'</if>
+                    <if test="dbName == 'mssql'">'%,'+#{category.id}+',%'</if>
+                    <if test="dbName == 'mysql'">CONCAT('%,', #{category.id}, ',%')</if>
+                </if>
+                )
+            </if>
+            <if test="image != null and image != ''">
+                AND a.image = #{image}
+            </if>
+            <if test="createBy != null and createBy.id != null and createBy.id != ''">
+                AND a.create_by = #{createBy.id}
+            </if>
+            <!-- ${sqlMap.dsf}-->
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.status_code, a.weight DESC ,a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findAllList" resultType="Article">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.weight DESC, a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_article(
+        id,
+        category_id,
+        title,
+        link,
+        color,
+        image,
+        keywords,
+        country,
+        audit_opinion,
+        nthrough_reason,
+        audit_time,
+        auditor,
+        review_opinions,
+        nreview_reason,
+        review_time,
+        reauditor,
+        status_code,
+        activity_location,
+        registration_way,
+        event_message,
+        description,
+        weight,
+        weight_date,
+        hits,
+        posid,
+        custom_content_view,
+        view_config,
+        create_by,
+        create_date,
+        speaker,
+        related_enterprises,
+        lecture_number,
+        project_scale,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{category.id},
+        #{title},
+        #{link},
+        #{color},
+        #{image},
+        #{keywords},
+        #{country},
+        #{auditOpinion},
+        #{nthroughReason},
+        #{auditTime},
+        #{auditor},
+        #{reviewOpinions},
+        #{nreviewReason},
+        #{reviewTime},
+        #{reauditor},
+        #{statusCode},
+        #{activityLocation},
+        #{registrationWay},
+        #{eventMessage},
+        #{description},
+        #{weight},
+        #{weightDate},
+        #{hits},
+        #{posid},
+        #{customContentView},
+        #{viewConfig},
+        #{createBy.id},
+        #{createDate},
+        #{speaker},
+        #{relatedEnterprises},
+        #{lectureNumber},
+        #{projectScale},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_article SET
+        category_id = #{category.id},
+        title = #{title},
+        link = #{link},
+        color = #{color},
+        <if test="image != null and image != ''">
+            image = #{image},
+        </if>
+        keywords = #{keywords},
+        country = #{country},
+        audit_opinion = #{auditOpinion},
+        nthrough_reason = #{nthroughReason},
+        audit_time = #{auditTime},
+        auditor = #{auditor},
+        review_opinions = #{reviewOpinions},
+        nreview_reason = #{nreviewReason},
+        review_time = #{reviewTime},
+        reauditor = #{reauditor},
+        status_code = #{statusCode},
+        activity_location = #{activityLocation},
+        registration_way = #{registrationWay},
+        event_message = #{eventMessage},
+        description = #{description},
+        weight = #{weight},
+        weight_date = #{weightDate},
+        hits = #{hits},
+        posid = #{posid},
+        custom_content_view = #{customContentView},
+        view_config = #{viewConfig},
+        create_date = #{createDate},
+        speaker = #{speaker},
+        related_enterprises = #{relatedEnterprises},
+        lecture_number = #{lectureNumber},
+        project_scale = #{projectScale},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks},
+        del_flag = #{delFlag}
+        WHERE id = #{id}
+    </update>
+
+    <update id="update1" parameterType="Article">
+        UPDATE cms_article SET
+        audit_time = #{auditTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="update2">
+        UPDATE cms_article SET
+        audit_opinion = #{auditOpinion},
+        nthrough_reason = #{nthroughReason},
+        audit_time = #{auditTime},
+        auditor = #{auditor},
+        status_code = #{statusCode}
+        WHERE id = #{id}
+    </update>
+
+    <update id="update3">
+        UPDATE cms_article SET
+        review_opinions = #{reviewOpinions},
+        nreview_reason = #{nreviewReason},
+        review_time = #{reviewTime},
+        reauditor = #{reauditor},
+        status_code = #{statusCode}
+        WHERE id = #{id}
+    </update>
+
+    <update id="update4">
+        UPDATE cms_article SET
+        status_code = #{statusCode}
+        WHERE id = #{id}
+    </update>
+
+    <update id="update5">
+        UPDATE cms_article SET
+        review_time = #{reviewTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_article
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByIdIn" resultType="Article">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        from cms_article a where
+        <where>
+            id in (${id});
+        </where>
+    </select>
+
+    <update id="updateExpiredWeight">
+        update cms_article SET
+        weight = 0
+        WHERE weight &gt; 0 AND weight_date &lt;
+        <if test="dbName == 'oracle'">sysdate</if>
+        <if test="dbName == 'mssql'">FLOOR(CONVERT(FLOAT,GETDATE()))</if>
+        <if test="dbName == 'mysql'">CURDATE()</if>
+    </update>
+
+    <update id="updateHitsAddOne">
+        update cms_article set
+        hits = hits+1
+        WHERE id = #{id}
+    </update>
+
+    <select id="findStats" resultType="Category">
+        select max(c.id) AS "id",
+        max(c.name) AS "name",
+        max(cp.id) AS "parent.id",
+        max(cp.name) AS "parent.name",
+        count(*) AS "cnt",
+        sum(a.hits) AS "hits",
+        max(a.update_date) as "updateDate",
+        max(o.id) AS "office.id",
+        max(o.name) AS "office.name"
+        FROM cms_article a
+        RIGHT JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_category cp ON c.parent_id = cp.id
+        JOIN sys_office o ON o.id = c.office_id
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            AND c.site_id = #{site.id}
+            <if test="office.id != null and office.id != ''">
+                AND (c.office_id = #{office.id} OR o.parent_ids like
+                <if test="dbName == 'oracle'">'%'||#{office.id}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{office.id}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{office.id}, '%')</if>)
+            </if>
+            <if test="beginDate != null and beginDate != ''">
+                AND a.update_date <![CDATA[ >= #{beginDate} ]]>
+            </if>
+            <if test="endDate != null and endDate != ''">
+                AND a.update_date <![CDATA[ <= #{endDate} ]]>
+            </if>
+            <if test="id != null and id != ''">
+                AND (c.id = #{id} OR c.parent_ids LIKE
+                <if test="dbName == 'oracle'">'%'||#{id}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{id}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{id}, '%')</if>)
+            </if>
+            group by cp.sort, cp.id, c.sort, c.id
+            order by cp.sort, cp.id, c.sort, c.id
+        </where>
+    </select>
+
+    <!-- 查询分页 教育讲堂 -->
+    <select id="findPaList" resultType="Article">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.weight DESC, a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 查询分页 教育讲堂8899 -->
+    <select id="findPaListCredit" resultType="Article">
+        SELECT
+        <include refid="cmsArticleColumns"/>
+        FROM cms_article a
+        <include refid="cmsArticleJoins"/>
+        ORDER BY a.weight DESC, a.update_date DESC
+
+    </select>
+
+    <!-- 查询 name为 项目招标的文章信息-->
+    <select id="findArticleAccName" resultType="Article"
+            parameterType="com.thinkgem.jeesite.modules.cms.entity.Category">
+        SELECT a.id AS "id",a.category_id AS "category.id",a.title AS "title" FROM cms_article a join cms_category c on
+        a.category_id=c.id WHERE c.name=#{name} AND
+        a.id NOT IN(SELECT b.article_id FROM cms_project_detils b where b.article_id is not null)
+    </select>
+
+    <!-- 查询 name为 项目招标的文章信息 -->
+    <select id="findArticleAccName1" resultType="Article"
+            parameterType="com.thinkgem.jeesite.modules.cms.entity.Category">
+        SELECT a.id AS "id",a.category_id AS "category.id",a.title AS "title" FROM cms_article a join cms_category c on
+        a.category_id=c.id WHERE c.name=#{name} AND
+        a.id NOT IN(SELECT b.article_id FROM cms_mega_project_introduce1 b where b.article_id is not null)
+    </select>
+
+    <!-- 同时查询不同产品信息名字的详情 -->
+    <select id="findArticleDfName" resultType="Article"
+            parameterType="com.thinkgem.jeesite.modules.cms.entity.Category">
+        SELECT a.id AS "id",a.category_id AS "category.id",a.title AS "title" FROM cms_article a join cms_category c on
+        a.category_id=c.id WHERE c.name IN (#{aname},#{bname},#{cname}) AND
+        a.id NOT IN(SELECT b.article_id FROM cms_report b where b.article_id is not null)
+    </select>
+    <!-- 对进行中活动进行报名填写-->
+    <select id="findSignUpActivities" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.title AS "title",
+        a.description AS "description",
+        a.speaker AS "speaker",
+        a.weight_date AS "weightDate",
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.status_code AS "statusCode",
+        a.activity_location AS "activityLocation",
+        a.registration_way AS "registrationWay",
+        d.content AS "ArticleData.content",
+        a.image AS "image"
+        FROM cms_article a
+        join cms_category c on a.category_id = c.id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.id = #{id}
+    </select>
+    <!-- 查询已完成活动详情列表 -->
+    <select id="findcompletedActivities" resultType="Article">
+        SELECT
+        a.title AS "title",
+        a.description AS "description",
+        a.update_date AS "updateDate",
+        a.status_code AS "statusCode",
+        a.image AS "image",
+        d.content AS "ArticleData.content",
+        a.event_message AS "eventMessage"
+        FROM cms_article a
+        JOIN cms_category c ON a.category_id=c.id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 查询已经发布的教育讲堂文章信息 -->
+    <select id="findPublishArticle" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.link AS "link",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.custom_content_view AS "customContentView",
+        a.view_config AS "viewConfig",
+        a.create_by AS "createBy.id",
+        a.speaker AS "speaker",
+        a.related_enterprises AS "relatedEnterprises",
+        a.project_scale AS "projectScale",
+        a.country AS "country",
+        a.audit_opinion AS "auditOpinion",
+        a.nthrough_reason AS "nthroughReason",
+        a.audit_time AS "auditTime",
+        a.auditor AS "auditor",
+        a.review_opinions AS "reviewOpinions",
+        a.nreview_reason AS "nreviewReason",
+        a.review_time AS "reviewTime",
+        a.reauditor AS "reauditor",
+        a.status_code AS "statusCode",
+        a.activity_location AS "activityLocation",
+        a.registration_way AS "registrationWay",
+        a.event_message AS "eventMessage",
+        a.lecture_number AS "lectureNumber",
+        d.content AS "ArticleData.content",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '29'
+        ORDER BY a.weight DESC,a.update_date DESC
+        <if test="size != null">
+            limit #{size}
+        </if>
+    </select>
+    <!-- 查询教育讲堂内容详情 -->
+    <select id="findJiangTangContent" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.speaker AS "speaker",       <!-- 讲堂作者 -->
+        a.status_code AS "statusCode",             <!-- 状态码 -->
+        d.content AS "ArticleData.content",       <!-- 文章内容 -->
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "user.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_office o ON o.id = c.office_id
+        JOIN sys_user u ON u.id = a.create_by
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.id = #{id}
+    </select>
+    <!-- 查询进行中教育活动内容详情 -->
+    <select id="findJxActivityContent" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.speaker AS "speaker",       <!-- 讲堂作者 -->
+        a.status_code AS "statusCode",             <!-- 状态码 -->
+        a.activity_location AS "activityLocation", <!-- 报名地点 -->
+        a.registration_way AS "registrationWay",  <!-- 报名方式 -->
+        d.content AS "ArticleData.content",       <!-- 文章内容 -->
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "user.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_office o ON o.id = c.office_id
+        JOIN sys_user u ON u.id = a.create_by
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.id = #{id}
+    </select>
+    <!-- 查询公告详情 -->
+    <select id="findgonggaoContent" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.speaker AS "speaker",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        d.content AS "ArticleData.content",
+        d.copyfrom AS "ArticleData.copyfrom",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "user.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_office o ON o.id = c.office_id
+        JOIN sys_user u ON u.id = a.create_by
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.id = #{id}
+    </select>
+    <!-- 查询公告列表 -->
+    <select id="findgonggaoList" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.speaker AS "speaker",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        d.content AS "ArticleData.content",
+        d.copyfrom AS "ArticleData.copyfrom",
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        c.name AS "category.name",
+        u.name AS "user.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_office o ON o.id = c.office_id
+        JOIN sys_user u ON u.id = a.create_by
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '24'
+        ORDER BY a.update_date DESC
+        <if test="size != null">
+            limit #{size}
+        </if>
+    </select>
+    <!-- 查询已完成教育活动内容详情 -->
+    <select id="findWcActivityContent" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.speaker AS "speaker",       <!-- 讲堂作者 -->
+        a.status_code AS "statusCode",             <!-- 状态码 -->
+        a.event_message AS "eventMessage",        <!-- 活动寄语 -->
+        d.content AS "ArticleData.content",       <!-- 文章内容 -->
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name",
+        u.name AS "user.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN sys_office o ON o.id = c.office_id
+        JOIN sys_user u ON u.id = a.create_by
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.id = #{id}
+    </select>
+    <!-- 查询进行中教育进行中活动内 -->
+    <select id="findJingXingList" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.speaker AS "speaker",
+        a.status_code AS "statusCode",
+        a.activity_location AS "activityLocation",
+        a.registration_way AS "registrationWay",
+        d.content AS "ArticleData.content",
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '31' AND a.weight_date > NOW()
+    </select>
+
+    <!-- 查询进行中教育进行中活动列表 -->
+    <select id="findJingXingListLieBiao" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.speaker AS "speaker",
+        a.status_code AS "statusCode",
+        a.activity_location AS "activityLocation",
+        a.registration_way AS "registrationWay",
+        d.content AS "ArticleData.content",
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '31' AND a.weight_date > NOW()
+    </select>
+    <!-- 查询已完成教育已活动内容列表前台-->
+    <select id="findWanChengLists" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.speaker AS "speaker",       <!-- 讲堂作者 -->
+        a.status_code AS "statusCode",             <!-- 状态码 -->
+        a.event_message AS "eventMessage",        <!-- 活动寄语 -->
+        d.content AS "ArticleData.content",       <!-- 文章内容 -->
+        a.create_date AS "createDate",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '84' AND a.weight_date &lt; NOW()
+    </select>
+
+    <!-- 新闻动态列表 -->
+    <select id="findNewsList" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.link AS "link",
+        a.color AS "color",
+        a.image AS "image",
+        a.keywords AS "keywords",
+        a.description AS "description",
+        a.weight AS "weight",
+        a.weight_date AS "weightDate",
+        a.hits AS "hits",
+        a.posid AS "posid",
+        a.custom_content_view AS "customContentView",
+        a.view_config AS "viewConfig",
+        a.create_by AS "createBy.id",
+        a.speaker AS "speaker",
+        a.related_enterprises AS "relatedEnterprises",
+        a.project_scale AS "projectScale",
+        a.country AS "country",
+        a.audit_opinion AS "auditOpinion",
+        a.nthrough_reason AS "nthroughReason",
+        a.audit_time AS "auditTime",
+        a.auditor AS "auditor",
+        a.review_opinions AS "reviewOpinions",
+        a.nreview_reason AS "nreviewReason",
+        a.review_time AS "reviewTime",
+        a.reauditor AS "reauditor",
+        a.status_code AS "statusCode",
+        a.activity_location AS "activityLocation",
+        a.registration_way AS "registrationWay",
+        a.event_message AS "eventMessage",
+        a.lecture_number AS "lectureNumber",
+        d.content AS "ArticleData.content",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        c.name AS "category.name"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '88'
+        ORDER BY a.weight DESC,a.update_date DESC
+    </select>
+
+    <!-- 新闻动态列表 -->
+    <select id="findImageNewsList" resultType="Article">
+        SELECT
+        a.id AS "id",
+        a.category_id AS "category.id",
+        a.title AS "title",
+        a.link AS "link",
+        a.image AS "image",
+        a.description AS "description",
+        a.speaker AS "speaker",
+        a.nthrough_reason AS "nthroughReason",
+        a.audit_time AS "auditTime",
+        a.auditor AS "auditor",
+        a.create_date AS "createDate",
+        a.registration_way AS "registrationWay",
+        a.event_message AS "eventMessage"
+        FROM cms_article a
+        JOIN cms_category c ON c.id = a.category_id
+        JOIN cms_article_data d ON d.id = a.id
+        WHERE a.status_code = '5' AND a.category_id = '88'
+        AND a.image IS NOT null
+        ORDER BY a.weight DESC,a.update_date DESC
+        <if test="size != null">
+            limit #{size}
+        </if>
+    </select>
+
+</mapper>

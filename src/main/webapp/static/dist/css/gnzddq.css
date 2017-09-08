@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.zh {
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.breadcrumb {
+    margin-left: 11.81%;
+}
+
+.gn-content-left h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin-top: 30px;
+    color: #060202;
+}
+
+.gn-content-left .pull-left {
+    width: 100%;
+    margin: 30px 0;
+}
+
+.gn-content-left .pull-left li {
+    list-style: none;
+    float: left;
+    margin-left: 5%;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.gn-content-left .pull-left li span {
+    height: 3px;
+    display: block;
+    visibility: hidden;
+    background-color: #bf1c21;
+
+}
+
+.gn-content-left .pull-left li a {
+    color: #333333;
+}
+
+.gn-content-left ul li p img {
+    width: 55px;
+    height: 55px;
+}
+
+.gn-content-left ul li p {
+    padding: 0;
+}
+
+.gn-content-left ul li p img {
+    width: 100%;
+    height: 100%;
+}
+
+.gn-content-left ul li:first-child {
+    margin-left: 0px;
+}
+
+.gn-content-right {
+    margin-top: 55px;
+    text-align: center;
+    background-color: #f7fbff;
+    border-top: 5px solid #bf1a20;;
+}
+
+.gn-content-right h1 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #bf1a20;
+}
+
+.gn-content-right button {
+    margin-top: -5px;
+    border-radius: 10px;
+    width: 66px;
+    height: 33px;
+    border: 0px;
+    color: white;
+    background-color: #f14349;
+}
+
+.gn-content-right span {
+    display: block;
+    font-size: 18px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.gn-content-left1 li {
+    float: left;
+    width: 20%;
+    height: 105px;
+    margin-top: 20px;
+    list-style: none;
+}
+
+/* .gn-content-left1 li:nth-child(4){
+    margin-left: 0;
+    clear: left;
+} */
+.gn-content-left1 li p {
+    border: 1px solid #cccccc;
+    padding: 10px 30px;
+    width: 118px;
+    float: left;
+}
+
+/*.gn-content-left1 li p a{*/
+/*display: inline-block;*/
+/*width: 100%;*/
+/*height: 100%;*/
+/*}*/
+.gn-content-left1 li a {
+    margin-top: 46px;
+    margin-left: 10px;
+    width: 35%;
+    font-size: 14px;
+    float: left;
+    font-weight: 600;
+}
+
+.gn-content-left1 li p a {
+    display: block;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.gn-content-left1 {
+    display: none;
+    float: left;
+    padding: 8px;
+    width: 100%;
+    background-color: #f7fbff;
+}
+
+.media-heading {
+    margin-top: 20px;
+    margin-left: 30px;
+    color: #979797;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+.media-left a {
+    display: block;
+    padding: 20px 40px;
+    margin: 0 30px 0 15px;
+    border: 1px solid #cccccc;
+}
+
+.media-left span {
+    color: #979797;
+    font-size: 24px;
+}
+
+.kuangjia {
+    margin: 60px auto -45px;
+    padding: 0;
+    height: 320px;
+    background-image: url("../images/index-touzi-top-right_03.png");
+    background-repeat: no-repeat;
+}
+
+.h1 {
+    border-top: 4px solid #bf1a20;
+    border-right: 1px solid #bf1a20;
+    margin-top: -45px;
+    padding-top: 10px;
+    width: 80px;
+    font-size: 24px;
+    color: #bf1a20;
+    height: 46px;
+    text-align: center;
+    font-weight: 600;
+    background-color: #f7fbff;
+}
+
+.gn-bot .gn-bot-top {
+    /*border-image:-webkit-linear-gradient(left, red , blue) 30 30;*/
+    /*border-image: -moz-linear-gradient(left, red, blue) 30 30;*/
+    /*border-image: linear-gradient(left, red , blue) 30 30;*/
+    /*border-bottom:1px solid red;*/
+    width: 96%;
+    margin-left: -13px;
+    margin-top: -46px;
+    height: 45px;
+    background-image: url(../images/index-touzi-top-right_03.png);
+    background-repeat: repeat-x;
+    background-position: 0 97%;
+}
+
+.gn-bot .gn-bot-top .li {
+    float: left;
+    list-style: none;
+    font-size: 24px;
+    font-weight: 600;
+    /*margin-left: 30px;*/
+    width: 12.5%;
+    text-align: center;
+    height: 102%;
+    /*border:1px solid blue;*/
+}
+
+.gn-bot .gn-bot-top .li a {
+    display: block;
+    color: #333333;
+    width: 100%;
+    z-index: 2;
+    position: relative;
+}
+
+.gn-bot .gn-bot-top .li a:hover {
+    cursor: pointer;
+}
+
+.current {
+    display: block;
+    height: 95%;
+    /*background-color:whitesmoke;*/
+    background-color: #fff;
+    color: #bf1a20;
+    border-top: 3px solid #bf1a20;
+    border-left: 1px solid #bf1a20;
+    border-right: 1px solid #bf1a20;
+}
+
+.gn-bot-content {
+    margin-left: 2px;
+    width: 94%;
+    /*  display: none; */
+    margin-bottom: 30px;
+    padding-left: 15px;
+}
+
+.gn-bot-content li {
+    clear: both;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 100%;
+    padding-top: 5px;
+    list-style-image: url("../images/index-xinyong-text3-dian_07.png");
+}
+
+.gn-bot-content li a {
+    color: #404040;
+
+}
+
+.gn-bot-content li span {
+    /*font-size: 18px;*/
+    float: right;
+    color: #979797;
+}
+
+.gn-bot-right p {
+    line-height: 30px;
+}
+
+.gn-bot-right p a {
+    color: #59a0e8;
+}
+
+.gn-bot-right span {
+    font-size: 14px;
+    color: #979797;
+    display: block;
+}
+
+.form-group img {
+    height: 10px;
+    width: 20px;
+    margin-top: 8px;
+    margin-right: 12px;
+}
+
+.dp {
+    position: relative;
+    height: 25px;
+    width: 170px;
+    margin: 15px auto;
+    cursor: pointer;
+}
+
+.dp .dp-inp {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    height: 103% \9;
+    font-size: 18px;
+    color: #8c8c8c;
+    padding-left: 10%;
+}
+
+.dp .dp-img {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+}
+
+.dp .dp-ul {
+    position: absolute;
+    top: 26px;
+    width: 100%;
+    z-index: 2;
+    display: none;
+}
+
+.dp .dp-ul li {
+    border: 1px solid #CCCCCC;
+    font-size: 18px;
+    background-color: whitesmoke;
+    text-align: center;
+    list-style: none;
+}
+
+/*鎬绘牱寮忔敼鍙樺唴瀹�START*/
+
+.index-footer-top-content dt {
+    border-right: 2px solid black;
+}
+
+.index-footer-top-content dt:last-child {
+    border-right: 0px;
+}
+
+.index-nva ul li a:hover {
+    border-bottom: 4px solid #cc484d;
+    padding-bottom: 10px;
+    color: #bf1a20;
+}
+
+/* .index-nva ul li:nth-child(5) a{
+    border-bottom: 4px solid #cc484d;
+    padding-bottom: 10px;
+    color: #bf1a20;
+} */
+.mouseover {
+    color: #bf1a20;
+    border-bottom: 4px solid #cc484d;
+    padding-bottom: 10px;
+}
+
+/*鎬绘牱寮忔敼鍙樺唴瀹�END*/

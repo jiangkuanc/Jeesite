@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pDebtOverdueRecordDao">
+
+    <sql id="p2pDebtOverdueRecordColumns">
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.financing_information_id AS "financingInformationId",
+        a.total_overdue_number AS "totalOverdueNumber",
+        a.total_overdue_amount AS "totalOverdueAmount",
+        a.total_overdue_days AS "totalOverdueDays",
+        a.continue_overdue_days AS "continueOverdueDays",
+        a.last_overdue_time AS "lastOverdueTime",
+        a.repay_amount AS "repayAmount",
+        a.stay_overdue_amount AS "stayOverdueAmount",
+        a.overdue_faxi AS "overdueFaxi",
+        a.faxi_repay_amount AS "faxiRepayAmount",
+        a.guarantee_repay_state AS "guaranteeRepayState",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pDebtOverdueRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pDebtOverdueRecord">
+        SELECT
+        <include refid="p2pDebtOverdueRecordColumns"/>
+        FROM p2p_debt_overdue_record a
+        <include refid="p2pDebtOverdueRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pDebtOverdueRecord">
+        SELECT
+        <include refid="p2pDebtOverdueRecordColumns"/>
+        FROM p2p_debt_overdue_record a
+        <include refid="p2pDebtOverdueRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pDebtOverdueRecord">
+        SELECT
+        <include refid="p2pDebtOverdueRecordColumns"/>
+        FROM p2p_debt_overdue_record a
+        <include refid="p2pDebtOverdueRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="numberProjectsLimit" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM p2p_debt_overdue_record WHERE stay_overdue_amount > 0
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_debt_overdue_record(
+        id,
+        user_id,
+        financing_information_id,
+        total_overdue_number,
+        total_overdue_amount,
+        total_overdue_days,
+        continue_overdue_days,
+        last_overdue_time,
+        repay_amount,
+        stay_overdue_amount,
+        overdue_faxi,
+        faxi_repay_amount,
+        guarantee_repay_state
+        ) VALUES (
+        #{id},
+        #{userId},
+        #{financingInformationId},
+        #{totalOverdueNumber},
+        #{totalOverdueAmount},
+        #{totalOverdueDays},
+        #{continueOverdueDays},
+        #{lastOverdueTime},
+        #{repayAmount},
+        #{stayOverdueAmount},
+        #{overdueFaxi},
+        #{faxiRepayAmount},
+        #{guaranteeRepayState}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_debt_overdue_record SET
+        user_id = #{userId},
+        financing_information_id = #{financingInformationId},
+        total_overdue_number = #{totalOverdueNumber},
+        total_overdue_amount = #{totalOverdueAmount},
+        total_overdue_days = #{totalOverdueDays},
+        continue_overdue_days = #{continueOverdueDays},
+        last_overdue_time = #{lastOverdueTime},
+        repay_amount = #{repayAmount},
+        stay_overdue_amount = #{stayOverdueAmount},
+        overdue_faxi = #{overdueFaxi},
+        faxi_repay_amount = #{faxiRepayAmount},
+        guarantee_repay_state = #{guaranteeRepayState}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_debt_overdue_record
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="getDebtOverdueList" resultType="P2pDebtOverdueRecord">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "userId",
+        a.financing_information_id AS "financingInformationId",
+        a.total_overdue_number AS "totalOverdueNumber",
+        a.total_overdue_amount AS "totalOverdueAmount",
+        a.total_overdue_days AS "totalOverdueDays",
+        a.continue_overdue_days AS "continueOverdueDays",
+        a.last_overdue_time AS "lastOverdueTime",
+        a.repay_amount AS "repayAmount",
+        a.stay_overdue_amount AS "stayOverdueAmount",
+        a.overdue_faxi AS "overdueFaxi",
+        a.faxi_repay_amount AS "faxiRepayAmount",
+        a.guarantee_repay_state AS "guaranteeRepayState",
+        b.name AS "user.name",
+        c.finacing_name AS "p2pFinancingInformation.finacingName",
+        c.financing_amount AS "p2pFinancingInformation.financingAmount",
+        c.application_amount AS "p2pFinancingInformation.applicationAmount",
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+
+        FROM
+        p2p_debt_overdue_record a
+        LEFT JOIN sys_user b ON b.id = a.user_id
+        LEFT JOIN p2p_financing_information c ON c.id = a.financing_information_id
+        LEFT JOIN p2p_enterprise_certify d On d.user_id = a.user_id
+
+        <where>
+            <if test="financingInformationId != null and financingInformationId != ''">
+                AND a.financing_information_id LIKE CONCAT(CONCAT('%',#{financingInformationId}),'%')
+            </if>
+            <if test="p2pFinancingInformation != null and p2pFinancingInformation.finacingName != null and p2pFinancingInformation.finacingName != ''">
+                AND c.finacing_name LIKE CONCAT(CONCAT('%',#{p2pFinancingInformation.finacingName}),'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND d.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+        </where>
+    </select>
+
+    <!-- Zeus 根据债项id计算当前债项累计逾期次数、累计逾期金额、累计逾期天数、已还逾期金额 -->
+    <select id="calculateDebt" resultType="P2pDebtOverdueRecord">
+        SELECT
+        c.id AS "userId",
+        a.financing_information_id AS "financingInformationId",
+        COUNT(a.overdue_days) AS "totalOverDueNumber",
+        SUM(a.plan_repayment_principal+a.plan_repayment_interest) AS "totalOverdueAmount",
+        SUM(a.overdue_days) AS "totalOverdueDays",
+        MAX(overdue_days) AS "continueOverdueDays",
+        SUM(b.real_repayment_principal+real_repayment_interest) AS "repayAmount",
+        SUM(a.fine) AS "overdueFaxi",
+        SUM(b.real_repayment_fine) AS "faxiRepayAmount"
+
+        FROM
+        p2p_repayment_plan a
+        LEFT JOIN p2p_repayment_record b ON b.repayment_plan_id = a.id
+        LEFT JOIN p2p_financing_information c ON c.id = a.financing_information_id
+        WHERE
+        a.financing_information_id = #{financingInformationId}
+        AND a.overdue_days IS NOT NULL AND a.overdue_days != 0
+    </select>
+
+    <!-- Zeus 根据债项id计算当前债项累计逾期次数、累计逾期金额、累计逾期天数、已还逾期金额 -->
+    <select id="getByFid" resultType="P2pDebtOverdueRecord">
+        SELECT
+        *
+        FROM
+        p2p_debt_overdue_record a
+        WHERE a.financing_information_id = #{financingInformationId}
+    </select>
+</mapper>

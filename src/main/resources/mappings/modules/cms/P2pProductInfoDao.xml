@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.P2pProductInfoDao">
+
+    <sql id="p2pProductInfoColumns">
+        a.id AS "id",
+        a.product_name AS "productName",
+        a.product_price AS "productPrice",
+        a.supply_enterprise AS "supplyEnterprise",
+        a.min_order AS "minOrder",
+        a.max_supply_amount AS "maxSupplyAmount",
+        a.product_info AS "productInfo",
+        a.period_for_delivery AS "periodForDelivery",
+        a.supply_enterprise_info AS "supplyEnterpriseInfo",
+        a.product_pic AS "productPic",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="p2pProductInfoJoins">
+    </sql>
+
+    <select id="get" resultType="P2pProductInfo">
+        SELECT
+        <include refid="p2pProductInfoColumns"/>
+        FROM p2p_product_info a
+        <include refid="p2pProductInfoJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="selectProductInfo" resultType="P2pProductInfo">
+        SELECT
+        <include refid="p2pProductInfoColumns"/>
+        FROM p2p_product_info a
+        <include refid="p2pProductInfoJoins"/>
+    </select>
+
+    <select id="findList" resultType="P2pProductInfo">
+        SELECT
+        <include refid="p2pProductInfoColumns"/>
+        FROM p2p_product_info a
+        <include refid="p2pProductInfoJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="productName != null and productName != ''">
+                AND a.product_name LIKE CONCAT('%', #{productName}, '%')
+            </if>
+            <if test="supplyEnterprise != null and supplyEnterprise != ''">
+                AND a.supply_enterprise LIKE CONCAT('%', #{supplyEnterprise}, '%')
+            </if>
+        </where>
+        <choose>
+
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findProductList" resultType="P2pProductInfo">
+        SELECT a.id AS "id",
+        a.product_name AS "productName",
+        a.product_price AS "productPrice",
+        a.supply_enterprise AS "supplyEnterprise",
+        a.min_order AS "minOrder",
+        a.max_supply_amount AS "maxSupplyAmount",
+        a.product_info AS "productInfo",
+        a.period_for_delivery AS "periodForDelivery",
+        a.supply_enterprise_info AS "supplyEnterpriseInfo",
+        a.product_pic AS "productPic",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+        FROM p2p_product_info a
+    </select>
+
+    <!-- 不重复的id供from -->
+    <select id="findFromList" resultType="P2pProductInfo">
+        SELECT
+        <include refid="p2pProductInfoColumns"/>
+        FROM p2p_product_info a
+        <include refid="p2pProductInfoJoins"/>
+        <where>
+            a.id NOT IN(SELECT b.product_id FROM cms_supply_information b where b.product_id is not null)
+        </where>
+        ORDER BY a.update_date DESC
+    </select>
+
+    <select id="findAllList" resultType="P2pProductInfo">
+        SELECT
+        <include refid="p2pProductInfoColumns"/>
+        FROM p2p_product_info a
+        <include refid="p2pProductInfoJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_product_info(
+        id,
+        product_name,
+        product_price,
+        supply_enterprise,
+        min_order,
+        max_supply_amount,
+        product_info,
+        period_for_delivery,
+        supply_enterprise_info,
+        product_pic,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{productName},
+        #{productPrice},
+        #{supplyEnterprise},
+        #{minOrder},
+        #{maxSupplyAmount},
+        #{productInfo},
+        #{periodForDelivery},
+        #{supplyEnterpriseInfo},
+        #{productPic},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_product_info SET
+        product_name = #{productName},
+        product_price = #{productPrice},
+        supply_enterprise = #{supplyEnterprise},
+        min_order = #{minOrder},
+        max_supply_amount = #{maxSupplyAmount},
+        product_info = #{productInfo},
+        period_for_delivery = #{periodForDelivery},
+        supply_enterprise_info = #{supplyEnterpriseInfo},
+        product_pic = #{productPic},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_product_info
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pUserResourceDao">
+
+    <sql id="p2pUserResourceColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.user_type AS "userType",
+        a.resource_name AS "resourceName",
+        a.resource_explain AS "resourceExplain",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="p2pUserResourceJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pUserResource">
+        SELECT
+        <include refid="p2pUserResourceColumns"/>
+        FROM p2p_user_resource a
+        <include refid="p2pUserResourceJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pUserResource">
+        SELECT
+        <include refid="p2pUserResourceColumns"/>
+        FROM p2p_user_resource a
+        <include refid="p2pUserResourceJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id = #{user.id}
+            </if>
+            <if test="userType != null and userType != ''">
+                AND a.user_type = #{userType}
+            </if>
+            <if test="resourceName != null and resourceName != ''">
+                AND a.resource_name = #{resourceName}
+            </if>
+            <if test="resourceExplain != null and resourceExplain != ''">
+                AND a.resource_explain = #{resourceExplain}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pUserResource">
+        SELECT
+        <include refid="p2pUserResourceColumns"/>
+        FROM p2p_user_resource a
+        <include refid="p2pUserResourceJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_user_resource(
+        id,
+        user_id,
+        user_type,
+        resource_name,
+        resource_explain,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{userType},
+        #{resourceName},
+        #{resourceExplain},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_user_resource SET
+        user_id = #{user.id},
+        user_type = #{userType},
+        resource_name = #{resourceName},
+        resource_explain = #{resourceExplain},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_user_resource SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

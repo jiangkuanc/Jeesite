@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditmanage.dao.CreditAppealInfoDao">
+
+    <sql id="creditAppealInfoColumns">
+        a.id AS "id",
+        a.appeal_id AS "appealId",
+        a.appea_info_type AS "appeaInfoType",
+        a.appeal_reason AS "appealReason",
+        a.appeal_explain AS "appealExplain",
+        a.attachment AS "attachment",
+        a.attachment_name AS "attachmentName",
+        a.appeal_time AS "appealTime",
+        a.audit_status AS "auditStatus",
+        a.check_id AS "checkId",
+        a.check_opinion AS "checkOpinion",
+        a.recheck_id AS "recheckId",
+        a.recheck_opinion AS "recheckOpinion",
+        pec.enterprise_name AS "user.p2pEnterpriseCertify.enterpriseName",
+        pec.organization_code AS "user.p2pEnterpriseCertify.organizationCode",
+        pec.enterprise_scale AS "user.p2pEnterpriseCertify.enterpriseScale",
+        pec.enterprise_nature AS "user.p2pEnterpriseCertify.enterpriseNature",
+        pec.industry_code AS "user.p2pEnterpriseCertify.industryCode",
+        pec.name_of AS "user.p2pEnterpriseCertify.nameOf",
+        pec.telephone_num_of AS "user.p2pEnterpriseCertify.telephoneNumOf",
+        r.role_type AS "user.role.roleType",
+        r.data_scope AS "user.role.dataScope",
+        ruc.audit_state AS "user.p2pRegUserCertify.auditState",
+        ruc.real_name AS "user.p2pRegUserCertify.realName",
+        ruc.id_number AS "user.p2pRegUserCertify.idNumber",
+        u.phone AS "user.phone"
+
+    </sql>
+
+    <sql id="creditAppealInfoJoins">
+        LEFT JOIN p2p_enterprise_certify pec ON a.appeal_id=pec.user_id
+        LEFT JOIN sys_user u ON u.id = a.appeal_id
+        LEFT JOIN sys_user_role ur ON ur.user_id = u.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+        LEFT JOIN p2p_reg_user_certify ruc ON ruc.user_id = u.id
+    </sql>
+
+    <select id="get" resultType="CreditAppealInfo">
+        SELECT
+        <include refid="creditAppealInfoColumns"/>
+        FROM credit_appeal_info a
+        <include refid="creditAppealInfoJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CreditAppealInfo">
+        SELECT
+        <include refid="creditAppealInfoColumns"/>
+        FROM credit_appeal_info a
+        <include refid="creditAppealInfoJoins"/>
+        <where>
+            <if test="appealId != null and appealId != ''">
+                a.appeal_id like
+                <if test="dbName == 'oracle'">'%'||#{appealId}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{appealId}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{appealId}, '%')</if>
+            </if>
+            <if test="user!=null and user.p2pEnterpriseCertify!=null and user.p2pEnterpriseCertify.enterpriseName != null and user.p2pEnterpriseCertify.enterpriseName != ''">
+                AND pec.enterprise_name like
+                <if test="dbName == 'oracle'">'%'||#{user.p2pEnterpriseCertify.enterpriseName}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.p2pEnterpriseCertify.enterpriseName}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{user.p2pEnterpriseCertify.enterpriseName}, '%')</if>
+            </if>
+            <if test="appealReason != null and appealReason != ''">
+                AND a.appeal_reason like
+                <if test="dbName == 'oracle'">'%'||#{appealReason}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{appealReason}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{appealReason}, '%')</if>
+            </if>
+            <if test="user != null and user.p2pRegUserCertify != null and user.p2pRegUserCertify.realName != null and user.p2pRegUserCertify.realName != ''">
+                AND ruc.real_name like
+                <if test="dbName == 'oracle'">'%'||#{user.p2pRegUserCertify.realName}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.p2pRegUserCertify.realName}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{user.p2pRegUserCertify.realName}, '%')</if>
+            </if>
+            <if test="user != null and user.p2pEnterpriseCertify != null and user.p2pEnterpriseCertify.industryCode != null and user.p2pEnterpriseCertify.industryCode != ''">
+                AND pec.industry_code like
+                <if test="dbName == 'oracle'">'%'||#{user.p2pEnterpriseCertify.industryCode}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{user.p2pEnterpriseCertify.industryCode}+'%'</if>
+                <if test="dbName == 'mysql'">CONCAT('%', #{user.p2pEnterpriseCertify.industryCode}, '%')</if>
+            </if>
+            <if test="appealTime != null and appealTime != ''">
+                AND a.appeal_time &gt;= #{appealTime}
+            </if>
+            <if test="appealTime2 != null and appealTime2 != ''">
+                AND a.appeal_time &lt;= date_add(#{appealTime2}, INTERVAL 1 day)
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CreditAppealInfo">
+        SELECT
+        <include refid="creditAppealInfoColumns"/>
+        FROM credit_appeal_info a
+        <include refid="creditAppealInfoJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO credit_appeal_info(
+        id,
+        appeal_id,
+        appea_info_type,
+        appeal_reason,
+        appeal_explain,
+        attachment,
+        attachment_name,
+        appeal_time,
+        audit_status,
+        check_id,
+        check_opinion,
+        recheck_id,
+        recheck_opinion
+        ) VALUES (
+        #{id},
+        #{appealId},
+        #{appeaInfoType},
+        #{appealReason},
+        #{appealExplain},
+        #{attachment},
+        #{attachmentName},
+        #{appealTime},
+        #{auditStatus},
+        #{checkId},
+        #{checkOpinion},
+        #{recheckId},
+        #{recheckOpinion}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE credit_appeal_info SET
+        appeal_id = #{appealId},
+        appea_info_type = #{appeaInfoType},
+        appeal_reason = #{appealReason},
+        appeal_explain = #{appealExplain},
+        attachment = #{attachment},
+        attachment_name = #{attachmentName},
+        appeal_time = #{appealTime},
+        audit_status = #{auditStatus},
+        check_id = #{checkId},
+        check_opinion = #{checkOpinion},
+        recheck_id = #{recheckId},
+        recheck_opinion = #{recheckOpinion}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM credit_appeal_info
+        WHERE id = #{id}
+    </update>
+
+    <update id="appealAudit">
+        UPDATE credit_appeal_info
+        <set>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus},
+            </if>
+            <if test="checkId != null">
+                check_id = #{checkId},
+            </if>
+            <if test="checkOpinion != null">
+                check_opinion = #{checkOpinion},
+            </if>
+            <if test="recheckId != null">
+                recheck_id = #{recheckId},
+            </if>
+            <if test="recheckOpinion != null">
+                recheck_opinion = #{recheckOpinion}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

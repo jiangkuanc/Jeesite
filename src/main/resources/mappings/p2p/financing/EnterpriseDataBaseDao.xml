@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.EnterpriseDataBaseDao">
+    <sql id="rateEnterpriseFinancialDataColumns">
+        a.enterprise_financial_data_id AS "enterpriseFinancialDataId",
+        a.project_id AS "projectId",
+        a.accouting_standard AS "accoutingStandard",
+        a.reporting_time AS "reportingTime",
+        a.whether_audit AS "whetherAudit",
+        a.audit_unit AS "auditUnit",
+        a.audit_opinion AS "auditOpinion",
+        a.creater AS "creater",
+        a.create_time AS "createTime",
+        a.status AS "status"
+    </sql>
+
+
+    <select id="findEnterpriseDataBaseByProjectId" parameterType="String" resultType="EnterpriseDataBase">
+        SELECT
+        ma.temp_id AS id,
+        GROUP_CONCAT(re.file_address) AS filePath
+        FROM (
+        SELECT
+        up.id,
+        up.financing_information_id,
+        te.id AS temp_id,
+        te.temp_name,
+        te.temp_type
+        FROM p2p_rate_document_template te
+        LEFT JOIN (
+        SELECT *
+        FROM p2p_rate_document_upload
+        WHERE is_reject='1'
+        AND financing_information_id = #{projectId}
+        ) up ON up.rate_document_temp_id = te.id
+        WHERE te.industryNum = #{industryNum}
+        ) ma
+        LEFT JOIN p2p_document_upload_record re ON ma.id = re.rate_document_upload_id
+        GROUP BY ma.temp_id,ma.temp_name,ma.temp_type ORDER BY CAST(ma.temp_id AS SIGNED)
+    </select>
+
+    <!-- 根据债项编号/评级项目编号查询该债项项目下企业的行业分析和区域分析 -->
+    <select id="getIndustryAndAreaAnalysisByRateProjectId" resultType="java.util.HashMap">
+        SELECT
+        ifnull(a.id, '') AS 'enterpriseId',
+        ifnull(a.company_name, '') AS 'enterpriseName',
+        ifnull(a.industry_analysis, '') AS 'industryAnalysis',
+        ifnull(a.area_analysis, '') AS 'areaAnalysis'
+        FROM
+        rate_enterprise_base_info a
+        LEFT JOIN rate_project_basic_info b ON b.company_id = a.id
+        WHERE
+        b.id = #{rateProjectId};
+    </select>
+    <select id="findFinancalTime" resultType="RateEnterpriseFinancialData">
+        SELECT
+        <include refid="rateEnterpriseFinancialDataColumns"/>
+        FROM rate_enterprise_financial_data a,rate_data_write_time b
+        where a.project_id=#{1} and b.project_id=#{0} and (a.reporting_time=b.one_issue_time
+        or a.reporting_time=b.first_year or a.reporting_time=b.second_year or
+        a.reporting_time=b.third_year or a.reporting_time=b.fourth_year) order by reporting_time desc
+    </select>
+    <select id="findIndicatorList" resultType="RateFinancialIndicator">
+        SELECT
+        zb.financial_indicator_id,zb.formula,zb.financial_indicator_name,zb.order_num,indval.periodValue,indval.firstYearValue,indval.secondYearValue,indval.thirdYearValue,indval.lastYearValue
+        FROM rate_financial_indicator zb LEFT JOIN (SELECT indv.financial_indicator_id AS financial_indicator_id,
+        SUM(IF(indv.reporting_time=per.one_issue_time,indv.indicator_value,NULL)) AS 'periodValue',
+        SUM(IF(indv.reporting_time=per.first_year,indv.indicator_value,NULL)) AS 'firstYearValue',
+        SUM(IF(indv.reporting_time=per.second_year,indv.indicator_value,NULL)) AS 'secondYearValue',
+        SUM(IF(indv.reporting_time=per.third_year,indv.indicator_value,NULL)) AS 'thirdYearValue',
+        SUM(IF(indv.reporting_time=per.fourth_year,indv.indicator_value,NULL)) AS 'lastYearValue'
+        FROM (SELECT finv.financial_indicator_id,finv.indicator_value,find.reporting_time FROM
+        rate_financial_indicator_value finv,
+        rate_enterprise_financial_data find WHERE finv.enterprise_financial_data_id=find.enterprise_financial_data_id
+        AND find.project_id=#{1}) indv,
+        (SELECT * FROM rate_data_write_time WHERE project_id=#{0}) per
+        GROUP BY indv.financial_indicator_id) indval ON zb.financial_indicator_id=indval.financial_indicator_id
+        WHERE zb.financial_indicator_id LIKE #{2} ORDER BY CAST(zb.order_num AS SIGNED)
+    </select>
+
+    <select id="findByProjectId" resultType="RateDataWriteTime">
+        select * from rate_data_write_time WHERE project_id = #{id}
+    </select><!-- 根据项目编号去查询操作系统选择 -->
+    <select id="getOperatingSystemSelection" resultType="String">
+        SELECT operating_system_selection
+        FROM rate_project_basic_info
+        WHERE id = #{id}
+    </select>
+    <select id="findP2pEnterpriseCertify" parameterType="String" resultType="String">
+        SELECT a.enterprise_name FROM p2p_enterprise_certify a ,p2p_financing_information b where b.id=#{0} and
+        a.user_id=b.applicants_id
+    </select>
+    <select id="findP2pFinancingRatingInfoByFinancingInformationId" parameterType="String"
+            resultType="P2pFinancingRatingInfo">
+        SELECT * FROM p2p_financing_rating_info where financing_information_id=#{0}
+    </select>
+    <!-- 根据根据债项编号/评级项目编号查询该项目的行业分析和区域分析数据 -->
+    <select id="getIndustryAreaAnalysisByProjectId" resultType="java.util.HashMap">
+        SELECT
+        id AS 'id',
+        ifnull(industry_analysis, '') AS 'industryAnalysis',
+        ifnull(area_analysis, '') AS 'areaAnalysis'
+        FROM
+        rate_project_basic_info
+        WHERE
+        id = #{rateProjectId};
+    </select>
+
+    <select id="findP2pEnterpriseCertifyById" parameterType="String" resultType="String">
+        select a.business_license from p2p_enterprise_certify a ,p2p_financing_information b where b.id=#{0} and
+        a.user_id=b.applicants_id
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+

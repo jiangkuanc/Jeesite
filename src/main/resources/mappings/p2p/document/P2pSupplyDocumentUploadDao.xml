@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.document.dao.P2pSupplyDocumentUploadDao">
+
+    <sql id="p2pSupplyDocumentUploadColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.rate_document_temp_id AS "rateDocumentTempId",
+        a.upload_id AS "uploadId",
+        a.upload_date AS "uploadDate"
+    </sql>
+
+    <sql id="p2pSupplyDocumentUploadJoins">
+    </sql>
+
+    <select id="get" resultType="P2pSupplyDocumentUpload">
+        SELECT
+        <include refid="p2pSupplyDocumentUploadColumns"/>
+        FROM p2p_supply_document_upload a
+        <include refid="p2pSupplyDocumentUploadJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pSupplyDocumentUpload">
+        SELECT
+        <include refid="p2pSupplyDocumentUploadColumns"/>
+        FROM p2p_supply_document_upload a
+        <include refid="p2pSupplyDocumentUploadJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pSupplyDocumentUpload">
+        SELECT
+        <include refid="p2pSupplyDocumentUploadColumns"/>
+        FROM p2p_supply_document_upload a
+        <include refid="p2pSupplyDocumentUploadJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_supply_document_upload(
+        id,
+        financing_information_id,
+        rate_document_temp_id,
+        upload_id,
+        upload_date,
+        upload_flag
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{rateDocumentTempId},
+        #{uploadId},
+        #{uploadDate},
+        #{uploadFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_supply_document_upload SET
+        financing_information_id = #{financingInformationId},
+        rate_document_temp_id = #{rateDocumentTempId},
+        upload_id = #{uploadId},
+        upload_date = #{uploadDate},
+        upload_flag = #{uploadFlag}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_supply_document_upload
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过债项ID和评级材料模板ID查询补充材料上传记录 -->
+    <select id="findRecord" parameterType="P2pSupplyDocumentUpload" resultType="P2pSupplyDocumentUpload">
+        SELECT *
+        FROM p2p_supply_document_upload
+        WHERE financing_information_id = #{financingInformationId}
+        AND rate_document_temp_id = #{rateDocumentTempId}
+        AND upload_flag = 0
+    </select>
+
+    <!-- 修改补充材料上传时间 -->
+    <update id="updateUploadTime" parameterType="P2pSupplyDocumentUpload">
+        UPDATE p2p_supply_document_upload
+        SET upload_date = #{uploadDate}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改上传标记 -->
+    <update id="updateUploadFlag">
+        UPDATE p2p_supply_document_upload
+        SET upload_flag = 1
+        WHERE upload_flag != 1
+    </update>
+
+    <resultMap type="P2pSupplyDocumentUpload" id="listMap">
+        <id property="id" column="aid"/>
+        <result property="rateDocumentTempId" column="rateDocumentTempId"/>
+        <collection property="p2pDocumentUploadRecordList" ofType="P2pDocumentUploadRecord">
+            <id property="id" column="bid"/>
+            <result property="fileAddress" column="fileAddress"/>
+            <result property="fileName" column="fileName"/>
+        </collection>
+    </resultMap>
+
+    <!-- 加载补充材料清单 -->
+    <select id="findSupplyDocumentList" parameterType="java.lang.String" resultMap="listMap">
+        SELECT
+        a.id AS "aid",
+        a.rate_document_temp_id AS "rateDocumentTempId",
+        b.id AS "bid",
+        b.file_address AS "fileAddress",
+        b.file_name AS "fileName"
+        FROM
+        p2p_supply_document_upload a,p2p_document_upload_record b
+        WHERE
+        a.id = b.rate_document_upload_id
+        AND
+        a.financing_information_id = #{_parameter}
+        AND
+        a.upload_flag = 0
+    </select>
+</mapper>

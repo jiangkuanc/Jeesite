@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsChinaAreaCityDao">
+
+    <sql id="cmsChinaAreaCityColumns">
+        a.id AS "id",
+        a.cms_china_area_id AS "cmsChinaAreaId",
+        a.cms_china_area_city_name AS "cmsChinaAreaCityName",
+        a.cms_china_area_city_basic AS "cmsChinaAreaCityBasic",
+        a.cms_china_area_city_position AS "cmsChinaAreaCityPosition",
+        a.cms_china_area_city_population AS "cmsChinaAreaCityPopulation",
+        a.cms_china_area_city_nation AS "cmsChinaAreaCityNation",
+        a.content AS "content"
+    </sql>
+
+    <sql id="cmsChinaAreaCityJoins">
+    </sql>
+
+    <select id="get" resultType="CmsChinaAreaCity">
+        SELECT
+        <include refid="cmsChinaAreaCityColumns"/>
+        FROM cms_china_area_city a
+        <include refid="cmsChinaAreaCityJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsChinaAreaCity">
+        SELECT
+        <include refid="cmsChinaAreaCityColumns"/>
+        FROM cms_china_area_city a
+        <include refid="cmsChinaAreaCityJoins"/>
+        <where>
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="cmsChinaAreaId != null and cmsChinaAreaId != ''">
+                AND a.cms_china_area_id = #{cmsChinaAreaId}
+            </if>
+            <if test="cmsChinaAreaCityName !=null and cmsChinaAreaCityName !=''">
+                AND a.cms_china_area_city_name=#{cmsChinaAreaCityName}
+            </if>
+        </where>
+    </select>
+
+    <select id="findCityNames" resultType="CmsChinaAreaCity">
+        SELECT
+        a.id,a.cms_china_area_city_name AS "cmsChinaAreaCityName"
+        FROM cms_china_area_city a limit 8
+    </select>
+
+    <select id="findAllList" resultType="CmsChinaAreaCity">
+        SELECT
+        <include refid="cmsChinaAreaCityColumns"/>
+        FROM cms_china_area_city a
+        <include refid="cmsChinaAreaCityJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_china_area_city(
+        id,
+        cms_china_area_id,
+        cms_china_area_city_name,
+        cms_china_area_city_basic,
+        cms_china_area_city_position,
+        cms_china_area_city_population,
+        cms_china_area_city_nation,
+        content
+        ) VALUES (
+        #{id},
+        #{cmsChinaAreaId},
+        #{cmsChinaAreaCityName},
+        #{cmsChinaAreaCityBasic},
+        #{cmsChinaAreaCityPosition},
+        #{cmsChinaAreaCityPopulation},
+        #{cmsChinaAreaCityNation},
+        #{content}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_china_area_city SET
+        cms_china_area_id = #{cmsChinaAreaId},
+        cms_china_area_city_name = #{cmsChinaAreaCityName},
+        cms_china_area_city_basic = #{cmsChinaAreaCityBasic},
+        cms_china_area_city_position = #{cmsChinaAreaCityPosition},
+        cms_china_area_city_population=#{cmsChinaAreaCityPopulation},
+        cms_china_area_city_nation = #{cmsChinaAreaCityNation},
+        content=#{content}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_china_area_city
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据区域表查询城市id.图片.名称 -->
+    <select id="seletCtityNamesAccAid" resultType="CmsChinaAreaCity"
+            parameterType="com.thinkgem.jeesite.modules.cms.entity.CmsChinaArea">
+        select a.id AS "id",
+        a.cms_china_area_city_name AS "cmsChinaAreaCityName",
+        a.cms_china_area_city_basic AS "cmsChinaAreaCityBasic",
+        a.content AS "content"
+        from cms_china_area_city a
+        where a.cms_china_area_id =#{id}
+
+    </select>
+
+    <!-- 根据城市id查询城市概况、介绍等信息 -->
+    <select id="seletCtityInfoAccCid" resultType="CmsChinaAreaCity" parameterType="String">
+        select a.id AS "id",
+        a.cms_china_area_city_name AS "cmsChinaAreaCityName",
+        a.cms_china_area_city_basic AS "cmsChinaAreaCityBasic",
+        a.cms_china_area_city_position AS "cmsChinaAreaCityPosition",
+        a.cms_china_area_city_population AS "cmsChinaAreaCityPopulation",
+        a.cms_china_area_city_nation AS "cmsChinaAreaCityNation",
+        a.content AS "content"
+        from cms_china_area_city a
+        where a.id =#{id}
+    </select>
+
+</mapper>

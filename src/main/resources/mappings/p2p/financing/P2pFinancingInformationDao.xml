@@ -1,0 +1,3244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pFinancingInformationDao">
+
+    <sql id="p2pFinancingInformationColumns">
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",
+        a.current_stage AS "currentStage",
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.financing_maturity AS "financingMaturity",
+        a.is_guarantee AS "isGuarantee",
+        a.financing_amount AS "financingAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        <!-- a.enterprise_name AS "enterpriseName", -->
+        <!-- a.registered_address AS "registeredAddress", -->
+        <!-- a.enterprise_scale AS "enterpriseScale", -->
+        <!-- a.enterprise_nature AS "enterpriseNature", -->
+        <!-- a.industry_code AS
+		"industryCode", -->
+        <!-- a.gov_area_code AS "govAreaCode", -->
+        <!-- a.provincial_area AS
+		"provincialArea", -->
+        <!-- a.municipal_area AS "municipalArea", -->
+        <!-- a.county_area AS
+		"countyArea", -->
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.in_raise_state AS "inRaiseState",
+        a.giving_out_time AS "givingOutTime",
+        <!-- a.gov_area_code AS "govAreaCode", -->
+        <!-- a.real_capital AS "realCapital", -->
+        <!-- a.business_area AS "businessArea", -->
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS
+        "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+        <!-- a.JZQX AS "JZQX" -->
+    </sql>
+
+    <sql id="p2pFinancingInformationMarketColumns">
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",
+        a.current_stage AS "currentStage",
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.financing_maturity AS "financingMaturity",
+        a.is_guarantee AS "isGuarantee",
+        a.financing_amount AS "financingAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.in_raise_state AS "inRaiseState",
+        a.giving_out_time AS "givingOutTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        b.id AS "p2pEnterpriseCertify.id",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+    </sql>
+
+    <sql id="p2pFinancingInformationMarketDebtColumns">
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",
+        a.current_stage AS "currentStage",
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.financing_maturity AS "financingMaturity",
+        a.is_guarantee AS "isGuarantee",
+        a.financing_amount AS "financingAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.in_raise_state AS "inRaiseState",
+        a.giving_out_time AS "givingOutTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        b.id AS "p2pEnterpriseCertify.id",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",<!-- 主体信用等级 -->
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",<!-- 评级展望 -->
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.rating_level AS "p2pFinancingRatingInfo.rating_level",
+        c.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        c.mark_type AS "p2pFinancingRatingInfo.markType",
+        c.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        c.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        c.is_finalized AS "p2pFinancingRatingInfo.isFinalized"
+    </sql>
+
+    <sql id="p2pFinancingInformationMarketDebtColumnsTwo">
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",
+        a.current_stage AS "currentStage",
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.financing_maturity AS "financingMaturity",
+        a.is_guarantee AS "isGuarantee",
+        a.financing_amount AS "financingAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.in_raise_state AS "inRaiseState",
+        a.giving_out_time AS "givingOutTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        b.id AS "p2pEnterpriseCertify.id",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.is_pass AS "p2pMarketConfirmRecord.isPass",
+        d.id AS "p2pFinancingRatingInfo.id",
+        d.rating_level AS "p2pFinancingRatingInfo.rating_level",
+        d.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        d.mark_type AS "p2pFinancingRatingInfo.markType"
+    </sql>
+
+    <sql id="p2pFinancingInformationJoins">
+    </sql>
+
+
+    <select id="getById" parameterType="string" resultType="P2pFinancingInformation">
+        SELECT
+        *
+        FROM p2p_financing_information a
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pFinancingInformation">
+        SELECT
+        <include refid="p2pFinancingInformationColumns"/>
+        FROM p2p_financing_information a
+        <include refid="p2pFinancingInformationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="applicantsId != null and applicantsId != ''">
+                AND a.applicants_id = #{applicantsId}
+            </if>
+            <if test="finacingName != null and finacingName != ''">
+                AND a.finacing_name = #{finacingName}
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+            <if test="commitTime != null and commitTime != ''">
+                AND a.commit_time = #{commitTime}
+            </if>
+            <if test="publishTime != null and publishTime != ''">
+                AND a.publish_time = #{publishTime}
+            </if>
+            <if test="financingMaturity != null and financingMaturity != ''">
+                AND a.financing_maturity = #{financingMaturity}
+            </if>
+            <if test="isGuarantee != null and isGuarantee != ''">
+                AND a.is_guarantee = #{isGuarantee}
+            </if>
+            <if test="financingAmount != null and financingAmount != ''">
+                AND a.financing_amount = #{financingAmount}
+            </if>
+            <if test="raiseTimeLimit != null and raiseTimeLimit != ''">
+                AND a.raise_time_limit = #{raiseTimeLimit}
+            </if>
+            <if test="repaymentMode != null and repaymentMode != ''">
+                AND a.repayment_mode = #{repaymentMode}
+            </if>
+            <!-- <if test="enterpriseName != null and enterpriseName != ''">
+				AND a.enterprise_name = #{enterpriseName}
+			</if> -->
+            <!-- <if test="registeredAddress != null and registeredAddress != ''">
+				AND a.registered_address = #{registeredAddress}
+			</if> -->
+            <!-- <if test="enterpriseScale != null and enterpriseScale != ''">
+				AND a.enterprise_scale = #{enterpriseScale}
+			</if> -->
+            <!-- <if test="enterpriseNature != null and enterpriseNature != ''">
+				AND a.enterprise_nature = #{enterpriseNature}
+			</if> -->
+            <!-- <if test="industryCode != null and industryCode != ''">
+				AND a.industry_code = #{industryCode}
+			</if> -->
+            <!-- <if test="govAreaCode != null and govAreaCode != ''">
+				AND a.gov_area_code = #{govAreaCode}
+			</if> -->
+            <!-- <if test="provincialArea != null and provincialArea != ''">
+				AND a.provincial_area = #{provincialArea}
+			</if>
+			<if test="municipalArea != null and municipalArea != ''">
+				AND a.municipal_area = #{municipalArea}
+			</if> -->
+            <!-- <if test="countyArea != null and countyArea != ''">
+				AND a.county_area = #{countyArea}
+			</if> -->
+            <if test="purposeClassification != null and purposeClassification != ''">
+                AND a.purpose_classification = #{purposeClassification}
+            </if>
+            <if test="purposeExplain != null and purposeExplain != ''">
+                AND a.purpose_explain = #{purposeExplain}
+            </if>
+            <if test="repaymentFirstSource != null and repaymentFirstSource != ''">
+                AND a.repayment_first_source = #{repaymentFirstSource}
+            </if>
+            <if test="repaymentSecondSource != null and repaymentSecondSource != ''">
+                AND a.repayment_second_source = #{repaymentSecondSource}
+            </if>
+            <if test="repaymentThirdSource != null and repaymentThirdSource != ''">
+                AND a.repayment_third_source = #{repaymentThirdSource}
+            </if>
+            <if test="repaymentOtherSource != null and repaymentOtherSource != ''">
+                AND a.repayment_other_source = #{repaymentOtherSource}
+            </if>
+            <if test="hasRaiseAmount !=null and hasRaiseAmount != ''">
+                AND a.has_raise_amount = #{hasRaiseAmount}
+            </if>
+            <if test="restRaiseMoney != null and restRaiseMoney != ''">
+                AND a.rest_raise_money = #{restRaiseMoney}
+            </if>
+            <if test="restRepaymetMoney != null and restRepaymetMoney != ''">
+                AND a.rest_repaymet_money = #{restRepaymetMoney}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findMarketConfirmationList" resultType="P2pFinancingInformation">
+        SELECT
+        <include refid="p2pFinancingInformationMarketColumns"/>
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id=b.user_id
+        LEFT JOIN p2p_market_confirm_record c ON a.id=c.financing_information_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE (a.current_stage = '203' OR c.confirm_stage = '1')
+        <if test="id !=null and id!=''">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName!=null and p2pEnterpriseCertify.enterpriseName!=''">
+            AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        ORDER BY a.current_stage,z.state_time desc
+    </select>
+
+    <select id="findMarketConfirmationReleaseDebt" resultType="P2pFinancingInformation">
+        SELECT
+        <include refid="p2pFinancingInformationMarketDebtColumnsTwo"/>
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id=b.user_id
+        LEFT JOIN p2p_market_confirm_record c ON a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info d ON a.id=d.financing_information_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        <include refid="p2pFinancingInformationJoins"/>
+        <where>
+            (a.current_stage= '250' OR c.confirm_stage ='2')
+            <if test="id != null and id != '' ">
+                AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+            </if>
+            <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+        </where>
+        ORDER BY a.current_stage,z.state_time desc
+    </select>
+
+    <select id="findMarketConfirmationDebtList" resultType="P2pFinancingInformation">
+        SELECT
+        <include refid="p2pFinancingInformationMarketDebtColumns"/>
+        FROM p2p_financing_information a , p2p_enterprise_certify b, p2p_financing_rating_info c
+        <include refid="p2pFinancingInformationJoins"/>
+        WHERE a.applicants_id=b.user_id
+        AND a.id=c.financing_information_id
+        AND a.current_stage IN ('250','302')
+    </select>
+
+    <select id="findDebtIssuedList" resultType="P2pFinancingInformation">
+        SELECT
+        <include refid="p2pFinancingInformationMarketDebtColumns"/>
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id=b.user_id
+        LEFT JOIN p2p_financing_rating_info c ON a.id=c.financing_information_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE
+        a.current_stage IN ('400','500')
+        <if test="p2pEnterpriseCertify !=null">
+            <if test="p2pEnterpriseCertify.enterpriseName!=null and p2pEnterpriseCertify.enterpriseName!=''">
+                AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pFinancingRatingInfo !=null">
+            <if test="p2pFinancingRatingInfo.wetherRep !=null and p2pFinancingRatingInfo.wetherRep !=''">
+                AND c.wether_rep = #{p2pFinancingRatingInfo.wetherRep}
+            </if>
+        </if>
+        ORDER BY a.current_stage,z.state_time desc
+    </select>
+
+    <select id="findAllList" resultType="P2pFinancingInformation">
+        SELECT
+        <include refid="p2pFinancingInformationColumns"/>
+        FROM p2p_financing_information a
+        <include refid="p2pFinancingInformationJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_financing_information(
+        id,
+        applicants_id,
+        finacing_name,
+        current_stage,
+        commit_time,
+        publish_time,
+        financing_maturity,
+        is_guarantee,
+        financing_amount,
+        application_rate,
+        raise_time_limit,
+        repayment_mode,
+        <!-- enterprise_name, -->
+        <!-- registered_address, -->
+        <!-- enterprise_scale, -->
+        <!-- enterprise_nature, -->
+        <!-- industry_code, -->
+        <!-- gov_area_code, -->
+        <!-- provincial_area,
+		municipal_area, -->
+        <!-- county_area, -->
+        purpose_classification,
+        purpose_explain,
+        repayment_first_source,
+        repayment_second_source,
+        repayment_third_source,
+        repayment_other_source,
+        has_raise_amount,
+        rest_raise_money,
+        rest_repaymet_money,
+        <!-- gov_area_code, -->
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{applicantsId},
+        #{finacingName},
+        #{currentStage},
+        #{commitTime},
+        #{publishTime},
+        #{financingMaturity},
+        #{isGuarantee},
+        #{financingAmount},
+        #{applicationRate},
+        #{raiseTimeLimit},
+        #{repaymentMode},
+        <!-- #{enterpriseName}, -->
+        <!-- #{registeredAddress}, -->
+        <!-- #{enterpriseScale}, -->
+        <!-- #{enterpriseNature}, -->
+        <!-- #{industryCode}, -->
+        <!-- #{govAreaCode}, -->
+        <!-- 	#{provincialArea},
+		#{municipalArea}, -->
+        <!-- #{countyArea}, -->
+        #{purposeClassification},
+        #{purposeExplain},
+        #{repaymentFirstSource},
+        #{repaymentSecondSource},
+        #{repaymentThirdSource},
+        #{repaymentOtherSource},
+        #{hasRaiseAmount},
+        #{restRaiseMoney},
+        #{restRepaymetMoney},
+        <!-- #{govAreaCode}, -->
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_financing_information SET
+        applicants_id =
+        #{applicantsId},
+        finacing_name = #{finacingName},
+        current_stage =
+        #{currentStage},
+        commit_time = #{commitTime},
+        publish_time =
+        #{publishTime},
+        financing_maturity = #{financingMaturity},
+        is_guarantee
+        = #{isGuarantee},
+        financing_amount = #{financingAmount},
+        application_rate = #{applicationRate},
+        raise_time_limit =
+        #{raiseTimeLimit},
+        repayment_mode = #{repaymentMode},
+        <!-- enterprise_name =
+		#{enterpriseName}, -->
+        <!-- registered_address = #{registeredAddress}, -->
+        <!-- enterprise_scale = #{enterpriseScale}, -->
+        <!-- enterprise_nature =
+		#{enterpriseNature}, -->
+        <!-- industry_code = #{industryCode}, -->
+        <!-- gov_area_code =
+		#{govAreaCode}, -->
+        <!-- provincial_area = #{provincialArea},
+		municipal_area =
+		#{municipalArea}, -->
+        <!-- county_area = #{countyArea}, -->
+        purpose_classification =
+        #{purposeClassification},
+        purpose_explain = #{purposeExplain},
+        repayment_first_source = #{repaymentFirstSource},
+        repayment_second_source = #{repaymentSecondSource},
+        repayment_third_source = #{repaymentThirdSource},
+        repayment_other_source = #{repaymentOtherSource},
+        has_raise_amount = #{hasRaiseAmount},
+        rest_raise_money =
+        #{restRaiseMoney},
+        rest_repaymet_money = #{restRepaymetMoney},
+        <!-- gov_area_code=#{govAreaCode}, -->
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks =
+        #{remarks},
+        JZQX =#{JZQX}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_financing_information SET
+        del_flag =
+        #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findAllFinancingAmount" parameterType="java.lang.String"
+            resultType="java.lang.Integer">
+        SELECT SUM(financing_amount) FROM p2p_financing_information
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                current_stage = #{_parameter}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllFinancingInformation" parameterType="java.lang.String"
+            resultType="java.lang.Integer">
+        SELECT COUNT(id) FROM p2p_financing_information
+        <where>
+            <if test="_parameter != null and _parameter != ''">
+                current_stage = #{_parameter}
+            </if>
+        </where>
+    </select>
+
+    <!-- 撮合前列表页面 ： 融资信息表，撮合前债项状态进展表，融资评级信息表关联查询 -->
+    <select id="findFinancingRelationInfo" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id AS "applicantsId",
+        a.current_stage AS "currentStage",
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.is_guarantee AS "isGuarantee",
+        a.financing_maturity AS "financingMaturity",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.financing_amount AS "financingAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        <!-- a.enterprise_scale AS "enterpriseScale", -->
+        <!-- a.enterprise_nature AS
+		"enterpriseNature", -->
+        <!-- a.industry_code AS "industryCode", -->
+        <!-- a.gov_area_code
+		AS "govAreaCode", -->
+        <!-- a.provincial_area AS "provincialArea",
+		a.municipal_area AS "municipalArea", -->
+        <!-- a.county_area AS "countyArea", -->
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain
+        AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS
+        "repaymentSecondSource",
+        a.repayment_third_source AS
+        "repaymentThirdSource",
+        a.repayment_other_source AS
+        "repaymentOtherSource",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.in_raise_state AS "inRaiseState",
+        a.last_publish_time AS "lastPublishTime",
+        a.has_raise_time AS "hasRaiseTime",
+        a.giving_out_time AS "givingOutTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        b.id AS "p2pFinancingRatingInfo.id",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",
+        b.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        b.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",<!-- 主体信用等级 -->
+        b.commit_report AS "p2pFinancingRatingInfo.commitReport",<!-- 简版信用报告 -->
+        b.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",<!-- 简版信用报告 -->
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport",<!-- 详版信用报告 -->
+        b.credit_report_name AS "p2pFinancingRatingInfo.creditReportName",<!-- 详版信用报告 -->
+        b.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",<!-- 评级展望 -->
+        f.view_type AS "p2pRatingResultView.viewType",<!-- 用户异议类型 -->
+        c.id AS "p2pBeforeMatchDebtState.id",
+        c.progress_stage AS "p2pBeforeMatchDebtState.progressStage",
+        c.state_time AS "p2pBeforeMatchDebtState.stateTime",
+        c.operator_id AS "p2pBeforeMatchDebtState.operatorId",
+        c.handle_result AS "p2pBeforeMatchDebtState.handleResult",
+        d.id AS "p2pEnterpriseCertify.id",
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        d.registered_address AS "p2pEnterpriseCertify.registeredAddress"
+        FROM p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b ON b.financing_information_id = a.id
+        LEFT JOIN p2p_before_match_debt_state c ON c.finacing_information_id = a.id
+        AND a.current_stage = c.progress_stage
+        LEFT JOIN p2p_enterprise_certify d ON d.user_id = a.applicants_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        LEFT JOIN p2p_rating_result_view f ON f.financing_information_id = a.id
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            AND ((a.current_stage &gt;= 101
+            AND a.current_stage &lt;= 500) OR a.current_stage = 902)
+            <if test="id !=null and id !='' ">
+                AND a.id LIKE CONCAT(CONCAT(CONCAT('%',#{id}),'%'))
+            </if>
+            <if test="finacingName != null and finacingName != ''">
+                AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                AND a.current_stage = #{currentStage}
+            </if>
+            <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and p2pEnterpriseCertify.enterpriseName !=''">
+                AND d.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+            </if>
+            <if
+                    test="p2pBeforeMatchDebtState != null and p2pBeforeMatchDebtState.stateTime != null and p2pBeforeMatchDebtState.stateTime != '' and p2pBeforeMatchDebtState.stateTime != 'ALL'">
+                AND c.state_time = #{p2pBeforeMatchDebtState.stateTime}
+            </if>
+            <if test="developmentPhase != null and developmentPhase !='' ">
+                <if test="developmentPhase == 1">
+                    AND a.current_stage in(101,200,201,202)
+                </if>
+                <if test="developmentPhase == 2">
+                    AND a.current_stage in(203)
+                </if>
+                <if test="developmentPhase == 3">
+                    AND a.current_stage in(210)
+                </if>
+                <if test="developmentPhase == 4">
+                    AND a.current_stage in(211)
+                </if>
+                <if test="developmentPhase == 5">
+                    AND a.current_stage in(212,221,222,223)
+                </if>
+                <if test="developmentPhase == 6">
+                    AND a.current_stage in(230,231,232,240,241,242)
+                </if>
+                <if test="developmentPhase == 7">
+                    AND a.current_stage in(250,302)
+                </if>
+                <if test="developmentPhase == 8">
+                    AND a.current_stage in(400,500)
+                </if>
+            </if>
+
+        </where>
+        GROUP BY a.id
+        ORDER BY a.current_stage,z.state_time desc
+        <!-- 	<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				 ${page.orderBy}
+			</when>
+			<otherwise>
+				 a.update_date DESC
+			</otherwise>
+		</choose> -->
+    </select>
+
+    <select id="get" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id AS "applicantsId",
+        a.current_stage AS "currentStage",
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.is_guarantee AS "isGuarantee",
+        a.financing_maturity AS "financingMaturity",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.financing_amount AS "financingAmount",
+        a.recommended_rate AS "recommendedRate",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.in_raise_state AS "inRaiseState",
+        a.giving_out_time AS "givingOutTime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag",
+        b.id AS "p2pFinancingRatingInfo.id",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        <!-- b.debt_limit AS "p2pFinancingRatingInfo.debtLimit", -->
+        b.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        b.rep_count AS "p2pFinancingRatingInfo.repCount",
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        b.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",
+        c.id AS "p2pBeforeMatchDebtState.id",
+        c.progress_stage AS "p2pBeforeMatchDebtState.progressStage",
+        c.state_time AS "p2pBeforeMatchDebtState.stateTime",
+        c.operator_id AS "p2pBeforeMatchDebtState.operatorId",
+        c.handle_result AS "p2pBeforeMatchDebtState.handleResult",
+        d.id AS "p2pEnterpriseCertify.id",
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        d.registered_address AS "p2pEnterpriseCertify.registeredAddress",
+        d.enterprise_scale AS "p2pEnterpriseCertify.enterpriseScale",
+        d.enterprise_nature AS "p2pEnterpriseCertify.enterpriseNature",
+        d.industry_code AS "p2pEnterpriseCertify.industryCode",
+        d.provincial_area AS "p2pEnterpriseCertify.provincialArea",
+        d.municipal_area AS "p2pEnterpriseCertify.municipalArea",
+        d.business_scope AS "p2pEnterpriseCertify.businessScope"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON
+        b.financing_information_id = a.id
+        LEFT JOIN p2p_before_match_debt_state
+        c ON c.finacing_information_id = a.id AND a.current_stage =
+        c.progress_stage
+        LEFT JOIN p2p_enterprise_certify d ON d.user_id =
+        a.applicants_id
+        LEFT JOIN p2p_giving_out_loans e ON
+        e.financing_information_id = a.id
+
+        <where>
+            a.id = #{id}
+
+        </where>
+        GROUP BY a.id
+    </select>
+
+    <!-- 添加融资申请基本信息 -->
+    <insert id="saveP2pFinancingInformation" parameterType="P2pFinancingInformation">
+        INSERT INTO p2p_financing_information(
+        id,
+        applicants_id,
+        finacing_name,
+        current_stage,
+        commit_time,
+        financing_maturity,
+        application_amount,
+        application_rate,
+        raise_time_limit,
+        repayment_mode,
+        purpose_classification,
+        purpose_explain,
+        repayment_first_source,
+        repayment_second_source,
+        repayment_third_source,
+        repayment_other_source,
+        rest_raise_money,
+        is_hand_rate_cost
+        )VALUES(
+        #{id},
+        #{applicantsId},
+        #{finacingName},
+        #{currentStage},
+        #{commitTime},
+        #{financingMaturity},
+        #{applicationAmount},
+        #{applicationRate},
+        #{raiseTimeLimit},
+        #{repaymentMode},
+        #{purposeClassification},
+        #{purposeExplain},
+        #{repaymentFirstSource},
+        #{repaymentSecondSource},
+        #{repaymentThirdSource},
+        #{repaymentOtherSource},
+        #{restRaiseMoney},
+        #{isHandRateCost}
+        )
+    </insert>
+
+    <!-- 修改融资申请基本信息 -->
+    <update id="updateP2pFinancingInformation" parameterType="P2pFinancingInformation">
+        UPDATE
+        p2p_financing_information
+        <set>
+            <if test="finacingName != null and finacingName != ''">
+                finacing_name = #{finacingName},
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                current_stage = #{currentStage},
+            </if>
+            <if test="commitTime != null and commitTime != ''">
+                commit_time = #{commitTime},
+            </if>
+            <if test="publishTime != null and publishTime != ''">
+                publish_time = #{publishTime},
+            </if>
+            <if test="financingMaturity != null and financingMaturity != ''">
+                financing_maturity = #{financingMaturity},
+            </if>
+            <if test="isGuarantee != null and isGuarantee != ''">
+                is_guarantee = #{isGuarantee},
+            </if>
+            <if test="financingAmount != null and financingAmount != ''">
+                financing_amount = #{financingAmount},
+            </if>
+            <if test="applicationRate != null and applicationRate != ''">
+                application_rate = #{applicationRate},
+            </if>
+            <if test="raiseTimeLimit != null and raiseTimeLimit != ''">
+                raise_time_limit = #{raiseTimeLimit},
+            </if>
+            <if test="repaymentMode != null and repaymentMode != ''">
+                repayment_mode = #{repaymentMode},
+            </if>
+            <if test="purposeClassification != null and purposeClassification != ''">
+                purpose_classification = #{purposeClassification},
+            </if>
+            <if test="purposeExplain != null and purposeExplain != ''">
+                purpose_explain = #{purposeExplain},
+            </if>
+            <if test="repaymentFirstSource != null and repaymentFirstSource != ''">
+                repayment_first_source = #{repaymentFirstSource},
+            </if>
+            <if test="repaymentSecondSource != null and repaymentSecondSource != ''">
+                repayment_second_source = #{repaymentSecondSource},
+            </if>
+            <if test="repaymentThirdSource != null and repaymentThirdSource != ''">
+                repayment_third_source = #{repaymentThirdSource},
+            </if>
+            <if test="repaymentOtherSource != null and repaymentOtherSource != ''">
+                repayment_other_source = #{repaymentOtherSource},
+            </if>
+            <if test="restRaiseMoney != null and restRaiseMoney != ''">
+                rest_raise_money = #{restRaiseMoney},
+            </if>
+            <if test="restRepaymetMoney != null and restRepaymetMoney != ''">
+                rest_repaymet_money = #{restRepaymetMoney},
+            </if>
+            <if test="givingOutTime != null and givingOutTime != ''">
+                giving_out_time = #{givingOutTime},
+            </if>
+            <if test="givingOutVoucher != null and givingOutVoucher != ''">
+                giving_out_voucher = #{givingOutVoucher},
+            </if>
+            <if test="givingOutState != null and givingOutState != ''">
+                giving_out_state = #{givingOutState},
+            </if>
+            <if test="isSupply != null">
+                is_supply = #{isSupply},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <!-- 根据ID查询当前融资项目阶段 -->
+    <select id="findCurrentStage" parameterType="java.lang.String"
+            resultType="java.lang.String">
+        SELECT
+        current_stage
+        FROM
+        p2p_financing_information
+
+        WHERE
+        applicants_id = #{applicantsId}
+        AND
+        (current_stage &lt; 900 OR current_stage = 901)
+    </select>
+
+    <!-- 根据ID修改当前融资项目阶段 -->
+    <update id="updateCurrentStage" parameterType="P2pFinancingInformation">
+        UPDATE
+        p2p_financing_information
+        <set>
+            <if test="restRaiseMoney != null and restRaiseMoney != ''">
+                rest_raise_money = #{restRaiseMoney},
+            </if>
+            <if test="currentStage != null and currentStage != ''">
+                current_stage = #{currentStage},
+            </if>
+            <if test="hasRaiseAmount != null and hasRaiseAmount != ''">
+                has_raise_amount = #{hasRaiseAmount},
+            </if>
+            <if test="publishTime != null and publishTime != ''">
+                publish_time=#{publishTime},
+            </if>
+            <if test="lastPublishTime != null and lastPublishTime != ''">
+                last_publish_time=#{lastPublishTime},
+            </if>
+            <if test="hasRaiseTime !=null and hasRaiseTime != ''">
+                has_raise_time=#{hasRaiseTime},
+            </if>
+            <if test="inRaiseState !=null and inRaiseState != ''">
+                in_raise_state=#{inRaiseState},
+            </if>
+            <if test="financingAmount !=null and financingAmount != ''">
+                financing_amount=#{financingAmount},
+            </if>
+            <if test="publishId !=null and publishId != ''">
+                publish_id=#{publishId},
+            </if>
+            <if test="restRaiseMoney !=null and restRaiseMoney != ''">
+                rest_raise_money=#{restRaiseMoney},
+            </if>
+            <if test="productDescription !=null and productDescription != ''">
+                product_description=#{productDescription},
+            </if>
+        </set>
+        <where>
+            current_stage &lt; 900
+            AND id = #{id}
+            <if test="applicantsId != null and applicantsId != ''">
+                AND applicants_id = #{applicantsId}
+            </if>
+        </where>
+    </update>
+
+    <!-- 根据申请人ID查询对应的融资信息 -->
+    <select id="findP2pFinancingInformationByApplicantsId"
+            parameterType="java.lang.String" resultType="P2pFinancingInformation">
+        SELECT *
+        FROM
+        p2p_financing_information
+        WHERE
+        applicants_id = #{0}
+        AND
+        current_stage =
+        #{1}
+    </select>
+
+    <!-- 融资信息表，企业认证表，融资评级信息表关联查询 -->
+    <select id="findAllcreditList" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id As "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 融资金额 -->
+        a.current_stage AS"currentStage",
+        b.id As "p2pEnterpriseCertify.id",
+        b.certificate_type AS"p2pEnterpriseCertify.certificateType",<!-- 是否为三证合一 -->
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        c.id As "p2pFinancingRatingInfo.id",<!-- 评级信息id供修改时使用 -->
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",<!-- 偿债评级报告 -->
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",<!-- 简版评级报告 -->
+        <!-- c.debt_limit AS "p2pFinancingRatingInfo.debtLimit",债项举债额度 -->
+        c.recommended_rate AS"p2pFinancingRatingInfo.recommendedRate",<!-- 利率 -->
+        c.wether_rep AS "p2pFinancingRatingInfo.wetherRep"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON
+        c.financing_information_id =a.id
+        <where>
+            <![CDATA[a.current_stage>=203]]>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY field(c.credit_state,'3','1'),a.create_date desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findTheFinancingList" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id As "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 融资金额 -->
+        a.current_stage AS"currentStage",
+        b.id As "p2pEnterpriseCertify.id",
+        b.certificate_type AS"p2pEnterpriseCertify.certificateType",<!-- 是否为三证合一 -->
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        c.id As "p2pFinancingRatingInfo.id",<!-- 评级信息id供修改时使用 -->
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",<!-- 偿债评级报告 -->
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",<!-- 简版评级报告 -->
+        <!-- c.debt_limit AS "p2pFinancingRatingInfo.debtLimit",债项举债额度 -->
+        c.recommended_rate AS"p2pFinancingRatingInfo.recommendedRate"<!-- 利率 -->
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON
+        c.financing_information_id =a.id
+        <where>
+            <![CDATA[a.current_stage>=203]]>
+            <if test="finacingName != null and finacingName != ''">
+                AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+            </if>
+            <!-- <if test="enterpriseName != null and enterpriseName != ''">
+				AND b.enterprise_name 	LIKE CONCAT(CONCAT('%',#{enterpriseName}),'%')
+			</if> -->
+            <if test="ratingLevel!= null and ratingLevel != ''">
+                AND c.rating_level = #{ratingLevel}
+            </if>
+            <if test="id!= null and id!= ''">
+                AND a.id = #{id}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY field(c.credit_state,'3','1'),a.create_date desc
+            </otherwise>
+        </choose>
+    </select>
+
+
+    <!-- 查询一个对象 -->
+    <select id="findOneById" resultType="P2pFinancingInformation" parameterType="String">
+        SELECT *
+        FROM p2p_financing_information a
+        WHERE a.id
+        =#{id}
+    </select>
+
+
+    <!-- 投资专区列表，融资信息表，融资评级信息表关联查询 li -->
+    <select id="findAllFinancingList" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.application_amount AS "applicationAmount",
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.has_raise_time AS "hasRaiseTime",<!-- 已募集时间 -->
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.raise_time_limit AS "raiseTimeLimit",<!-- 募集期限 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        a.mark_type AS "markType",
+        a.product_name AS "productName"
+        FROM p2p_financing_information a
+        INNER JOIN p2p_financing_rating_info b
+        INNER JOIN p2p_enterprise_certify c
+        ON a.id=b.financing_information_id
+        AND a.applicants_id = c.user_id
+        WHERE a.current_stage BETWEEN 500 AND 900
+        <if test="fs1 != null and fs2 != null and fs1 != '' and fs2 != '' ">
+            AND a.rest_raise_money BETWEEN #{fs1} and #{fs2}
+        </if>
+        <if test="er1 != null and er2 != null and er1 != '' and er2 != ''">
+            AND b.recommended_rate BETWEEN #{er1} and #{er2}
+        </if>
+        <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.industryCode !=null and p2pEnterpriseCertify.industryCode != ''">
+            AND c.industry_code LIKE concat('%',#{p2pEnterpriseCertify.industryCode},'%')
+        </if>
+        <if test="financingMaturity != null and financingMaturity != ''">
+            AND a.financing_maturity = #{financingMaturity}
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="rate != null and rate != ''">
+            AND b.recommended_rate = #{rate}
+        </if>
+        <if test="ratingLevel != null and ratingLevel != ''">
+            AND b.rating_level = #{ratingLevel}
+        </if>
+        <if test="markType != null and markType != ''">
+            AND a.mark_type = #{markType}
+        </if>
+        ORDER BY a.publish_time DESC,FIELD(b.rating_level, 'AAA','AA+','AA','AA-',
+        'A+','A','A-','BBB+','BBB','BBB-','BB+','BB','BB-','B+','B','B-','CCC','CC','C')
+    </select>
+
+    <!--推荐标的 -->
+
+
+    <!-- 获取融资记录的总条数 -->
+    <select id="getTotalRecords" resultType="Integer">
+        SELECT COUNT(*)
+        FROM p2p_financing_information a
+        INNER JOIN p2p_financing_rating_info b
+        ON a.id=b.financing_information_id
+        WHERE a.current_stage &lt;500
+    </select>
+
+
+    <!-- 融资信息表，融资评级信息表关联查询前四条数据 li -->
+    <select id="findFourFinancingInfo" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.has_raise_amount AS "hasRaiseAmount",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.application_amount AS "applicationAmount",
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额 -->
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        a.has_raise_time AS "hasRaiseTime",
+        a.last_publish_time AS "lastPublishTime",
+        b.id AS "p2pFinancingRatingInfo.id",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime"<!-- 发布时间 -->
+        FROM p2p_financing_information a
+        INNER JOIN p2p_financing_rating_info b
+        ON a.id=b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c
+        ON c.user_id = a.applicants_id
+        WHERE a.current_stage = 500
+        OR a.current_stage = 600
+        AND a.in_raise_state = 0
+        #AND hasRaiseAmount != financingAmount
+        #ORDER BY a.publish_time DESC
+        ORDER BY (hasRaiseAmount/financingAmount)
+        limit 4
+    </select>
+
+    <!-- 根据id从 融资信息表，融资评级信息表关联查询一条数据 li -->
+    <select id="findFinancingInfoById" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.product_description AS "productDescription",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余募集金额 -->
+        a.mark_type AS "markType", <!-- 债项类型 -->
+        a.is_hand_rate_cost AS "isHandRateCost", <!-- 是否缴评级费 -->
+        a.commit_time AS "commitTime",
+        a.publish_time AS "publishTime",
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        a.has_raise_time AS "hasRaiseTime",<!-- 已募集时间 -->
+        a.is_guarantee AS "isGuarantee",
+        a.application_rate AS "applicationRate",
+        a.application_amount AS "applicationAmount",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.product_name AS "productName",
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        c.telephone_num AS "p2pEnterpriseCertify.telephoneNum",
+        c.registration_authority AS "p2pEnterpriseCertify.registrationAuthority",
+        c.registration_state AS "p2pEnterpriseCertify.registrationState",
+        c.quasi_nuclear_date AS "p2pEnterpriseCertify.quasiNuclearDate",
+        c.is_offshore_transaction AS "p2pEnterpriseCertify.isOffshoreTransaction",
+        c.registered_address AS "p2pEnterpriseCertify.registeredAddress",
+        c.enterprise_scale AS "p2pEnterpriseCertify.enterpriseScale",
+        c.enterprise_nature AS "p2pEnterpriseCertify.enterpriseNature",
+        c.industry_code AS "p2pEnterpriseCertify.industryCode",
+        c.registered_capital AS "p2pEnterpriseCertify.registeredCapital",<!-- 注册资金 -->
+        c.name_of AS "p2pEnterpriseCertify.nameOf",<!-- 企业法人 -->
+        c.id_number_of AS "p2pEnterpriseCertify.idNumberOf",
+        c.id_card_front AS "p2pEnterpriseCertify.idCardFront",
+        c.id_card_back AS "p2pEnterpriseCertify.idCardBack",
+        c.real_capital AS "p2pEnterpriseCertify.realCapital",<!-- 实缴资本 -->
+        c.business_scope AS "p2pEnterpriseCertify.businessScope",<!-- 经营范围 -->
+        c.company_found_date AS "p2pEnterpriseCertify.companyFoundDate",<!-- 成立时间 -->
+        c.business_area AS "p2pEnterpriseCertify.businessArea",<!-- 经营区域 -->
+        <!-- a.gov_area_code AS "govAreaCode", -->
+        c.provincial_area AS "p2pEnterpriseCertify.provincialArea",
+        c.municipal_area AS "p2pEnterpriseCertify.municipalArea",
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        a.rest_repaymet_money AS "restRepaymetMoney",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport",<!-- 报告 -->
+        d.ClassiName_CN AS "p2pIndustryclassi.classinameCn",
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime",
+        f.asset_company_id AS "p2pAssetValuationRecord.assetCompanyId",
+        f.assessment_report AS "p2pAssetValuationRecord.assessmentReport",
+        f.evaluation_contract AS "p2pAssetValuationRecord.evaluationContract",
+        e.guarantee_company_id AS "p2pGuaranteeRecord.guaranteeCompanyId",
+        e.guarantee_contract AS "p2pGuaranteeRecord.guaranteeContract",
+        e.letter_intent AS "p2pGuaranteeRecord.letterIntent",
+        g.name AS "p2pGuarantee.name",
+        h.name AS "p2pAssetValuation.name"
+        FROM p2p_financing_information a
+        INNER JOIN p2p_financing_rating_info b
+        INNER JOIN p2p_enterprise_certify c
+        INNER JOIN p2p_industryclassi d
+        ON a.id=b.financing_information_id
+        AND a.applicants_id = c.user_id
+        AND c.industry_code = d.IndustryNum
+        LEFT JOIN p2p_guarantee_record e ON e.financing_information_id = a.id
+        LEFT JOIN p2p_asset_valuation_record f ON f.financing_information_id = a.id
+        LEFT JOIN p2p_guarantee g ON e.guarantee_company_id = g.user_id
+        LEFT JOIN p2p_asset_valuation h ON f.asset_company_id = h.user_id
+        WHERE a.id=#{id}
+    </select>
+
+    <!-- 根据申请人记载融资总金额 -->
+    <select id="loadAllFinancingAmountByApplicantsId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT SUM(financing_amount)
+        FROM
+        p2p_financing_information
+        WHERE applicants_id = #{_parameter}
+        AND
+        current_stage &gt; 700
+        AND
+        current_stage <![CDATA[ <= ]]> 900
+    </select>
+
+    <!-- 根据申请人记载融资总个数 -->
+    <select id="loadAllFinancingCountByApplicantsId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT COUNT(id)
+        FROM p2p_financing_information
+        WHERE
+        applicants_id = #{_parameter}
+        AND current_stage &gt; 700
+    </select>
+
+    <!-- 查询融资总额 -->
+    <select id="selectCountfinancingAmounts" resultType="Integer">
+        select
+        sum(financing_amount)from p2p_financing_information
+    </select>
+
+    <!-- 查询待还总额 -->
+    <select id="selectRepayfinancingAmounts" resultType="Integer">
+        select
+        sum(rest_repaymet_money)from p2p_financing_information
+    </select>
+
+    <!-- 查询处于满标的所有债项数量 -->
+    <select id="selectAllFullscaleAmounts" resultType="Integer">
+        select
+        count(id)from p2p_financing_information where current_stage
+        in('600','700','701','800','900')
+    </select>
+
+    <!-- 根据投资人加载投资总金额 -->
+    <select id="loadAllInvestAmountByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT SUM(giving_out_amount)
+        FROM p2p_giving_out_loans
+        WHERE giving_out_person = #{id}
+    </select>
+
+    <!-- 根据投资人加载投资总收益 -->
+    <select id="loadAllInvestIncomeByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT SUM(giving_out_amount*recommended_rate)
+        FROM p2p_giving_out_loans a
+        LEFT JOIN p2p_financing_rating_info b
+        ON a.financing_information_id = b.financing_information_id
+        WHERE giving_out_person = #{id}
+    </select>
+    <!-- 投资人投资收益明细 -->
+    <select id="InvestIncomeDetail" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        c.giving_out_amount*b.recommended_rate AS "investmentIncome" <!-- 单项投资收益 -->
+        FROM p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a
+        ON a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b
+        ON b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d
+        ON d.financing_information_id=c.financing_information_id
+        WHERE giving_out_person = #{id}
+        AND a.current_stage = 900
+    </select>
+
+    <!-- 根据投资人加载募集中的债项个数 -->
+    <select id="loadAllInvestmentRaiseNumByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT COUNT(a.id)
+        FROM p2p_financing_information a
+        JOIN p2p_investment_information b
+        ON a.id = b.financing_information_id
+        WHERE user_id = #{_parameter} AND a.current_stage = 500
+    </select>
+    <!-- 根据投资人加载还款中的债项个数 -->
+    <select id="loadAllRepaymentNumByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT COUNT(a.id)
+        FROM p2p_financing_information a
+        JOIN p2p_investment_information b
+        ON a.id = b.financing_information_id
+        WHERE user_id = #{id} AND a.current_stage = 800
+    </select>
+    <!-- 根据投资人加载已还款的债项个数 -->
+    <select id="loadAllRepaymentEndNumByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT COUNT(a.id)
+        FROM p2p_financing_information a
+        JOIN p2p_investment_information b
+        ON a.id = b.financing_information_id
+        WHERE user_id = #{id} AND a.current_stage = 900
+    </select>
+    <!-- 根据投资人加载已流标的债项个数 -->
+    <select id="loadAllLoseBidsNumByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT COUNT(a.id)
+        FROM p2p_financing_information a
+        JOIN p2p_investment_information b
+        ON a.id = b.financing_information_id
+        WHERE user_id = #{id} AND a.current_stage = 501
+    </select>
+    <!-- 根据投资人加载逾期的债项个数 -->
+    <select id="loadAllOverdueNumByUserId" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        SELECT COUNT(id)
+        FROM p2p_investment_information
+        WHERE
+        user_id = #{id}
+    </select>
+    <!--  加载 账户总览-投资推荐 列表   li-->
+    <select id="loadInvestRecommend" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        <!-- 	a.enterprise_name AS "enterpriseName",企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        unix_timestamp(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY)) AS "raiseDeadline",
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime"
+        FROM p2p_financing_information a
+        INNER JOIN p2p_financing_rating_info b ON a.id=b.financing_information_id
+        WHERE a.current_stage = 500
+        ORDER BY a.update_date ASC
+    </select>
+    <!-- 根据投资人ID查询投资总览列表 -->
+    <select id="loadInvestmentList" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        <!-- 		a.finacing_name AS "finacingName",债项名称 -->
+        e.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额/投资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        c.giving_out_time AS "p2pGivingOutLoans.givingOutTime",<!-- 放款时间 -->
+        c.receive_amount_time AS "p2pGivingOutLoans.receiveAmountTime",<!-- 收款时间 -->
+        c.receive_amount AS "p2pGivingOutLoans.receiveAmount",<!-- 收款总额 -->
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        unix_timestamp(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY)) AS "raiseDeadline",<!-- 募集截止日期 -->
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime",
+        c.giving_out_amount*b.recommended_rate AS "expectSumAccount"<!-- 收益总额 -->
+        FROM p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a
+        ON a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b
+        ON b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d
+        ON d.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_enterprise_certify e
+        ON e.user_id =a.applicants_id
+        WHERE
+        c.giving_out_person=#{id}
+        AND
+        a.current_stage in (700,701,702,800,900)
+        <if test="beginDate != null and beginDate != '' and endDate != null and endDate !=''">
+            AND d.investment_agreement_time BETWEEN #{beginDate} AND #{endDate}
+        </if>
+        ORDER BY d.investment_agreement_time DESC
+    </select>
+
+    <!-- 根据投资人ID查询还款中投资列表 -->
+    <select id="loadRepayingInvestmentList" parameterType="User"
+            resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        <!-- a.enterprise_name AS "enterpriseName",企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额/投资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        c.giving_out_time AS "p2pGivingOutLoans.givingOutTime",<!-- 放款时间 -->
+        c.receive_amount_time AS "p2pGivingOutLoans.receiveAmountTime",<!-- 收款时间 -->
+        c.receive_amount AS "p2pGivingOutLoans.reciveAmount",<!-- 收款总额 -->
+        c.giving_out_amount*(1+b.recommended_rate) AS "sumReceiveAccount",<!-- 收款总额度 -->
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        unix_timestamp(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY)) AS "raiseDeadline",<!-- 募集截止日期 -->
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime",
+        c.giving_out_amount*b.recommended_rate AS "expectSumAccount"<!-- 收益总额 -->
+        FROM p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a
+        ON a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b
+        ON b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d
+        ON d.financing_information_id=c.financing_information_id
+        WHERE
+        c.giving_out_person=#{id}
+        AND
+        a.current_stage = 800
+        ORDER BY d.investment_agreement_time DESC
+    </select>
+    <!-- 根据投资人ID查询已还完投资列表 -->
+    <select id="loadRepayEndInvestmentList" parameterType="User"
+            resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        <!-- a.enterprise_name AS "enterpriseName",企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额/投资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        c.giving_out_time AS "p2pGivingOutLoans.givingOutTime",<!-- 放款时间 -->
+        c.receive_amount_time AS "p2pGivingOutLoans.receiveAmountTime",<!-- 收款时间 -->
+        c.receive_amount AS "p2pGivingOutLoans.receiveAmount",<!-- 收款总额 -->
+        c.giving_out_amount*(1+b.recommended_rate) AS "sumReceiveAccount",<!-- 收款总额度 -->
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        unix_timestamp(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY)) AS "raiseDeadline",<!-- 募集截止日期 -->
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime",
+        c.giving_out_amount*b.recommended_rate AS "expectSumAccount"<!-- 收益总额 -->
+        FROM p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a
+        ON a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b
+        ON b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d
+        ON d.financing_information_id=c.financing_information_id
+        WHERE
+        c.giving_out_person=#{id}
+        AND
+        a.current_stage = 900
+        ORDER BY d.investment_agreement_time DESC
+    </select>
+    <!-- 根据投资人ID查询逾期列表 -->
+    <select id="loadOverdueInvestmentList" parameterType="User"
+            resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        <!-- a.enterprise_name AS "enterpriseName",企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        c.giving_out_time AS "p2pGivingOutLoans.givingOutTime",<!-- 放款时间 -->
+        c.receive_amount AS "p2pGivingOutLoans.receiveAmount",<!-- 收款金额 -->
+        c.giving_out_amount*(1+b.recommended_rate) AS "sumReceiveAccount",<!-- 收款总额度 -->
+        c.receive_amount_time AS "p2pGivingOutLoans.receiveAmountTime",<!-- 收款时间 -->
+        unix_timestamp(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY)) AS "raiseDeadline",<!-- 募集截止日期 -->
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime",
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        c.giving_out_amount*b.recommended_rate AS "expectSumAccount" <!-- 收益总额度 -->
+        FROM
+        p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a ON
+        a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b ON
+        b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d ON
+        d.financing_information_id=c.financing_information_id
+        WHERE
+        c.giving_out_person=#{id}
+        ORDER BY c.giving_out_time ASC
+    </select>
+    <!-- 根据投资人ID查询投资总收益 -->
+    <select id="loadAllInvestmentIncomeByUserId" parameterType="java.lang.String"
+            resultType="java.lang.Integer">
+        SELECT SUM(a.giving_out_amount * b.recommended_rate)
+        FROM
+        p2p_giving_out_loans a
+        LEFT JOIN p2p_financing_rating_info b ON
+        a.financing_information_id = b.financing_information_id
+        LEFT JOIN p2p_financing_information c ON
+        a.financing_information_id = c.id
+        WHERE c.current_stage = 900 AND
+        <if test="_parameter != null and _parameter != ''">
+            a.giving_out_person=#{id}
+        </if>
+    </select>
+    <!-- 根据投资人ID查询未到账投资总收益 -->
+    <select id="loadAllNotToAccountIncomeByUserId" parameterType="java.lang.String"
+            resultType="java.lang.Integer">
+        SELECT SUM(a.giving_out_amount * b.recommended_rate)
+        FROM
+        p2p_giving_out_loans a
+        LEFT JOIN p2p_financing_rating_info b ON
+        a.financing_information_id = b.financing_information_id
+        LEFT JOIN p2p_financing_information c ON
+        a.financing_information_id = c.id
+        WHERE c.current_stage in (700,701,702,800) AND
+        <if test="_parameter != null and _parameter != ''">
+            a.giving_out_person=#{id}
+        </if>
+    </select>
+    <!-- 根据投资人ID投资收益记录查询 -->
+    <select id="investmentEarnRecordByUserId" resultType="P2pFinancingInformation"
+            parameterType="com.thinkgem.jeesite.modules.sys.entity.User">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        <!-- 	a.enterprise_name AS "enterpriseName",企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        c.giving_out_time AS "p2pGivingOutLoans.givingOutTime",<!-- 放款时间 -->
+        c.receive_amount_time AS "p2pGivingOutLoans.receiveAmountTime",<!-- 收款时间 -->
+        c.receive_amount AS "p2pGivingOutLoans.receiveAmount",<!-- 收款金额 -->
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        c.giving_out_amount*b.recommended_rate AS "expectSumAccount", <!-- 收益总额度 -->
+        c.giving_out_amount*b.recommended_rate AS "expectCurrentAccount",<!-- 收益总额度 -->
+        c.giving_out_amount*(1+b.recommended_rate) AS "sumReceiveAccount",<!-- 收款总额度 -->
+        e.real_repayment_date AS "p2pRepaymentRecord.realRepaymentDate",<!-- 到账时间 -->
+        unix_timestamp(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY)) AS "raiseDeadline",<!-- 募集截止日期毫秒数 -->
+        DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY) AS "raiseDeadTime"<!-- 募集截止日期 -->
+        FROM
+        p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a ON
+        a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b ON
+        b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d ON
+        d.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_repayment_record e ON
+        e.financing_information_id=c.financing_information_id
+        WHERE
+        c.giving_out_person=#{id}
+        AND
+        a.current_stage in (800,900)
+        <if test="beginDate != null and beginDate != '' and endDate != null and endDate !=''">
+            AND d.investment_agreement_time BETWEEN #{beginDate} AND #{endDate}
+        </if>
+        GROUP BY e.financing_information_id
+        ORDER BY c.giving_out_time DESC
+    </select>
+
+    <!-- 根据投资人及债项状态查询结果 -->
+    <select id="selectInvestmentResAccMode" resultType="P2pFinancingInformation" parameterType="map">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        <!-- a.enterprise_name AS "enterpriseName",企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.financing_amount AS "financingAmount",<!-- 融资总额 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime",<!-- 发布时间 -->
+        c.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount",<!-- 放款金额 -->
+        c.giving_out_time AS "p2pGivingOutLoans.givingOutTime",<!-- 放款时间 -->
+        c.receive_amount_time AS "p2pGivingOutLoans.receiveAmountTime",<!-- 收款时间 -->
+        c.receive_amount AS "p2pGivingOutLoans.receiveAmount",<!-- 收款金额 -->
+        d.investment_agreement_time AS "p2pInvestmentInformation.investmentAgreementTime",<!-- 投资时间 -->
+        SUM(c.giving_out_amount*b.recommended_rate) AS "expectSumAccount", <!-- 收益总额度 -->
+        c.giving_out_amount*b.recommended_rate AS "expectCurrentAccount"<!-- 收益总额度 -->
+        FROM
+        p2p_giving_out_loans c
+        LEFT JOIN p2p_financing_information a ON
+        a.id=c.financing_information_id
+        LEFT JOIN p2p_financing_rating_info b ON
+        b.financing_information_id=c.financing_information_id
+        LEFT JOIN p2p_investment_information d ON
+        d.financing_information_id=c.financing_information_id
+        <!-- WHERE
+		c.giving_out_person=#{pid}
+		 AND a.current_stage =#{mode}-->
+        ORDER BY c.giving_out_time DESC
+    </select>
+
+
+    <!-- 查询所有处于募集预警期内的所有债项 -->
+    <select id="findAllRaiseAndWarning" resultType="P2pFinancingInformation">
+        <![CDATA[	SELECT finacing_NAME,a.publish_time,b.real_name AS realName,c.phone AS phone,DATEDIFF(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY),NOW())AS WARNDAYS,rest_raise_money
+    FROM p2p_financing_information a INNER JOIN p2p_reg_user_certify b on a.applicants_id=b.user_id
+      INNER JOIN sys_user c on a.applicants_id=c.id
+    WHERE DATEDIFF(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY),NOW())>=0 AND DATEDIFF(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY),NOW())<=5  AND current_stage='500']]>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.publish_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 按条件查询所有处于募集预警期内的所有债项 -->
+    <select id="findAllAccRaiseAndWarning" resultType="P2pFinancingInformation">
+        SELECT finacing_NAME,a.publish_time,b.real_name AS realName,c.phone AS
+        phone,DATEDIFF(DATE_ADD(a.publish_time,INTERVAL
+        a.raise_time_limit DAY),NOW())AS WARNDAYS,rest_raise_money
+        FROM
+        p2p_financing_information a INNER JOIN p2p_reg_user_certify b on a.applicants_id=b.user_id
+        INNER JOIN sys_user c on a.applicants_id=c.id
+        <where>
+            <![CDATA[DATEDIFF(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY),NOW())>=0 AND DATEDIFF(DATE_ADD(a.publish_time,INTERVAL a.raise_time_limit DAY),NOW())<=3  AND current_stage='500']]>
+            <if test="finacingName != null and finacingName != ''">
+                AND a.finacing_name = #{finacingName}
+            </if>
+            <if test="nameOf != null and nameOf != ''">
+                AND b.name_of =#{nameOf}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.publish_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 查询处于募集预警期内的债项 -->
+    <select id="findFronRaiseAndWarning" resultType="P2pFinancingInformation">
+        <![CDATA[
+		SELECT
+			*
+		FROM
+			(
+				SELECT
+					a.finacing_NAME,
+					a.publish_time,
+					b.real_name AS realName,
+					c.phone AS phone,
+					TIME_TO_SEC(
+						TIMEDIFF(
+							DATE_ADD(
+								a.publish_time,
+								INTERVAL a.raise_time_limit DAY
+							),
+							NOW()
+						)
+					) / (24 * 60 * 60) AS WARNDAYS,
+					a.rest_raise_money AS "restRaiseMoney"
+				FROM
+					p2p_financing_information a
+				INNER JOIN p2p_reg_user_certify b ON a.applicants_id = b.user_id
+				INNER JOIN sys_user c ON a.applicants_id = c.id
+				WHERE
+					current_stage = '500'
+				ORDER BY
+					WARNDAYS DESC
+			) d
+		WHERE
+			d.WARNDAYS >= 0
+		AND d.WARNDAYS <= 3
+	]]>
+    </select>
+
+
+    <!-- 查询所有债项名称及ID -->
+    <select id="findAllFinaNameAndID" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id
+        AS "applicantsId"
+        FROM
+        p2p_financing_information a where
+        a.current_stage='202'
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.publish_time
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 查询所有的融资信息 -->
+    <select id="findAllFinancingInformations" resultType="P2pFinancingInformation"
+            parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id
+        AS "applicantsId"
+        FROM
+        p2p_financing_information a
+        <where>
+            a.current_stage='500'
+        </where>
+    </select>
+
+
+    <!-- 根据条件查询所有债项名称及ID -->
+    <select id="findAllAccFinaNameAndID" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id
+        AS "applicantsId"
+        FROM
+        p2p_financing_information a
+        <where>
+            a.current_stage='202'
+            <if test="finacingName != null and finacingName != ''">
+                AND a.finacing_name LIKE '${finacingName}%'
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.publish_time
+            </otherwise>
+        </choose>
+    </select>
+    <!-- 查询前10条债项名称及ID -->
+    <select id="findFrontFinaNameAndID" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS
+        "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id AS
+        "applicantsId"
+        FROM
+        p2p_financing_information a where
+        a.current_stage='202'
+        order by a.commit_time desc limit 10
+    </select>
+
+
+    <!-- 查询前几条条债项名称等融资信息及放款时间 -->
+
+    <select id="findFinaNameAndGivTime" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",<!--融资金额 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.giving_out_time AS "givingOutTime",<!-- 放款时间 -->
+        c.real_name AS "realName",<!-- 真实姓名(企业代理人姓名) -->
+        d.phone AS "phone"<!-- 联系方式 -->
+        FROM
+        p2p_financing_information a inner join p2p_giving_out_loans b on
+        b.financing_information_id=a.id
+        INNER JOIN p2p_reg_user_certify c on a.applicants_id=c.user_id
+        INNER JOIN sys_user d on a.applicants_id=d.id
+        where
+        a.current_stage='800'
+        order by b.giving_out_time desc limit 10
+    </select>
+
+    <!-- 查询所有债项名称等融资信息及放款时间 -->
+    <select id="findAllFinaNameAndGivTime" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",<!--融资金额 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.giving_out_time AS "givingOutTime",<!-- 放款时间 -->
+        c.real_name AS "realName",<!-- 真实姓名(企业代理人姓名) -->
+        d.phone AS "phone"<!-- 联系方式 -->
+        FROM
+        p2p_financing_information a inner join p2p_giving_out_loans b on
+        b.financing_information_id=a.id
+        INNER JOIN p2p_reg_user_certify c on a.applicants_id=c.user_id
+        INNER JOIN sys_user d on a.applicants_id=d.id
+        where
+        a.current_stage='800'
+        order by b.giving_out_time desc
+
+    </select>
+
+
+    <!-- 根据条件查询还款期内所有条债项名称等融资信息及放款时间 -->
+    <select id="findAllAccFinaNameAndGivTime" resultType="P2pFinancingInformation"
+            parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",<!--融资金额 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.giving_out_time AS "givingOutTime",<!-- 放款时间 -->
+        c.name_of AS nameOf,<!-- 代理人姓名 -->
+        c.telephone_num_of AS "telephoneNumOf"<!-- 代理人联系方式 -->
+        FROM
+        p2p_financing_information a inner join p2p_giving_out_loans b on
+        b.financing_information_id=a.id
+        inner join p2p_enterprise_certify c on a.applicants_id=c.user_id
+        <where>
+            a.current_stage='800'
+            <if test="finacingName != null and finacingName != ''">
+                AND a.finacing_name = #{finacingName}
+            </if>
+            <if test="nameOf != null and nameOf != ''">
+                AND c.name_of =#{nameOf}
+            </if>
+        </where>
+        order by b.giving_out_time desc
+    </select>
+
+    <!-- 查询已满标债项数量 -->
+    <select id="SelectFullscaleNum" resultType="Integer">
+        select count(id)from p2p_financing_information a where a.current_stage='700'
+    </select>
+
+
+    <!-- 查询评级审核数量 -->
+    <select id="SelectCreditNum" resultType="Integer">
+        select count(id)from p2p_financing_information a where a.current_stage
+        in('301','302')
+    </select>
+
+    <!-- 查询流标审核数量 -->
+    <select id="SelectCreditFlowNum" resultType="Integer">
+        select count(id)from p2p_financing_information a where a.current_stage='501'
+    </select>
+
+    <!-- 查询流标审核债项的公司名称及债项 -->
+    <select id="SelectCreditFlowNameAndTime" resultType="P2pFinancingInformation">
+        select a.publish_time AS "publishTime",b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName" from
+        p2p_financing_information a
+        inner join p2p_enterprise_certify b on a.applicants_id=b.user_id
+        where a.current_stage='501'
+    </select>
+
+    <!-- 查询发布债项审核数量 -->
+    <select id="SelectReleaseCreditNum" resultType="Integer">
+        select count(id)from p2p_financing_information a where a.current_stage='400'
+    </select>
+
+    <!-- 查询待发布审核债项公司名称及债项发布时间 -->
+    <select id="selectReleaseNameAndTime" resultType="P2pFinancingInformation">
+        select a.commit_time AS "commitTime",b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName" from
+        p2p_financing_information a
+        inner join p2p_enterprise_certify b on a.applicants_id=b.user_id
+        where a.current_stage='400'
+    </select>
+
+
+    <!-- 根据逾期未还款债项数量及债项 -->
+    <select id="findOverdueNorepaySumAndFina" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",<!--融资金额 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.giving_out_time AS "givingOutTime"<!-- 放款时间 -->
+        FROM
+        p2p_financing_information a inner join p2p_giving_out_loans b on
+        b.financing_information_id=a.id where a.current_stage='800'
+        order by b.giving_out_time desc
+    </select>
+
+    <!-- 根据逾期未还款债项债项名称及发放时间 -->
+    <select id="findOverdueNorepayNameAndTime" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",<!--融资金额 -->
+        a.financing_maturity AS "financingMaturity",<!-- 融资期限 -->
+        a.repayment_mode AS "repaymentMode",<!-- 还款方式 -->
+        b.giving_out_time AS "givingOutTime",<!-- 放款时间 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName"
+        FROM
+        p2p_financing_information a inner join p2p_giving_out_loans b on
+        b.financing_information_id=a.id
+        inner join p2p_enterprise_certify c on a.applicants_id=c.user_id
+        where a.current_stage='800'
+        order by b.giving_out_time desc
+    </select>
+
+
+    <!-- 查询已满标债项公司名称和时间 -->
+    <select id="selectFullscaleNameAndTime" resultType="P2pFinancingInformation">
+        select a.publish_time AS "publishTime",b.enterprise_name AS "enterpriseName" from p2p_financing_information a
+        inner join p2p_enterprise_certify b on a.applicants_id=b.user_id
+        where a.current_stage='700'
+    </select>
+
+
+    <!-- 查询评级审核债项公司名称及债项发布时间 -->
+    <select id="selectCreditNameAndTime" resultType="P2pFinancingInformation">
+        select a.publish_time AS "publishTime",b.enterprise_name AS "enterpriseName" from p2p_financing_information a
+        inner join p2p_enterprise_certify b on a.applicants_id=b.user_id
+        where a.current_stage in('301','302')
+    </select>
+
+
+    <!-- 获取最大的ID -->
+    <select id="getMaxId" resultType="java.lang.String">
+        SELECT MAX(id) FROM p2p_financing_information WHERE id LIKE '${prefix}%'
+    </select>
+
+    <!-- 根据债项ID获取当前债项还款计划 -->
+    <select id="getRepaymentRecordById" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "p2pRepaymentRecord.id",
+        a.financing_information_id AS "p2pRepaymentRecord.financingInformationId",
+        a.plan_repayment_date AS "p2pRepaymentRecord.planRepaymentDate",
+        a.plan_repayment_amount AS "p2pRepaymentRecord.planRepaymentAmount",
+        a.real_repayment_date AS "p2pRepaymentRecord.realRepaymentDate",
+        a.real_repayment_amount AS "p2pRepaymentRecord.realRepaymentAmount",
+        a.repayment_account AS "p2pRepaymentRecord.repaymentAccount",
+        b.finacing_name AS "finacingName",
+        c.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        d.giving_out_amount AS "p2pGivingOutLoans.givingOutAmount"
+        FROM p2p_repayment_record a
+        LEFT JOIN p2p_financing_information b ON
+        a.financing_information_id = b.id
+        LEFT JOIN p2p_financing_rating_info c ON
+        a.financing_information_id = c.financing_information_id
+        LEFT JOIN p2p_giving_out_loans d ON
+        a.financing_information_id = d.financing_information_id
+        WHERE a.financing_information_id = #{id}
+        ORDER BY plan_repayment_date ASC
+    </select>
+
+    <select id="findFinancingCertifyInfo" resultType="P2pFinancingInformation">
+        SELECT
+        a.business_license AS "p2pEnterpriseCertify.businessLicense",
+        a.id_card_front AS "p2pEnterpriseCertify.idCardFront",
+        a.id_card_back AS "p2pEnterpriseCertify.idCardBack"
+        FROM
+        p2p_enterprise_certify a
+        LEFT JOIN p2p_financing_information b
+        ON a.user_id = b.applicants_id
+        WHERE b.id = #{id}
+    </select>
+
+    <!-- Chace 查询募集期满尚未自动进入流标的债项 -->
+    <select id="findDebtMaturity" resultType="p2pFinancingInformation">
+        SELECT
+        a.id,
+        a.applicants_id,
+        a.finacing_name
+        FROM p2p_financing_information a
+        WHERE
+        a.current_stage = 500
+        AND
+        DATE_ADD(last_publish_time,INTERVAL (raise_time_limit*3600*24 - has_raise_time)/(3600*24) DAY)
+        <![CDATA[   <=  ]]> NOW()
+    </select>
+
+    <!-- Quincy 根据ID修改评级费缴纳状态 -->
+    <update id="updateIsHandRateCost" parameterType="p2pFinancingInformation">
+        UPDATE
+        p2p_financing_information
+        <set>
+            is_hand_rate_cost = 1,
+            <if test="currentStage != null and currentStage != ''">
+                current_stage = #{currentStage},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- Quincy 根据债项ID查询债项详情 -->
+    <select id="findDebtDetailsByFid" parameterType="java.lang.String" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.application_amount AS "applicationAmount",
+        a.financing_maturity AS "financingMaturity",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.purpose_classification AS "purposeClassification",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.giving_out_time AS "givingOutTime",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.mark_type AS "p2pFinancingRatingInfo.markType"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        WHERE
+        a.id = #{_parameter}
+    </select>
+
+    <!-- Quincy 根据债项ID修改当前阶段 -->
+    <update id="updateCurrentStageByFid" parameterType="p2pFinancingInformation">
+        UPDATE
+        p2p_financing_information
+        SET
+        current_stage = #{currentStage}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- Quincy 加载撮合中债项信息 -->
+    <select id="findMiddleMatchDebtInfo" parameterType="java.lang.String" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.application_amount AS "applicationAmount",
+        a.financing_maturity AS "financingMaturity",
+        a.repayment_mode AS "repaymentMode",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.publish_time AS "publishTime",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.in_raise_state AS "inRaiseState",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.last_publish_time AS "lastPublishTime",
+        a.has_raise_time AS "hasRaiseTime",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        WHERE
+        a.applicants_id = #{_parameter}
+        AND
+        a.current_stage = 500
+    </select>
+
+    <!-- Quincy 加载撮合后债项信息 -->
+    <select id="findAfterMatchDebtInfo" parameterType="java.lang.String" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_maturity AS "financingMaturity",
+        a.repayment_mode AS "repaymentMode",
+        a.giving_out_time AS "givingOutTime",
+        a.application_amount AS "applicationAmount",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        b.mark_type AS "p2pFinancingRatingInfo.markType"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        WHERE
+        a.applicants_id = #{_parameter}
+        AND
+        a.current_stage = 800
+    </select>
+
+    <!-- Quincy 加载已完成债项列表 -->
+    <select id="findFinishedDebtList" parameterType="p2pFinancingInformation" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.financing_maturity AS "financingMaturity",
+        a.giving_out_time AS "givingOutTime",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        a.application_amount AS 'applicationAmount',
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        <where>
+            a.current_stage = 900
+            <if test="applicantsId != null and applicantsId != ''">
+                AND a.applicants_id = #{applicantsId}
+            </if>
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND a.giving_out_time <![CDATA[   >=  ]]> #{beginTime} AND a.giving_out_time <![CDATA[   <=  ]]>
+                #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <!-- Quincy 加载已流标债项列表 -->
+    <select id="findExpiredDebtList" parameterType="p2pFinancingInformation" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.has_raise_amount AS "hasRaiseAmount",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        a.application_amount AS "applicationAmount",
+        x.state_time AS "p2pBeforeMatchDebtState.stateTime"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        LEFT JOIN
+        (SELECT
+        finacing_information_id,state_time
+        FROM
+        p2p_before_match_debt_state
+        WHERE
+        progress_stage = 901) x
+        ON
+        x.finacing_information_id = a.id
+        <where>
+            (a.current_stage = 999 OR a.current_stage = 901)
+            <if test="applicantsId != null and applicantsId != ''">
+                AND a.applicants_id = #{applicantsId}
+            </if>
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND x.state_time <![CDATA[   >=  ]]> #{beginTime} AND x.state_time <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <!-- Quincy 加载撮合中、撮合后以及以结项的债项列表 -->
+    <select id="loadApplySuccessDebts" parameterType="p2pFinancingInformation" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.current_stage AS "currentStage",
+        a.financing_maturity AS "financingMaturity",
+        a.giving_out_time AS "givingOutTime",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.application_amount AS 'applicationAmount',
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        b.credit_report AS "p2pFinancingRatingInfo.creditReport"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        <where>
+            <if test="applicantsId != null and applicantsId != ''">
+                AND a.applicants_id = #{applicantsId}
+            </if>
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND a.giving_out_time <![CDATA[   >=  ]]> #{beginTime} AND a.giving_out_time <![CDATA[   <=  ]]>
+                #{endTime}
+            </if>
+            <if test="currentStage != '' and currentStage != null">
+                AND a.current_stage = #{currentStage}
+            </if>
+        </where>
+    </select>
+
+    <!-- 债项详情. -->
+    <select id="getDebtDetails" parameterType="String" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.financing_maturity AS "financingMaturity",
+        a.application_amount AS "applicationAmount",
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.applicants_id AS "applicantsId",
+        a.mark_type AS "markType",<!-- 债项类型 -->
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        a.publish_time AS "publishTime",
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.has_raise_time AS "hasRaiseTime",
+        a.recommended_rate AS "recommendedRate",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.giving_out_voucher AS "givingOutVoucher",
+        a.publish_id AS "publishId",
+        a.product_description AS "productDescription",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.registered_address AS "p2pEnterpriseCertify.registeredAddress",
+        b.enterprise_scale AS "p2pEnterpriseCertify.enterpriseScale",
+        b.enterprise_nature AS "p2pEnterpriseCertify.enterpriseNature",
+        b.industry_code AS "p2pEnterpriseCertify.industryCode",
+        d.ClassiName_CN AS "p2pEnterpriseCertify.p2pIndustryclassi.classinameCn",
+        b.provincial_area AS "p2pEnterpriseCertify.provincialArea",
+        b.municipal_area AS "p2pEnterpriseCertify.municipalArea",
+        b.business_scope AS "p2pEnterpriseCertify.businessScope",
+        b.registration_authority AS "p2pEnterpriseCertify.registrationAuthority",
+        b.registration_state AS "p2pEnterpriseCertify.registrationState",
+        b.quasi_nuclear_date AS "p2pEnterpriseCertify.quasiNuclearDate",
+        b.is_offshore_transaction AS "p2pEnterpriseCertify.isOffshoreTransaction",
+        b.real_capital AS "p2pEnterpriseCertify.realCapital",
+        b.business_area AS "p2pEnterpriseCertify.businessArea",
+
+
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.financing_information_id AS "p2pFinancingRatingInfo.financingInformationId",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        c.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        c.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.publish_time AS "p2pFinancingRatingInfo.publishTime",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        c.mark_type AS "p2pFinancingRatingInfo.mark_type",
+        c.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        c.rep_count AS "p2pFinancingRatingInfo.repCount",
+        c.rating_audit_state AS "p2pFinancingRatingInfo.ratingAuditState",
+        c.rating_audit_opinion AS "p2pFinancingRatingInfo.ratingAuditOpinion",
+        c.is_finalized AS "p2pFinancingRatingInfo.isFinalized",
+
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source As "repaymentOtherSource"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_financing_rating_info c ON a.id = c.financing_information_id
+        LEFT JOIN p2p_industryclassi d ON d.industryNum = b.industry_code
+
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- Chace 撮合中债项列表查询 -->
+    <select id="findInFinancingInformations" resultType="P2pFinancingInformation"
+            parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.application_amount AS "applicationAmount",
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.has_raise_time AS "hasRaiseTime",<!-- 已募集时间 -->
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.raise_time_limit AS "raiseTimeLimit",<!-- 募集期限 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.is_hand_rate_cost AS "isHandRateCost"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id=b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE a.current_stage IN (500,600,700,901)
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.recommendedRate != null and p2pFinancingRatingInfo.recommendedRate != ''">
+            AND b.recommended_rate LIKE CONCAT(CONCAT('%',#{p2pFinancingRatingInfo.recommendedRate}),'%')
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.ratingLevel != null and p2pFinancingRatingInfo.ratingLevel != ''">
+            AND b.rating_level = #{p2pFinancingRatingInfo.ratingLevel}
+        </if>
+        ORDER BY a.current_stage,z.state_time desc
+    </select>
+
+    <!-- Zeus 撮合后债项列表查询 -->
+    <select id="getAfterFinancingList" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.has_raise_time AS "hasRaiseTime",
+        a.in_raise_state AS "inRaiseState",
+        a.last_publish_time AS "lastPublishTime",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.current_stage AS "currentStage",
+        a.raise_time_limit AS "raiseTimeLimit",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.repayment_mode AS "repaymentMode"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id = b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE
+        a.current_stage IN (800, 900)
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="p2pFinancingRatingInfo !=null and p2pFinancingRatingInfo.recommendedRate != null and p2pFinancingRatingInfo.recommendedRate != ''">
+            AND b.recommended_rate LIKE CONCAT(CONCAT('%',#{p2pFinancingRatingInfo.recommendedRate}),'%')
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.ratingLevel != null and p2pFinancingRatingInfo.ratingLevel != ''">
+            AND b.rating_level = #{p2pFinancingRatingInfo.ratingLevel}
+        </if>
+        ORDER BY z.state_time desc
+    </select>
+
+    <!-- Quincy 查询还款记录 -->
+    <select id="findRepayRecordByUid" parameterType="p2pFinancingInformation" resultType="p2pFinancingInformation">
+        SELECT
+        a.finacing_name AS "finacingName",
+        SUM(c.real_repayment_principal +c.real_repayment_interest +c.real_repayment_fine) AS "qbyhk",
+        DATE_ADD(a.giving_out_time,INTERVAL a.financing_maturity MONTH) AS "financingRepayExpire"
+        FROM
+        p2p_financing_information a
+        INNER JOIN
+        p2p_repayment_plan b
+        ON
+        a.id = b.financing_information_id
+        INNER JOIN
+        p2p_repayment_record c
+        ON
+        b.id = c.repayment_plan_id
+        <where>
+            a.applicants_id = #{applicantsId}
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND DATE_ADD(a.giving_out_time,INTERVAL a.financing_maturity MONTH) <![CDATA[   >=  ]]> #{beginTime} AND
+                DATE_ADD(a.giving_out_time,INTERVAL a.financing_maturity MONTH) <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+        GROUP BY
+        a.id
+    </select>
+
+    <!-- Quincy 查询放款记录 -->
+    <select id="findLoanRecordByUid" parameterType="p2pFinancingInformation" resultType="p2pFinancingInformation">
+        SELECT
+        finacing_name AS "finacingName",
+        financing_amount AS "financingAmount",
+        giving_out_time AS "givingOutTime"
+        FROM
+        p2p_financing_information
+        <where>
+            applicants_id = #{applicantsId}
+            AND current_stage <![CDATA[   >  ]]> 700
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND giving_out_time <![CDATA[   >=  ]]> #{beginTime} AND giving_out_time <![CDATA[   <=  ]]> #{endTime}
+            </if>
+        </where>
+    </select>
+    <!-- Chace 满标审核列表 -->
+    <select id="findFullAuditList" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.application_amount AS "applicationAmount",
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.has_raise_time AS "hasRaiseTime",<!-- 已募集时间 -->
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.raise_time_limit AS "raiseTimeLimit",<!-- 募集期限 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.is_hand_rate_cost AS "isHandRateCost"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id=b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE a.current_stage IN (600,700,800)
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.recommendedRate != null and p2pFinancingRatingInfo.recommendedRate != ''">
+            AND b.recommended_rate LIKE CONCAT(CONCAT('%',#{p2pFinancingRatingInfo.recommendedRate}),'%')
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.ratingLevel != null and p2pFinancingRatingInfo.ratingLevel != ''">
+            AND b.rating_level = #{p2pFinancingRatingInfo.ratingLevel}
+        </if>
+        ORDER BY z.state_time desc
+    </select>
+    <!-- Chace 流标待审核列表 -->
+    <select id="findStandardAuditList" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.application_amount AS "applicationAmount",
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.has_raise_time AS "hasRaiseTime",<!-- 已募集时间 -->
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.raise_time_limit AS "raiseTimeLimit",<!-- 募集期限 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.is_hand_rate_cost AS "isHandRateCost"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id=b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE a.current_stage IN (901,999)
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.recommendedRate != null and p2pFinancingRatingInfo.recommendedRate != ''">
+            AND b.recommended_rate LIKE CONCAT(CONCAT('%',#{p2pFinancingRatingInfo.recommendedRate}),'%')
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.ratingLevel != null and p2pFinancingRatingInfo.ratingLevel != ''">
+            AND b.rating_level = #{p2pFinancingRatingInfo.ratingLevel}
+        </if>
+        ORDER BY a.current_stage,z.state_time desc
+    </select>
+    <!--Chace 根据债项id查债项投资记录明细 -->
+    <select id="getInvestRecord" resultType="P2pInvestmentInformation" parameterType="P2pInvestmentInformation">
+        SELECT
+        b.investment_amount AS "p2pInvestmentDetails.investmentAmount",
+        b.investment_time AS "p2pInvestmentDetails.investmentTime",
+        a.investment_sum_amount AS "investmentSumAmount",
+        c.name AS "user.name",
+        a.user_id AS "userId",
+        d.user_body_type AS "p2pUserInformation.userBodyType"
+        FROM p2p_investment_information a
+        LEFT JOIN p2p_investment_details b on b.investment_information_id = a.id
+        LEFT JOIN sys_user c on c.id = a.user_id
+        LEFT JOIN p2p_user_information d on d.user_id = a.user_id
+        WHERE a.financing_information_id = #{financingInformationId}
+        ORDER BY b.investment_time
+    </select>
+    <!--Chace 满标审核状态修改 -->
+    <select id="updateById">
+        UPDATE p2p_financing_information
+        <set>
+            <if test="currentStage != null and currentStage != ''">
+                current_stage = #{currentStage},
+            </if>
+            <if test="inRaiseState != null and inRaiseState != ''">
+                in_raise_state = #{inRaiseState},
+            </if>
+            <if test="givingOutTime != null and givingOutTime != ''">
+                giving_out_time = #{givingOutTime},
+            </if>
+            <if test="hasRaiseTime != null and hasRaiseTime != ''">
+                has_raise_time = #{hasRaiseTime},
+            </if>
+            <if test="lastPublishTime != null and lastPublishTime != ''">
+                last_publish_time = #{lastPublishTime},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </select>
+    <!-- 根据债项id修改债项状态 -->
+    <update id="updateCurrentStageById">
+        UPDATE p2p_financing_information SET
+        current_stage = #{currentStage}
+        WHERE id = #{id}
+    </update>
+    <!-- Zeus 根据债项id查询债项详情 -->
+    <select id="getRepaymentPlanDebtDetails" resultType="P2pFinancingInformation" parameterType="String">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",
+        a.application_amount AS "applicationAmount",
+        a.has_raise_amount AS "hasRaiseAmount",
+        a.has_raise_time AS "hasRaiseTime",
+        a.in_raise_state AS "inRaiseState",
+        a.last_publish_time AS "lastPublishTime",
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.rest_raise_money AS "restRaiseMoney",
+        a.current_stage AS "currentStage",
+        a.raise_time_limit AS "raiseTimeLimit",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.repayment_mode AS "repaymentMode",
+        d.name AS "user.name"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id = b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        LEFT JOIN sys_user d ON d.id = a.applicants_id
+        WHERE
+        a.id = #{id}
+    </select>
+    <!-- Chace 根据债项id查询投资记录 -->
+    <select id="getInvestRecordByFid" resultType="P2pInvestmentInformation" parameterType="P2pInvestmentInformation">
+        SELECT
+        a.user_id AS "userId",
+        a.investment_sum_amount AS "investmentSumAmount",
+        a.expect_earn AS "expectEarn",
+        b.repayment_mode AS "p2pFinancingInformation.repaymentMode",
+        b.recommended_rate AS "p2pFinancingInformation.recommendedRate",
+        b.financing_maturity AS "p2pFinancingInformation.financingMaturity"
+        FROM p2p_investment_information a
+        LEFT JOIN p2p_financing_information b
+        ON a.financing_information_id = b.id
+        where a.financing_information_id = #{financingInformationId}
+    </select>
+    <!-- Quincy 定时刷新评级信息 -->
+    <select id="refreshRatingInfo1" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.applicants_id AS "applicantsId",
+        a.application_amount AS "applicationAmount",
+        b.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_financing_rating_info b
+        ON
+        a.id = b.financing_information_id
+        WHERE
+        a.current_stage = 210
+    </select>
+
+    <!-- Quincy 更新债项信息 -->
+    <update id="refreshRatingInfo2" parameterType="p2pFinancingInformation">
+        UPDATE
+        p2p_financing_information
+        <set>
+            <if test="financingAmount != '' and financingAmount != null">
+                financing_amount = #{financingAmount},
+            </if>
+            <if test="recommendedRate != '' and recommendedRate != null">
+                recommended_rate = #{recommendedRate},
+            </if>
+            <if test="markType != '' and markType != null">
+                mark_type = #{markType},
+            </if>
+            <if test="currentStage != '' and currentStage != null">
+                current_stage = #{currentStage},
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+    <!-- Chace 募集期风控列表 -->
+    <select id="findRiskManagementList" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.application_amount AS "applicationAmount",
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        a.has_raise_time AS "hasRaiseTime",<!-- 已募集时间 -->
+        a.in_raise_state AS "inRaiseState",<!-- 募集中状态 -->
+        a.last_publish_time AS "lastPublishTime",<!-- 最新发布时间 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.rest_raise_money AS "restRaiseMoney",<!-- 剩余融资额度 -->
+        a.current_stage AS "currentStage",<!-- 债项状态 -->
+        a.raise_time_limit AS "raiseTimeLimit",<!-- 募集期限 -->
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",<!-- 信用等级 -->
+        b.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",<!-- 年化率 -->
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.is_hand_rate_cost AS "isHandRateCost"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id=b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE a.current_stage = 500
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.recommendedRate != null and p2pFinancingRatingInfo.recommendedRate != ''">
+            AND b.recommended_rate LIKE CONCAT(CONCAT('%',#{p2pFinancingRatingInfo.recommendedRate}),'%')
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.ratingLevel != null and p2pFinancingRatingInfo.ratingLevel != ''">
+            AND b.rating_level = #{p2pFinancingRatingInfo.ratingLevel}
+        </if>
+        ORDER BY z.state_time desc
+    </select>
+
+    <!-- Chace 我的账户:投资收益列表 -->
+    <select id="getEarningsList" parameterType="p2pFinancingInformation" resultType="p2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.finacing_name AS "finacingName",
+        a.recommended_rate AS "recommendedRate",
+        a.financing_maturity AS "financingMaturity",
+        b.investment_sum_amount AS "p2pInvestmentInformation.investmentSumAmount",
+        b.last_investment_time AS "p2pInvestmentInformation.lastInvestmentTime",
+        a.current_stage AS "currentStage",
+        SUM(c.plan_receive_interest + c.plan_receive_fine) AS "p2pReceivePlan.sumInterest",
+        MAX(c.plan_receive_date) AS "p2pReceivePlan.maturityTime"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_investment_information b ON a.id = b.financing_information_id
+        LEFT JOIN p2p_receive_plan c ON a.id = c.financing_information_id
+        <where>
+            b.user_id = #{userId} AND c.user_id = #{userId}
+            <if test="beginTime != '' and beginTime != null and endTime != '' and endTime != null">
+                AND b.last_investment_time <![CDATA[   >=  ]]> #{beginTime} AND b.last_investment_time
+                <![CDATA[   <  ]]> #{endTime}
+            </if>
+        </where>
+        GROUP BY a.id
+    </select>
+
+    <!-- Quincy 查询满标时间 -->
+    <select id="findFullBidTimeByFid" parameterType="java.lang.String" resultType="java.util.Date">
+        SELECT
+        b.state_time
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_before_match_debt_state b
+        ON
+        a.id = b.finacing_information_id
+        WHERE
+        b.progress_stage = 600
+        AND
+        a.id = #{_parameter}
+    </select>
+
+    <!-- Chace 根据userId个债项id查询投资收益明细 -->
+    <select id="getRepaymentRecordByIdAndUserId" parameterType="P2pFinancingInformation"
+            resultType="P2pFinancingInformation">
+        SELECT
+        a.finacing_name AS "finacingName",
+        a.recommended_rate AS "recommendedRate",
+        a.financing_maturity AS "financingMaturity",
+        c.investment_sum_amount AS "p2pInvestmentInformation.investmentSumAmount",
+        c.last_investment_time AS "p2pInvestmentInformation.lastInvestmentTime",
+        b.receive_state AS "p2pReceivePlan.receiveState",
+        b.plan_receive_interest AS "p2pReceivePlan.planReceiveInterest",
+        b.plan_receive_fine AS "p2pReceivePlan.planReceiveFine",
+        b.plan_receive_principal AS "p2pReceivePlan.planReceivePrincipal",
+        b.plan_receive_date AS "p2pReceivePlan.planReceiveDate",
+        d.real_receive_date AS "p2pReceiveRecord.realReceiveDate"
+        FROM p2p_financing_information a
+        INNER JOIN p2p_receive_plan b
+        INNER JOIN p2p_investment_information c
+        ON a.id = b.financing_information_id
+        AND a.id = c.financing_information_id
+        LEFT JOIN p2p_receive_record d ON b.id = d.receive_plan_id
+        WHERE
+        a.id = #{id}
+        AND b.user_id = #{userId}
+        AND c.user_id = #{userId}
+        ORDER BY b.plan_receive_date asc
+    </select>
+
+    <!--Chace 根据id查询债项批复金额 -->
+    <select id="getAmountById" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        financing_amount
+        FROM p2p_financing_information
+        WHERE id = #{_parameter}
+
+    </select>
+
+    <!-- 查询当前状态债项数量 -->
+    <select id="getCurrentStageNum" resultType="Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        p2p_financing_information a
+        WHERE
+        a.current_stage = #{currentStage}
+    </select>
+
+    <!-- 修改保留利率 -->
+    <update id="updateRetainRate" parameterType="P2pFinancingInformation">
+        UPDATE
+        p2p_financing_information
+        SET
+        recommended_rate = #{recommendedRate},
+        retain_rate = #{retainRate}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- Zeus 抵质押补信查询 -->
+    <select id="buxinList1" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS id,
+        a.applicants_id AS "applicantsId",
+        d.id AS "p2pEnterpriseCertify.id",
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.finacing_name AS "finacingName",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        a.mark_type AS "markType",
+        c.rep_count AS "p2pFinancingRatingInfo.repCount",
+        a.current_stage AS "currentStage",
+
+        f.id AS "p2pAssetValuationRecord.id",
+        f.is_reject AS "p2pAssetValuationRecord.isReject",
+        g.name AS "p2pAssetValuation.name",
+        g.user_id AS "p2pAssetValuation.userId"
+
+        FROM p2p_financing_information a
+        INNER JOIN p2p_financing_rating_info c ON c.financing_information_id = a.id
+        INNER JOIN p2p_enterprise_certify d ON d.user_id = a.applicants_id
+
+        INNER JOIN p2p_asset_valuation_record f ON a.id = f.financing_information_id
+        left JOIN p2p_asset_valuation g ON g.user_id = f.asset_company_id
+        WHERE a.mark_type = 1
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND d.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="p2pAssetValuation != null and p2pAssetValuation.name != null and p2pAssetValuation.name != ''">
+            AND g.name LIKE CONCAT(CONCAT('%',#{p2pAssetValuation.name}),'%')
+        </if>
+        ORDER BY f.is_reject
+    </select>
+
+    <!-- Zeus 担保补信查询 -->
+    <select id="buxinList2" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+
+        a.id AS id,
+        d.id AS "p2pEnterpriseCertify.id",
+        d.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.finacing_name AS "finacingName",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        a.mark_type AS "markType",
+        c.rep_count AS "p2pFinancingRatingInfo.repCount",
+        a.current_stage AS "currentStage",
+
+        f.id AS "p2pAssetValuationRecord.id",
+        f.is_reject AS "p2pAssetValuationRecord.isReject",
+        g.name AS "p2pAssetValuation.name",
+        g.user_id AS "p2pAssetValuation.userId",
+
+        h.id AS "p2pGuaranteeRecord.id",
+        h.is_reject AS "p2pGuaranteeRecord.isReject",
+        i.name AS "p2pGuarantee.name",
+        i.user_id AS "p2pGuarantee.userId"
+
+        FROM p2p_financing_information a
+
+        INNER JOIN p2p_financing_rating_info c ON c.financing_information_id = a.id
+        INNER JOIN p2p_enterprise_certify d ON d.user_id = a.applicants_id
+
+        INNER JOIN p2p_asset_valuation_record f ON a.id = f.financing_information_id
+        left JOIN p2p_asset_valuation g ON g.user_id = f.asset_company_id
+
+        INNER JOIN p2p_guarantee_record h ON a.id = h.financing_information_id
+        left JOIN p2p_guarantee i ON i.user_id = h.guarantee_company_id
+        WHERE a.mark_type = 2
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND d.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="p2pAssetValuation != null and p2pAssetValuation.name != null and p2pAssetValuation.name != ''">
+            AND g.name LIKE CONCAT(CONCAT('%',#{p2pAssetValuation.name}),'%')
+        </if>
+        <if test="p2pGuarantee != null and p2pGuarantee.name != null and p2pGuarantee.name != ''">
+            AND i.name LIKE CONCAT(CONCAT('%',#{p2pGuarantee.name}),'%')
+        </if>
+        ORDER BY h.is_reject ,f.is_reject
+    </select>
+
+    <select id="findFinancingAppInfo" parameterType="java.lang.String" resultType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.application_amount AS "applicationAmount",
+        a.application_rate AS "applicationRate",
+        a.financing_maturity AS "financingMaturity",
+        a.raise_time_limit AS "raiseTimeLimit",
+        a.repayment_mode AS "repaymentMode",
+        a.purpose_classification AS "purposeClassification",
+        a.purpose_explain AS "purposeExplain",
+        a.repayment_first_source AS "repaymentFirstSource",
+        a.repayment_second_source AS "repaymentSecondSource",
+        a.repayment_third_source AS "repaymentThirdSource",
+        a.repayment_other_source AS "repaymentOtherSource",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        b.registered_address AS "p2pEnterpriseCertify.registeredAddress",
+        b.enterprise_scale AS "p2pEnterpriseCertify.enterpriseScale",
+        b.enterprise_nature AS "p2pEnterpriseCertify.enterpriseNature",
+        b.business_scope AS "p2pEnterpriseCertify.businessScope",
+        b.industry_code AS "p2pEnterpriseCertify.industryCode",
+        b.provincial_area AS "p2pEnterpriseCertify.provincialArea",
+        b.municipal_area AS "p2pEnterpriseCertify.municipalArea",
+        b.real_capital AS "p2pEnterpriseCertify.realCapital",
+        b.business_area AS "p2pEnterpriseCertify.businessArea",
+        b.registration_authority AS "p2pEnterpriseCertify.registrationAuthority",
+        b.registration_state AS "p2pEnterpriseCertify.registrationState",
+        b.quasi_nuclear_date AS "p2pEnterpriseCertify.quasiNuclearDate",
+        b.is_offshore_transaction AS "p2pEnterpriseCertify.isOffshoreTransaction",
+        c.real_name AS "p2pRegUserCertify.realName",
+        d.classiname_cn AS "p2pIndustryclassi.classinameCn"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN
+        p2p_enterprise_certify b
+        ON
+        a.applicants_id = b.user_id
+        LEFT JOIN
+        p2p_reg_user_certify c
+        ON
+        a.applicants_id = c.user_id
+        LEFT JOIN
+        p2p_industryclassi d
+        ON
+        d.industrynum = b.industry_code
+        WHERE
+        a.id = #{_parameter}
+    </select>
+
+
+    <!-- Chace 撮合前评级结果查询 -->
+    <select id="findLevelResultList" parameterType="P2pFinancingInformation" resultType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        a.applicants_id,
+        a.finacing_name AS "finacingName",
+        a.application_amount AS "applicationAmount",
+        a.financing_amount AS "financingAmount",
+        a.current_stage AS "currentStage",
+        a.recommended_rate AS "recommendedRate",
+        a.mark_type AS "markType",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.credit_report AS "p2pFinancingRatingInfo.creditReport",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.main_credit_grade AS "p2pFinancingRatingInfo.mainCreditGrade",
+        c.rate_expectation AS "p2pFinancingRatingInfo.rateExpectation",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        d.view_type AS "p2pRatingResultView.viewType"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id = b.user_id
+        LEFT JOIN p2p_financing_rating_info c ON a.id = c.financing_information_id
+        LEFT JOIN p2p_rating_result_view d ON a.id = d.financing_information_id
+        LEFT JOIN (select finacing_information_id,MAX(state_time) as state_time from p2p_before_match_debt_state GROUP
+        BY finacing_information_id) z ON a.id=z.finacing_information_id
+        WHERE a.current_stage >= 225
+        <if test="id != null and id != ''">
+            AND a.id LIKE CONCAT('%',#{id},'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT('%',#{finacingName},'%')
+        </if>
+        <if test="p2pEnterpriseCertify != null and p2pEnterpriseCertify.enterpriseName != null and p2pEnterpriseCertify.enterpriseName != ''">
+            AND b.enterprise_name LIKE CONCAT('%',#{p2pEnterpriseCertify.enterpriseName},'%')
+        </if>
+        <if test="currentStage != null and currentStage != ''">
+            AND a.current_stage = #{currentStage}
+        </if>
+        <if test="p2pFinancingRatingInfo != null and p2pFinancingRatingInfo.ratingLevel != null and p2pFinancingRatingInfo.ratingLevel != ''">
+            AND c.rating_level = #{p2pFinancingRatingInfo.ratingLevel}
+        </if>
+        ORDER BY a.current_stage,z.state_time desc
+    </select>
+
+    <!-- Chace评级报告发布页面查询 -->
+    <select id="recordPublishPage" parameterType="P2pFinancingInformation" resultType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.finacing_name AS "finacingName",
+        a.application_amount AS "applicationAmount",
+        a.financing_maturity AS "financingMaturity",
+        a.application_rate AS "applicationRate",
+        a.is_hand_rate_cost AS "isHandRateCost",
+        a.mark_type AS "markType",
+        a.product_name AS "productName",
+        a.current_stage AS "currentStage",
+        c.id AS "p2pFinancingRatingInfo.id",
+        c.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        c.commit_report AS "p2pFinancingRatingInfo.commitReport",
+        c.commit_report_name AS "p2pFinancingRatingInfo.commitReportName",
+        c.recommended_amount AS "p2pFinancingRatingInfo.recommendedAmount",
+        c.recommended_rate AS "p2pFinancingRatingInfo.recommendedRate",
+        c.wether_rep AS "p2pFinancingRatingInfo.wetherRep",
+        c.rep_count AS "p2pFinancingRatingInfo.repCount"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id = b.user_id
+        LEFT JOIN p2p_financing_rating_info c ON a.id = c.financing_information_id
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- Chace 撮合前报告发布 -->
+    <update id="publishRecord" parameterType="P2pFinancingInformation">
+        UPDATE p2p_financing_information
+        SET
+        current_stage = #{currentStage},
+        mark_type = #{markType},
+        product_name = #{productName}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Zeus 还款凭证审核列表查询 -->
+    <select id="getRepaymentVoucherAuditList" resultType="P2pFinancingInformation"
+            parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.finacing_name AS "finacingName",
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.repayment_mode AS "repaymentMode",
+        a.financing_amount AS "financingAmount",
+        a.application_amount AS "applicationAmount",
+        a.publish_time AS "publishTime",
+        a.last_publish_time AS "lastPublishTime",
+        a.giving_out_time AS "givingOutTime",
+        c.phase AS "p2pRepaymentPlan.phase",
+        c.plan_repayment_principal AS "p2pRepaymentPlan.planRepaymentPrincipal",
+        c.plan_repayment_interest AS "p2pRepaymentPlan.planRepaymentInterest",
+        IFNULL(d.repayment_audit_state, 0) AS "p2pRepaymentRecord.repaymentAuditState",
+        d.id AS "p2pRepaymentRecord.id",
+        e.last_investment_time AS "p2pInvestmentInformation.lastInvestmentTime"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON b.user_id = a.applicants_id
+        LEFT JOIN p2p_repayment_plan c ON c.financing_information_id = a.id
+        LEFT JOIN p2p_repayment_record d ON d.repayment_plan_id = c.id
+        LEFT JOIN p2p_investment_information e ON e.financing_information_id = a.id
+        WHERE
+        a.current_stage IN (800, 900)
+        AND a.mark_type = 1
+
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND b.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        <if test="p2pRepaymentRecord !=null and p2pRepaymentRecord.repaymentAuditState !=null and  p2pRepaymentRecord.repaymentAuditState != ''">
+            AND IFNULL(d.repayment_audit_state, 0) = #{p2pRepaymentRecord.repaymentAuditState}
+        </if>
+        ORDER BY a.id,c.phase
+    </select>
+
+    <!-- 查询定时中的未发布债项 -->
+    <select id="findTimingFinancing" resultType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        a.publish_time AS "publishTime",
+        a.publish_id AS "publishId"
+        FROM
+        p2p_financing_information a
+        WHERE a.current_stage = 400
+        AND a.publish_time IS NOT NULL
+    </select>
+
+    <!-- 查询需要批量发布的债项 -->
+    <select id="batchReleasePage" resultType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        a.finacing_name AS "finacingName",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        c.rating_level AS "p2pFinancingRatingInfo.rating_level",
+        a.recommended_rate AS "recommendedRate",
+        a.financing_amount AS "financingAmount",
+        a.financing_maturity AS "financingMaturity",
+        a.repayment_mode AS "repaymentMode",
+        a.commit_time AS "commitTime"
+        FROM
+        p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id = b.user_id
+        LEFT JOIN p2p_financing_rating_info c ON a.id = c.financing_information_id
+        WHERE a.id IN
+        <foreach collection="list" item="id" index="index"
+                 open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <!-- Chace 查询融资金额 -->
+    <select id="getFinancingAmount" parameterType="string" resultType="P2pFinancingInformation">
+        SELECT
+        a.financing_amount,
+        a.application_amount
+        FROM p2p_financing_information a
+        WHERE a.id = #{_parameter}
+    </select>
+    <!-- Chace 机构放款审核列表 -->
+    <select id="givingOutAuditPage" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id AS "id",
+        a.applicants_id AS "applicantsId",
+        a.finacing_name AS "finacingName",<!-- 债项名称 -->
+        a.financing_amount AS "financingAmount",<!-- 批复金额 -->
+        a.application_amount AS "applicationAmount",
+        a.has_raise_amount AS "hasRaiseAmount",<!-- 已募集金额 -->
+        c.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",<!-- 企业名称 -->
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.publish_time AS "publishTime",
+        a.giving_out_state AS "givingOutState",
+        b.last_investment_time AS "p2pInvestmentInformation.lastInvestmentTime"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_investment_information b ON a.id=b.financing_information_id
+        LEFT JOIN p2p_enterprise_certify c ON a.applicants_id = c.user_id
+        WHERE a.current_stage IN (700,800)
+        AND a.mark_type = 1
+        <if test="id != null and id != '' ">
+            AND a.id LIKE CONCAT(CONCAT('%',#{id}),'%')
+        </if>
+        <if test="givingOutState != null and givingOutState != '' ">
+            AND a.giving_out_state = #{givingOutState}
+        </if>
+        <if test="finacingName != null and finacingName != ''">
+            AND a.finacing_name LIKE CONCAT(CONCAT('%',#{finacingName}),'%')
+        </if>
+        <if test="p2pEnterpriseCertify !=null and p2pEnterpriseCertify.enterpriseName !=null and  p2pEnterpriseCertify.enterpriseName != ''">
+            AND c.enterprise_name LIKE CONCAT(CONCAT('%',#{p2pEnterpriseCertify.enterpriseName}),'%')
+        </if>
+        ORDER BY a.giving_out_time desc
+    </select>
+
+    <!-- 机构放款审核页面 -->
+    <select id="givingOutAuditDetails" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        a.applicants_id AS "applicantsId",
+        b.enterprise_name AS "p2pEnterpriseCertify.enterpriseName",
+        a.finacing_name AS "finacingName",
+        a.financing_amount AS "financingAmount",
+        a.application_amount AS "applicationAmount",
+        a.mark_type AS "markType",
+        a.financing_maturity AS "financingMaturity",
+        a.repayment_mode AS "repaymentMode",
+        a.has_raise_amount AS "hasRaiseAmount",
+        c.last_investment_time AS "p2pInvestmentInformation.lastInvestmentTime",
+        a.giving_out_time AS "givingOutTime",
+        a.giving_out_state AS "givingOutState",
+        c.user_id AS "p2pInvestmentInformation.userId",
+        c.investment_sum_amount AS "p2pInvestmentInformation.investmentSumAmount",
+        a.giving_out_voucher AS "givingOutVoucher"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_enterprise_certify b ON a.applicants_id = b.user_id
+        LEFT JOIN p2p_investment_information c ON a.id = c.financing_information_id
+        LEFT JOIN sys_user_role d ON c.user_id = d.role_id
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- Chace 查询募集期到期时间 -->
+    <select id="getLimitTime" resultType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        a.last_publish_time,
+        a.finacing_name,
+        a.applicants_id,
+        a.has_raise_time,
+        a.raise_time_limit
+        FROM p2p_financing_information a
+        WHERE a.current_stage = 500
+        AND a.in_raise_state = 0
+    </select>
+    <!-- Chace 查询发消息所需参数 -->
+    <select id="findForMsg" parameterType="P2pFinancingInformation" resultType="P2pFinancingInformation">
+        SELECT
+        a.id,
+        a.finacing_name,
+        a.applicants_id,
+        b.rating_level AS "ratingLevel",
+        a.financing_amount AS "financingAmount",
+        c.user_id AS "p2pInvestmentInformation.userId"
+        FROM p2p_financing_information a
+        LEFT JOIN p2p_financing_rating_info b ON a.id = b.financing_information_id
+        LEFT JOIN p2p_investment_information c ON a.id = c.financing_information_id
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getP2pFinancingInformationList" resultType="P2pFinancingInformation"
+            parameterType="P2pFinancingInformation">
+        SELECT
+        b.rating_level AS "p2pFinancingRatingInfo.ratingLevel",
+        b.publish_time AS "p2pFinancingRatingInfo.publishTime"
+        FROM p2p_financing_information a
+        left JOIN p2p_financing_rating_info b ON a.id = b.financing_information_id
+        WHERE a.applicants_id = #{applicantsId}
+    </select>
+
+    <select id="getApplicantdId" resultType="P2pFinancingInformation" parameterType="P2pFinancingInformation">
+        SELECT * FROM p2p_financing_information WHERE id = #{id}
+    </select>
+</mapper>

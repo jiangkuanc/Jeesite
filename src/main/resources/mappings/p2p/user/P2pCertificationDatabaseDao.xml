@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.user.dao.P2pCertificationDatabaseDao">
+
+    <sql id="p2pCertificationDatabaseColumns">
+        a.id AS "id",
+        a.real_name AS "realName",
+        a.id_number AS "idNumber",
+        a.updatetime AS "updatetime",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="p2pCertificationDatabaseJoins">
+    </sql>
+
+    <select id="get" resultType="P2pCertificationDatabase">
+        SELECT
+        <include refid="p2pCertificationDatabaseColumns"/>
+        FROM p2p_certification_database a
+        <include refid="p2pCertificationDatabaseJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pCertificationDatabase">
+        SELECT
+        <include refid="p2pCertificationDatabaseColumns"/>
+        FROM p2p_certification_database a
+        <include refid="p2pCertificationDatabaseJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="id != null and id != ''">
+                AND a.id = #{id}
+            </if>
+            <if test="realName != null and realName != ''">
+                AND a.real_name = #{realName}
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                AND a.id_number = #{idNumber}
+            </if>
+            <if test="updatetime != null and updatetime != ''">
+                AND a.updatetime = #{updatetime}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pCertificationDatabase">
+        SELECT
+        <include refid="p2pCertificationDatabaseColumns"/>
+        FROM p2p_certification_database a
+        <include refid="p2pCertificationDatabaseJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_certification_database(
+        id,
+        real_name,
+        id_number,
+        updatetime,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{realName},
+        #{idNumber},
+        #{updatetime},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_certification_database SET
+        real_name = #{realName},
+        id_number = #{idNumber},
+        updatetime = #{updatetime},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE p2p_certification_database SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByIdNumber" parameterType="P2pCertificationDatabase" resultType="P2pCertificationDatabase">
+        SELECT real_name FROM p2p_certification_database WHERE id_number = #{idNumber}
+    </select>
+
+    <insert id="insertNewInfo" parameterType="P2pCertificationDatabase">
+        INSERT INTO p2p_certification_database(
+        id,
+        real_name,
+        id_number,
+        updatetime
+        ) VALUES (
+        #{id},
+        #{realName},
+        #{idNumber},
+        #{updatetime}
+        )
+    </insert>
+</mapper>

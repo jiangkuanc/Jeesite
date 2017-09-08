@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.repayment.dao.P2pRepaymentRecordDao">
+
+    <sql id="p2pRepaymentRecordColumns">
+        a.id AS "id",
+        a.repayment_plan_id AS "repaymentPlanId",
+        a.real_repayment_date AS "realRepaymentDate",
+        a.real_repayment_principal AS "realRepaymentPrincipal",
+        a.real_repayment_interest AS "realRepaymentInterest",
+        a.real_repayment_fine AS "realRepaymentFine",
+        a.repayment_account AS "repaymentAccount",
+        a.repayment_voucher AS "repaymentVoucher",
+        a.repayment_audit_state AS "repaymentAuditState",
+        a.repayment_audit_time AS "repaymentAuditTime",
+        a.repayment_audit_person AS "repaymentAuditPerson",
+        a.repayment_audit_reason AS "repaymentAuditReason"
+    </sql>
+
+    <sql id="p2pRepaymentRecordJoins">
+    </sql>
+
+    <select id="get" resultType="P2pRepaymentRecord">
+        SELECT
+        <include refid="p2pRepaymentRecordColumns"/>
+        FROM p2p_repayment_record a
+        <include refid="p2pRepaymentRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRepaymentRecord">
+        SELECT
+        <include refid="p2pRepaymentRecordColumns"/>
+        FROM p2p_repayment_record a
+        <include refid="p2pRepaymentRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRepaymentRecord">
+        SELECT
+        <include refid="p2pRepaymentRecordColumns"/>
+        FROM p2p_repayment_record a
+        <include refid="p2pRepaymentRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_repayment_record(
+        id,
+        repayment_plan_id,
+        real_repayment_date,
+        real_repayment_principal,
+        real_repayment_interest,
+        real_repayment_fine,
+        repayment_account,
+        repayment_voucher,
+        repayment_audit_state,
+        repayment_audit_time,
+        repayment_audit_person,
+        repayment_audit_reason
+        ) VALUES (
+        #{id},
+        #{repaymentPlanId},
+        #{realRepaymentDate},
+        #{realRepaymentPrincipal},
+        #{realRepaymentInterest},
+        #{realRepaymentFine},
+        #{repaymentAccount},
+        #{repaymentVoucher},
+        #{repaymentAuditState},
+        #{repaymentAuditTime},
+        #{repaymentAuditPerson},
+        #{repaymentAuditReason}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_repayment_record SET
+        repayment_plan_id = #{repaymentPlanId},
+        real_repayment_date = #{realRepaymentDate},
+        real_repayment_principal = #{realRepaymentPrincipal},
+        real_repayment_interest = #{realRepaymentInterest},
+        real_repayment_fine = #{realRepaymentFine},
+        repayment_account = #{repaymentAccount},
+        repayment_voucher = #{repaymentVoucher},
+        repayment_audit_state = #{repaymentAuditState},
+        repayment_audit_time = #{repaymentAuditTime},
+        repayment_audit_person = #{repaymentAuditPerson},
+        repayment_audit_reason = #{repaymentAuditReason}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_repayment_record
+        WHERE id = #{id}
+    </update>
+
+    <select id="getRepaymentRecordById" resultType="P2pRepaymentRecord">
+        SELECT
+        a.id AS "id",
+        a.repayment_plan_id AS "repaymentPlanId",
+        a.real_repayment_date AS "realRepaymentDate",
+        a.real_repayment_principal AS "realRepaymentPrincipal",
+        a.real_repayment_interest AS "realRepaymentInterest",
+        a.real_repayment_fine AS "realRepaymentFine",
+        a.repayment_account AS "repaymentAccount",
+        a.repayment_voucher AS "repaymentVoucher",
+        a.repayment_audit_state AS "repaymentAuditState",
+        a.repayment_audit_time AS "repaymentAuditTime",
+        a.repayment_audit_person AS "repaymentAuditPerson",
+        a.repayment_audit_reason AS "repaymentAuditReason",
+        b.id AS "p2pRepaymentPlan.id",
+        b.financing_information_id AS "p2pRepaymentPlan.financingInformationId",
+        b.phase AS "p2pRepaymentPlan.phase",
+        b.plan_repayment_date AS "p2pRepaymentPlan.planRepaymentDate",
+        b.plan_repayment_principal AS "p2pRepaymentPlan.planRepaymentPrincipal",
+        b.plan_repayment_interest AS "p2pRepaymentPlan.planRepaymentInterest",
+        b.overdue_days AS "p2pRepaymentPlan.overdueDays",
+        b.overdue_level AS "p2pRepaymentPlan.overdueLevel",
+        b.fine AS "p2pRepaymentPlan.fine",
+        b.repayment_state AS "p2pRepaymentPlan.repaymentState"
+        FROM p2p_repayment_record a
+        LEFT JOIN p2p_repayment_plan b ON b.id = a.repayment_plan_id
+        WHERE a.id = #{id}
+    </select>
+
+    <update id="updateRepayInfo" parameterType="P2pRepaymentRecord">
+        UPDATE
+        p2p_repayment_record
+        SET
+        real_repayment_date = #{realRepaymentDate},
+        repayment_voucher = #{repaymentVoucher},
+        repayment_audit_state = #{repaymentAuditState}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 根据ID修改还款凭证审核信息 -->
+    <update id="updateRepaymentVoucherAudit" parameterType="P2pRepaymentRecord">
+        UPDATE
+        p2p_repayment_record a
+        SET
+        a.repayment_audit_state = #{repaymentAuditState},
+        a.repayment_audit_time = #{repaymentAuditTime},
+        a.repayment_audit_person = #{repaymentAuditPerson},
+        a.repayment_audit_reason = #{repaymentAuditReason}
+        WHERE
+        id = #{id}
+    </update>
+
+    <!-- 根据repaymentPlanId修改实际还款罚金 -->
+    <update id="updateFineByRepaymentPlanId">
+        UPDATE p2p_repayment_record SET
+        real_repayment_fine = #{realRepaymentFine}
+        WHERE repayment_plan_id = #{repaymentPlanId}
+    </update>
+
+    <!-- Chace 根据债项id查询还款凭证 -->
+    <select id="getrepaymentVoucher" parameterType="string" resultType="P2pRepaymentRecord">
+        SELECT
+        a.repayment_voucher
+        FROM p2p_repayment_record a
+        LEFT JOIN p2p_repayment_plan b ON a.repayment_plan_id = b.id
+        WHERE b.financing_information_id = #{_parameter}
+    </select>
+</mapper>

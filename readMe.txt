@@ -1,0 +1,3 @@
+平台中文名称全称：电力行业市场主体信用监测平台
+平台英文名称全称：Electric Credit Monitor Platform
+平台英文名称简称：ECMP

@@ -1,0 +1,57 @@
+/*breadcrumb*/
+body {
+    background-color: #ffffff;
+}
+
+ol.breadcrumb {
+    background: #FFFFFF;
+    margin-bottom: 0px;
+    padding: 8px 15px;
+}
+
+/*table*/
+table.table thead tr td {
+    background: #eeeeee;
+    line-height: 30px;
+    text-align: center;
+    font-weight: 600;
+    color: #666666;
+}
+
+table.table tbody tr td {
+    background: #FFFFFF;
+    padding-left: 30px;
+    line-height: 40px;
+    color: #333333;
+}
+
+/*expenses*/
+div.expenses-div {
+    margin-bottom: 80px;
+}
+
+div.expenses-div p {
+    height: 160px;
+    padding-top: 40px;
+}
+
+button.btn {
+    margin: 0px 50px;
+    width: 70px;
+    background: #f2434a;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

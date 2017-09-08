@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsCreditactivityDao">
+
+    <sql id="cmsCreditactivityColumns">
+        a.id AS "id",
+        a.article_id AS "articleId",
+        a.user_id AS "user.id",
+        a.real_name AS "realName",
+        a.tel AS "tel",
+        a.registration_time AS "registrationTime",
+        a.verification_code AS "verificationCode",
+        b.title AS "article.title",
+        u3.name AS "user.name"
+    </sql>
+
+    <sql id="cmsCreditactivityJoins">
+        JOIN sys_user u3 ON u3.id = a.user_id
+        JOIN cms_article b ON b.id = a.article_id
+    </sql>
+
+    <select id="get" resultType="CmsCreditactivity">
+        SELECT
+        <include refid="cmsCreditactivityColumns"/>
+        FROM cms_creditactivity a
+        <include refid="cmsCreditactivityJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsCreditactivity">
+        SELECT
+        <include refid="cmsCreditactivityColumns"/>
+        FROM cms_creditactivity a
+        <include refid="cmsCreditactivityJoins"/>
+        <where>
+
+            <if test="article != null and article.title != null and article.title != ''">
+                AND b.title LIKE
+                <if test="dbName == 'oracle'">'%'||#{article.title}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{article.title}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{article.title},'%')</if>
+            </if>
+            <if test="realName != null and realName != ''">
+                AND a.real_name LIKE
+                <if test="dbName == 'oracle'">'%'||#{realName}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{realName}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{realName},'%')</if>
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsCreditactivity">
+        SELECT
+        <include refid="cmsCreditactivityColumns"/>
+        FROM cms_creditactivity a
+        <include refid="cmsCreditactivityJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_creditactivity(
+        id,
+        article_id,
+        user_id,
+        real_name,
+        tel,
+        registration_time,
+        verification_code
+        ) VALUES (
+        #{id},
+        #{articleId},
+        #{user.id},
+        #{realName},
+        #{tel},
+        #{registrationTime},
+        #{verificationCode}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_creditactivity SET
+        article_id = #{articleId},
+        user_id = #{user.id},
+        real_name = #{realName},
+        tel = #{tel},
+        registration_time = #{registrationTime},
+        registration_time = #{verificationCode}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM cms_creditactivity
+        WHERE id = #{id}
+    </update>
+
+    <insert id="commite">
+        INSERT INTO cms_creditactivity(
+        id,
+        article_id,
+        user_id,
+        real_name,
+        tel,
+        registration_time,
+        verification_code
+        ) VALUES (
+        #{id},
+        #{articleId},
+        #{userId},
+        #{realName},
+        #{tel},
+        #{registrationTime},
+        #{verificationCode}
+        )
+    </insert>
+</mapper>

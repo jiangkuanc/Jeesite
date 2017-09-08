@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.SysLoginRecordDao">
+
+    <sql id="sysLoginRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.login_name AS "loginName",
+        a.error_pwd_count AS "errorPwdCount",
+        a.frozen_state AS "frozenState",
+        a.last_login_ip AS "lastLoginIp",
+        a.last_login_time AS "lastLoginTime",
+        a.frozen_start_time AS "frozenStartTime",
+        a.frozen_end_time AS "frozenEndTime",
+        a.remarks AS "remarks",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="sysLoginRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="SysLoginRecord">
+        SELECT
+        <include refid="sysLoginRecordColumns"/>
+        FROM sys_login_record a
+        <include refid="sysLoginRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="SysLoginRecord">
+        SELECT
+        <include refid="sysLoginRecordColumns"/>
+        FROM sys_login_record a
+        <include refid="sysLoginRecordJoins"/>
+        <where>
+
+            <if test="loginName != null and loginName != ''">
+                AND a.login_name LIKE
+                <if test="dbName == 'oracle'">'%'||#{loginName}||'%'</if>
+                <if test="dbName == 'mssql'">'%'+#{loginName}+'%'</if>
+                <if test="dbName == 'mysql'">concat('%',#{loginName},'%')</if>
+            </if>
+            <if test="errorPwdCount != null and errorPwdCount != ''">
+                AND a.error_pwd_count = #{errorPwdCount}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="SysLoginRecord">
+        SELECT
+        <include refid="sysLoginRecordColumns"/>
+        FROM sys_login_record a
+        <include refid="sysLoginRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_login_record(
+        id,
+        user_id,
+        login_name,
+        error_pwd_count,
+        frozen_state,
+        last_login_ip,
+        last_login_time,
+        frozen_start_time,
+        frozen_end_time,
+        remarks
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{loginName},
+        #{errorPwdCount},
+        #{frozenState},
+        #{lastLoginIp},
+        #{lastLoginTime},
+        #{frozenStartTime},
+        #{frozenEndTime},
+        #{remarks}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_login_record SET
+        user_id = #{user.id},
+        login_name = #{loginName},
+        error_pwd_count = #{errorPwdCount},
+        frozen_state = #{frozenState},
+        last_login_ip = #{lastLoginIp},
+        last_login_time = #{lastLoginTime},
+        frozen_start_time = #{frozenStartTime},
+        frozen_end_time = #{frozenEndTime},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM sys_login_record
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过用户编号获取用户登录记录 -->
+    <select id="getRecordByUserId" resultType="SysLoginRecord" parameterType="String">
+        select
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.login_name AS "loginName",
+        a.error_pwd_count AS "errorPwdCount",
+        a.frozen_state AS "frozenState",
+        a.last_login_ip AS "lastLoginIp",
+        a.last_login_time AS "lastLoginTime",
+        a.frozen_start_time AS "frozenStartTime",
+        a.frozen_end_time AS "frozenEndTime",
+        a.remarks AS "remarks"
+        from
+        sys_login_record a
+        where
+        user_id = #{_parameter}
+    </select>
+
+    <!-- 更新用户登录记录 -->
+    <update id="updateRecord">
+        update
+        sys_login_record
+        set
+        error_pwd_count = #{errorPwdCount},
+        last_login_time = #{lastLoginTime},
+        last_login_ip = #{lastLoginIp}
+        <if test="user != null">
+            where user_id = #{user.id}
+        </if>
+    </update>
+
+    <!-- 更新用户冻结状态 -->
+    <update id="updateFrozenState">
+        update
+        sys_login_record
+        set
+        frozen_state = #{frozenState},
+        error_pwd_count = #{errorPwdCount},
+        frozen_start_time = #{frozenStartTime}
+        <if test="user != null">
+            where user_id = #{user.id}
+        </if>
+    </update>
+
+    <!-- 保存用户登录记录 -->
+    <insert id="saveRecord">
+        INSERT INTO sys_login_record(
+        id,
+        user_id,
+        login_name,
+        error_pwd_count,
+        last_login_ip,
+        last_login_time,
+        frozen_state
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{loginName},
+        #{errorPwdCount},
+        #{lastLoginIp},
+        #{lastLoginTime},
+        #{frozenState}
+        )
+    </insert>
+
+    <update id="deleteRecored">
+        delete from
+        sys_login_record
+        <if test="user != null">
+            where user_id = #{user.id}
+        </if>
+    </update>
+</mapper>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditreport.dao.P2pCreditReportDao">
+
+    <select id="findList" resultType="P2pCreditReport">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.enterprise_name AS "enterpriseName",
+        a.enterprise_type AS "enterpriseType",
+        a.industry_code AS "industryCode",
+        b.ClassiName_CN AS "p2pIndustryclassi.classinameCn",
+        a.enterprise_introduce AS "enterpriseIntroduce",
+        a.is_delete AS "isDelete",
+        a.report_time AS "reportTime",
+        a.rating_level AS "ratingLevel",
+        a.rating_time AS "ratingTime",
+        a.rating_definition AS "ratingDefinition",
+        a.unified_social_credit_code AS "unifiedSocialCreditCode",
+        a.uscc_is_commit AS "usccIsCommit",
+        a.organization_code AS "organizationCode",
+        a.oc_is_commit AS "ocIsCommit",
+        a.gongshang_regist_num AS "gongshangRegistNum",
+        a.grn_is_commit AS "grnIsCommit",
+        a.tax_registration_num AS "taxRegistrationNum",
+        a.trn_is_commit AS "trnIsCommit",
+        a.legal_name AS "legalName",
+        a.legal_is_change AS "legalIsChange",
+        a.registered_capital AS "registeredCapital",
+        a.registered_capital_is_change AS "registeredCapitalIsChange",
+        a.enterprise_base_info_comment AS "enterpriseBaseInfoComment",
+        a.government_regulation_info_comment AS "governmentRegulationInfoComment",
+        a.financial_credit_info_comment AS "financialCreditInfoComment",
+        a.industry_evaluation_info_comment AS "industryEvaluationInfoComment",
+        a.media_evaluation_info_comment AS "mediaEvaluationInfoComment",
+        a.enterprise_operation_info_comment AS "enterpriseOperationInfoComment",
+        a.market_feedback_info_comment AS "marketFeedbackInfoComment",
+        u2.name AS "user.name"
+        FROM p2p_credit_report a
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+        LEFT JOIN
+        p2p_industryclassi b ON a.industry_code = b.IndustryNum
+        <where>
+            1=1
+            <if test="industryCode != null and industryCode != null">
+                AND a.industry_code LIKE concat('%',#{industryCode},'%')
+            </if>
+            <if test="enterpriseType != null and enterpriseType != null">
+                AND a.enterprise_type LIKE concat('%',#{enterpriseType},'%')
+            </if>
+        </where>
+    </select>
+
+
+    <sql id="p2pCreditReportColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.enterprise_name AS "enterpriseName",
+        a.enterprise_type AS "enterpriseType",
+        a.industry_code AS "industryCode",
+        a.enterprise_introduce AS "enterpriseIntroduce",
+        a.is_delete AS "isDelete",
+        a.report_time AS "reportTime",
+        a.rating_level AS "ratingLevel",
+        a.rating_time AS "ratingTime",
+        a.rating_definition AS "ratingDefinition",
+        a.unified_social_credit_code AS "unifiedSocialCreditCode",
+        a.uscc_is_commit AS "usccIsCommit",
+        a.organization_code AS "organizationCode",
+        a.oc_is_commit AS "ocIsCommit",
+        a.gongshang_regist_num AS "gongshangRegistNum",
+        a.grn_is_commit AS "grnIsCommit",
+        a.tax_registration_num AS "taxRegistrationNum",
+        a.trn_is_commit AS "trnIsCommit",
+        a.legal_name AS "legalName",
+        a.legal_is_change AS "legalIsChange",
+        a.registered_capital AS "registeredCapital",
+        a.registered_capital_is_change AS "registeredCapitalIsChange",
+        a.enterprise_base_info_comment AS "enterpriseBaseInfoComment",
+        a.government_regulation_info_comment AS "governmentRegulationInfoComment",
+        a.financial_credit_info_comment AS "financialCreditInfoComment",
+        a.industry_evaluation_info_comment AS "industryEvaluationInfoComment",
+        a.media_evaluation_info_comment AS "mediaEvaluationInfoComment",
+        a.enterprise_operation_info_comment AS "enterpriseOperationInfoComment",
+        a.market_feedback_info_comment AS "marketFeedbackInfoComment"<!-- ,
+		u2.name AS "user.name" -->
+    </sql>
+
+    <sql id="p2pCreditReportJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+
+    <select id="get" resultType="P2pCreditReport">
+        SELECT
+        <include refid="p2pCreditReportColumns"/>
+        FROM p2p_credit_report a
+        <include refid="p2pCreditReportJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="getByUserId" resultType="P2pCreditReport">
+        SELECT
+        <include refid="p2pCreditReportColumns"/>
+        FROM p2p_credit_report a
+        WHERE a.user_id= #{user.id}
+    </select>
+
+
+    <select id="findAllList" resultType="P2pCreditReport" parameterType="string">
+        SELECT
+        <include refid="p2pCreditReportColumns"/>
+        FROM p2p_credit_report a
+        <include refid="p2pCreditReportJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+    <insert id="insert">
+        INSERT INTO p2p_credit_report(
+        id,
+        user_id,
+        enterprise_name,
+        enterprise_type,
+        industry_code,
+        enterprise_introduce,
+        is_delete,
+        report_time,
+        rating_level,
+        rating_time,
+        rating_definition,
+        unified_social_credit_code,
+        uscc_is_commit,
+        organization_code,
+        oc_is_commit,
+        gongshang_regist_num,
+        grn_is_commit,
+        tax_registration_num,
+        trn_is_commit,
+        legal_name,
+        legal_is_change,
+        registered_capital,
+        registered_capital_is_change,
+        enterprise_base_info_comment,
+        government_regulation_info_comment,
+        financial_credit_info_comment,
+        industry_evaluation_info_comment,
+        media_evaluation_info_comment,
+        enterprise_operation_info_comment,
+        market_feedback_info_comment
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{enterpriseName},
+        #{enterpriseType},
+        #{industryCode},
+        #{enterpriseIntroduce},
+        #{isDelete},
+        #{reportTime},
+        #{ratingLevel},
+        #{ratingTime},
+        #{ratingDefinition},
+        #{unifiedSocialCreditCode},
+        #{usccIsCommit},
+        #{organizationCode},
+        #{ocIsCommit},
+        #{gongshangRegistNum},
+        #{grnIsCommit},
+        #{taxRegistrationNum},
+        #{trnIsCommit},
+        #{legalName},
+        #{legalIsChange},
+        #{registeredCapital},
+        #{registeredCapitalIsChange},
+        #{enterpriseBaseInfoComment},
+        #{governmentRegulationInfoComment},
+        #{financialCreditInfoComment},
+        #{industryEvaluationInfoComment},
+        #{mediaEvaluationInfoComment},
+        #{enterpriseOperationInfoComment},
+        #{marketFeedbackInfoComment}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_credit_report SET
+        user_id = #{user.id},
+        enterprise_name = #{enterpriseName},
+        enterprise_type = #{enterpriseType},
+        industry_code = #{industryCode},
+        enterprise_introduce = #{enterpriseIntroduce},
+        is_delete = #{isDelete},
+        report_time = #{reportTime},
+        rating_level = #{ratingLevel},
+        rating_time = #{ratingTime},
+        rating_definition = #{ratingDefinition},
+        unified_social_credit_code = #{unifiedSocialCreditCode},
+        uscc_is_commit = #{usccIsCommit},
+        organization_code = #{organizationCode},
+        oc_is_commit = #{ocIsCommit},
+        gongshang_regist_num = #{gongshangRegistNum},
+        grn_is_commit = #{grnIsCommit},
+        tax_registration_num = #{taxRegistrationNum},
+        trn_is_commit = #{trnIsCommit},
+        legal_name = #{legalName},
+        legal_is_change = #{legalIsChange},
+        registered_capital = #{registeredCapital},
+        registered_capital_is_change = #{registeredCapitalIsChange},
+        enterprise_base_info_comment = #{enterpriseBaseInfoComment},
+        government_regulation_info_comment = #{governmentRegulationInfoComment},
+        financial_credit_info_comment = #{financialCreditInfoComment},
+        industry_evaluation_info_comment = #{industryEvaluationInfoComment},
+        media_evaluation_info_comment = #{mediaEvaluationInfoComment},
+        enterprise_operation_info_comment = #{enterpriseOperationInfoComment},
+        market_feedback_info_comment = #{marketFeedbackInfoComment}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_credit_report
+        WHERE id = #{id}
+    </update>
+</mapper>

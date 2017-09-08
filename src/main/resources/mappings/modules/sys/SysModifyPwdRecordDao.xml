@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.sys.dao.SysModifyPwdRecordDao">
+
+    <sql id="sysModifyPwdRecordColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.password AS "password",
+        a.modify_time AS "modifyTime",
+        u2.name AS "user.name"
+    </sql>
+
+    <sql id="sysModifyPwdRecordJoins">
+        LEFT JOIN sys_user u2 ON u2.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="SysModifyPwdRecord">
+        SELECT
+        <include refid="sysModifyPwdRecordColumns"/>
+        FROM sys_modify_pwd_record a
+        <include refid="sysModifyPwdRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="SysModifyPwdRecord">
+        SELECT
+        <include refid="sysModifyPwdRecordColumns"/>
+        FROM sys_modify_pwd_record a
+        <include refid="sysModifyPwdRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="SysModifyPwdRecord">
+        SELECT
+        <include refid="sysModifyPwdRecordColumns"/>
+        FROM sys_modify_pwd_record a
+        <include refid="sysModifyPwdRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_modify_pwd_record(
+        id,
+        user_id,
+        password,
+        modify_time
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{password},
+        #{modifyTime}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE sys_modify_pwd_record SET
+        user_id = #{user.id},
+        password = #{password},
+        modify_time = #{modifyTime}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM sys_modify_pwd_record
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过用户编号，查询用户最近的N次修改密码的记录 -->
+    <select id="getTopUPListByUserId" resultType="SysModifyPwdRecord" parameterType="java.util.HashMap">
+        SELECT
+        id,
+        user_id,
+        PASSWORD,
+        modify_time
+        FROM
+        sys_modify_pwd_record
+        WHERE
+        user_id = #{userId}
+        ORDER BY
+        modify_time DESC
+        LIMIT ${notRepeatTime}
+    </select>
+
+    <!-- 修改密码后，把记录存入到修改密码记录表中 -->
+    <insert id="saveModifyRed">
+        INSERT INTO sys_modify_pwd_record(
+        id,
+        user_id,
+        password,
+        modify_time
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{password},
+        #{modifyTime}
+        )
+    </insert>
+</mapper>
+
+
+
+
+
+
+
+

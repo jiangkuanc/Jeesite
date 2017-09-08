@@ -1,0 +1,144 @@
+@charset "utf-8";
+/*Time:20160718*/
+/*我的账户左侧内容部分*/
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+ul, li, ol {
+    list-style: none
+}
+
+.zh {
+    border-bottom: 1px solid #EAEAEC
+}
+
+.zh-con {
+    width: 79%;
+    margin: 0 auto;
+    border-left: 1px solid #EAEAEC;
+    margin-left: 12%;
+}
+
+.zh-left {
+    width: 20%;
+    border-top: none
+}
+
+ul.zhzl li {
+    text-align: center; /*font-size:1.55rem;*//*border-bottom:1px solid #DFDEDD;*/
+}
+
+ul.zhzl li a {
+    font-weight: bold;
+    color: #343434;
+    text-decoration: none;
+}
+
+.youjian {
+    background: url(../images/youjian.jpg) no-repeat 90% center;
+}
+
+.xiajian {
+    background: url(../images/xiajian.jpg) no-repeat 90% 15px;
+}
+
+/*.zh-con  ul.zhzllevel2{border-top:1px solid #DFDEDD;}*/
+ul.zhzllevel2 li, .zh-con ul.zhzllevel1 li {
+    font-family: "微软雅黑";
+    margin: 0;
+    height: 40px;
+    line-height: 40px;
+}
+
+ul.zhzllevel2 li a {
+    color: #929292;
+    font-size: 1.2rem;
+}
+
+ul.zhzllevel2 li:hover {
+    background: #eaeaea;
+}
+
+ul.zhzllevel2 li:hover a {
+    color: #C1181D
+}
+
+.zh-left .zh-p {
+    font-size: 18px;
+    font-family: "微软雅黑";
+    margin: 0px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px
+}
+
+.zh-left .zh-p > a {
+    color: #343434;
+}
+
+.zh-p:hover {
+    background: #eaeaea;
+}
+
+.zh-left ul.zhzl {
+    height: 370px;
+    clear: both
+}
+
+.zh-left .jianjietitle {
+    color: #bf1a20;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+}
+
+.zhtext {
+    width: 100%;
+    margin: 0px;
+    border-bottom: 1px solid #DFDEDD;
+    font-size: 18px;
+    color: #343434;
+    font-family: "微软雅黑";
+    height: 40px;
+    line-height: 40px
+}
+
+p.zhtext > a {
+    font-size: 18px;
+}
+
+/*.zhtext:hover{background: #eaeaea url(../images/xiajian.jpg) no-repeat 90% center}*/
+
+/*.zhtext:hover{background: #eaeaea;}*/
+.zhzl-li {
+    border-top: 1px solid #DFDEDD;
+}
+
+.zhgl {
+    border-bottom: 1px solid #DFDEDD;
+}
+
+.kuang {
+    height: 740px;
+    border-left: 1px solid #DFDEDD;
+    border-right: 1px solid #DFDEDD;
+}
+
+.zhzl .tz-active a {
+    color: #C1181D
+}
+
+.zhzl .tz-active {
+    background: #eaeaea;
+    border-right: none;
+    border-bottom: 1px solid #DFDEDD;
+}
+
+.zhzllevel1tzsy-zh p:hover {
+    background: #eaeaea;
+}
+
+
+

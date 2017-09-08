@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.creditmanage.dao.CreditOverdueInfoDao">
+
+    <sql id="creditOverdueInfoColumns">
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.disposal_agency AS "disposalAgency",
+        a.currency AS "currency",
+        a.overdue_amount AS "overdueAmount",
+        a.overdue_date AS "overdueDate",
+        a.overdue_months AS "overdueMonths",
+        a.last_repayment_date AS "lastRepaymentDate",
+        a.disposal_completion_date AS "disposalCompletionDate",
+        a.pens AS "pens",
+        pec.enterprise_name AS "user.p2pEnterpriseCertify.enterpriseName",
+        pec.organization_code AS "user.p2pEnterpriseCertify.organizationCode",
+        pec.enterprise_scale AS "user.p2pEnterpriseCertify.enterpriseScale",
+        pec.enterprise_nature AS "user.p2pEnterpriseCertify.enterpriseNature",
+        pec.industry_code AS "user.p2pEnterpriseCertify.industryCode",
+        pec.name_of AS "user.p2pEnterpriseCertify.nameOf",
+        pec.telephone_num_of AS "user.p2pEnterpriseCertify.telephoneNumOf",
+        r.role_type AS "user.role.roleType",
+        r.data_scope AS "user.role.dataScope",
+        ruc.audit_state AS "user.p2pRegUserCertify.auditState",
+        ruc.real_name AS "user.p2pRegUserCertify.realName",
+        ruc.id_number AS "user.p2pRegUserCertify.idNumber",
+        u.phone AS "user.phone"
+
+    </sql>
+
+    <sql id="creditOverdueInfoJoins">
+        LEFT JOIN p2p_enterprise_certify pec ON a.user_id=pec.user_id
+        LEFT JOIN sys_user u ON u.id = a.user_id
+        LEFT JOIN sys_user_role ur ON ur.user_id = u.id
+        LEFT JOIN sys_role r ON r.id = ur.role_id
+        LEFT JOIN p2p_reg_user_certify ruc ON ruc.user_id = u.id
+    </sql>
+
+    <select id="get" resultType="CreditOverdueInfo">
+        SELECT
+        <include refid="creditOverdueInfoColumns"/>
+        FROM credit_overdue_info a
+        <include refid="creditOverdueInfoJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CreditOverdueInfo">
+        SELECT
+        <include refid="creditOverdueInfoColumns"/>
+        FROM credit_overdue_info a
+        <include refid="creditOverdueInfoJoins"/>
+        <where>
+            <if test="user != null and user.id != null and user.id != ''">
+                AND a.user_id LIKE CONCAT(CONCAT('%',#{user.id}),'%')
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CreditOverdueInfo">
+        SELECT
+        <include refid="creditOverdueInfoColumns"/>
+        FROM credit_overdue_info a
+        <include refid="creditOverdueInfoJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO credit_overdue_info(
+        id,
+        user_id,
+        disposal_agency,
+        currency,
+        overdue_amount,
+        overdue_date,
+        overdue_months,
+        last_repayment_date,
+        disposal_completion_date,
+        pens
+        ) VALUES (
+        #{id},
+        #{user.id},
+        #{disposalAgency},
+        #{currency},
+        #{overdueAmount},
+        #{overdueDate},
+        #{overdueMonths},
+        #{lastRepaymentDate},
+        #{disposalCompletionDate},
+        #{pens}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE credit_overdue_info SET
+        user_id = #{user.id},
+        disposal_agency = #{disposalAgency},
+        currency = #{currency},
+        overdue_amount = #{overdueAmount},
+        overdue_date = #{overdueDate},
+        overdue_months = #{overdueMonths},
+        last_repayment_date = #{lastRepaymentDate},
+        disposal_completion_date = #{disposalCompletionDate},
+        pens = #{pens}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM credit_overdue_info
+        WHERE id = #{id}
+    </update>
+
+    <!--Chace 根据用户id查询逾期记录 -->
+    <select id="findByUserId" parameterType="string" resultType="CreditOverdueInfo">
+        SELECT
+        a.id AS "id",
+        a.user_id AS "user.id",
+        a.disposal_agency AS "disposalAgency",
+        a.currency AS "currency",
+        a.overdue_amount AS "overdueAmount",
+        a.overdue_date AS "overdueDate",
+        a.overdue_months AS "overdueMonths",
+        a.last_repayment_date AS "lastRepaymentDate",
+        a.disposal_completion_date AS "disposalCompletionDate",
+        a.pens AS "pens"
+        FROM credit_overdue_info a
+        WHERE a.user_id = #{_parameter}
+    </select>
+
+</mapper>

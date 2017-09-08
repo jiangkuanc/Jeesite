@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.cms.dao.CmsForeignCountryDao">
+
+    <sql id="cmsForeignCountryColumns">
+        a.id AS "id",
+        a.cms_forgign_area_id AS "cmsForgignAreaId",
+        a.cms_country__name AS "cmsCountryName",
+        a.cms_country_basic AS "cmsCountryBasic",
+        a.cms_country_position AS "cmsCountryPosition",
+        a.cms_country_population AS "cmsCountryPopulation",
+        a.cms_country_nation AS "cmsCountryNation",
+        a.content AS "content",
+        a.create_by AS "createBy.id",
+        a.create_date AS "createDate",
+        a.update_by AS "updateBy.id",
+        a.update_date AS "updateDate",
+        a.remarks AS "remarks",
+        a.del_flag AS "delFlag"
+    </sql>
+
+    <sql id="cmsForeignCountryJoins">
+    </sql>
+
+    <select id="get" resultType="CmsForeignCountry">
+        SELECT
+        <include refid="cmsForeignCountryColumns"/>
+        FROM cms_foreign_country a
+        <include refid="cmsForeignCountryJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="CmsForeignCountry">
+        SELECT
+        <include refid="cmsForeignCountryColumns"/>
+        FROM cms_foreign_country a
+        <include refid="cmsForeignCountryJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+            <if test="cmsForgignAreaId != null and cmsForgignAreaId != ''">
+                AND a.cms_forgign_area_id = #{cmsForgignAreaId}
+            </if>
+            <if test="cmsCountryName != null and cmsCountryName != ''">
+                AND a.cms_country__name = #{cmsCountryName}
+            </if>
+            <if test="cmsCountryBasic != null and cmsCountryBasic != ''">
+                AND a.cms_country_basic = #{cmsCountryBasic}
+            </if>
+            <if test="cmsCountryPosition != null and cmsCountryPosition != ''">
+                AND a.cms_country_position = #{cmsCountryPosition}
+            </if>
+            <if test="cmsCountryPopulation != null and cmsCountryPopulation != ''">
+                AND a.cms_country_population = #{cmsCountryPopulation}
+            </if>
+            <if test="cmsCountryNation != null and cmsCountryNation != ''">
+                AND a.cms_country_nation = #{cmsCountryNation}
+            </if>
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="CmsForeignCountry">
+        SELECT
+        <include refid="cmsForeignCountryColumns"/>
+        FROM cms_foreign_country a
+        <include refid="cmsForeignCountryJoins"/>
+        <where>
+            a.del_flag = #{DEL_FLAG_NORMAL}
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY a.update_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO cms_foreign_country(
+        id,
+        cms_forgign_area_id,
+        cms_country__name,
+        cms_country_basic,
+        cms_country_position,
+        cms_country_population,
+        cms_country_nation,
+        content,
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        remarks,
+        del_flag
+        ) VALUES (
+        #{id},
+        #{cmsForgignAreaId},
+        #{cmsCountryName},
+        #{cmsCountryBasic},
+        #{cmsCountryPosition},
+        #{cmsCountryPopulation},
+        #{cmsCountryNation},
+        #{content},
+        #{createBy.id},
+        #{createDate},
+        #{updateBy.id},
+        #{updateDate},
+        #{remarks},
+        #{delFlag}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE cms_foreign_country SET
+        cms_forgign_area_id = #{cmsForgignAreaId},
+        cms_country__name = #{cmsCountryName},
+        cms_country_basic = #{cmsCountryBasic},
+        cms_country_position = #{cmsCountryPosition},
+        cms_country_population = #{cmsCountryPopulation},
+        cms_country_nation = #{cmsCountryNation},
+        content = #{content},
+        update_by = #{updateBy.id},
+        update_date = #{updateDate},
+        remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        UPDATE cms_foreign_country SET
+        del_flag = #{DEL_FLAG_DELETE}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 查询国外前5个国家 -->
+    <select id="selectFrontForejgnCountry" resultType="CmsForeignCountry">
+        select a.id AS "id",
+        a.cms_forgign_area_id AS "cmsForgignAreaId",
+        a.cms_country__name AS "cmsCountryName" from cms_foreign_country a limit 5
+    </select>
+
+    <!-- 根据区域id查询区域国家 -->
+    <select id="selectCountrysAccAid" resultType="CmsForeignCountry">
+        select a.id AS "id",
+        a.cms_country__name AS "cmsCountryName",
+        a.content AS "content"
+        from cms_foreign_country a where a.cms_forgign_area_id=#{cmsForgignAreaId}
+    </select>
+
+</mapper>

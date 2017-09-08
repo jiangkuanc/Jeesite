@@ -1,0 +1,108 @@
+/*充值记录*/
+.wdzh-zjgl-right h4 {
+    margin: 0;
+    color: #8c8c8c;
+    padding-top: 10px;
+    line-height: 20px;
+}
+
+.wdzh-zjgl-right h4 span:nth-child(2) {
+    color: orangered;
+    font-size: 24px;
+    display: inline-block;
+    margin: 0px 1% 0 2%;
+}
+
+.wdzh-zjgl-right h4 button {
+    margin-top: -7px;
+    padding: .5% 2%;
+    background: orangered;
+}
+
+/*表格*/
+.zh-right-bot-table {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.zh-right-bot-table thead tr {
+    height: 50px;
+    word-break: keep-all;
+    background: #ebeaea;
+}
+
+.zh-right-bot-table tbody tr td:first-child {
+    color: #4896e5;
+}
+
+.zh-right-bot-table tbody tr td:nth-child(3) {
+    color: #4896e5;
+}
+
+.zh-right-bot-table tbody tr td:nth-child(4) {
+    color: #4896e5;
+}
+
+.zh-right-bot-table tbody tr:hover td {
+    background: #f4f4f4;
+    border-bottom: 1px solid #ebeaea;
+    border-top: 1px solid #ebeaea;
+}
+
+.zh-right-bot-table tbody tr:hover td:first-child {
+    color: orangered;
+}
+
+.zh-right-bot-table tbody tr:hover td:nth-child(3) {
+    color: orangered;
+}
+
+.zh-right-bot-table tbody tr:hover td:nth-child(4) {
+    color: orangered;
+}
+
+/*我的账户-资金管理-费用管理*/
+.wdzh-zjgl-fygl-table {
+    text-align: center;
+    margin-top: 10px;
+    color: #8c8c8c;
+
+}
+
+.wdzh-zjgl-fygl-table thead tr {
+    height: 50px;
+    word-break: keep-all;
+    background: #ebeaea;
+}
+
+.wdzh-zjgl-fygl-table tbody tr td:first-child {
+    color: #4896e5;
+}
+
+.wdzh-zjgl-fygl-table tbody tr td:nth-child(2) {
+    color: #4896e5;
+}
+
+.wdzh-zjgl-fygl-table tbody tr:hover td {
+    background: #f4f4f4;
+    border-bottom: 1px solid #ebeaea;
+    border-top: 1px solid #ebeaea;
+}
+
+.wdzh-zjgl-fygl-table tbody tr:hover td:first-child {
+    color: orangered;
+}
+
+.wdzh-zjgl-fygl-table tbody tr:hover td:nth-child(2) {
+    color: orangered;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,110 @@
+* {
+    padding: 0;
+    margin: 0
+}
+
+.calender {
+    width: 265px;
+    margin: 50px auto;
+    top: 0;
+    left: 0;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+    background: #fff;
+    position: absolute;
+    display: none;
+    z-index: 999;
+}
+
+.calendertb {
+    width: 100%;
+}
+
+.calendertb td {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    color: #979797;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/*.calendertb td.hover,.calendertb td.weekendhover{background:#D6D6D6;}*/
+.calendertb th {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #000;
+}
+
+.tdtoday { /*background:#0080FF;*/
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #006dcc;
+    background-image: -moz-linear-gradient(top, #08c, #04c);
+    background-image: -ms-linear-gradient(top, #08c, #04c);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08c), to(#04c));
+    background-image: -webkit-linear-gradient(top, #08c, #04c);
+    background-image: -o-linear-gradient(top, #08c, #04c);
+    background-image: linear-gradient(top, #08c, #04c);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088cc', endColorstr='#0044cc', GradientType=0);
+    border-color: #04c #04c #002a80;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    /*color: #fff;*/
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.getyear {
+    height: 30px;
+    line-height: 35px;
+    width: 100%;
+    text-align: center;
+}
+
+.preMonth {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 18px;
+    color: #000;
+}
+
+.nextMonth {
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 18px;
+    color: #000;
+}
+
+.mh_date {
+    cursor: pointer;
+    background: url(../images/dateIco.png) no-repeat right center;
+}
+
+.zhezhao {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 998;
+    background: #fff;
+    filter: alpha(opacity=10);
+    opacity: 0.1;
+    display: none;
+}

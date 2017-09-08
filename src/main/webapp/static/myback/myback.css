@@ -1,0 +1,123 @@
+@CHARSET "UTF-8";
+/*
+
+*/
+
+/*********************************/
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/* 居中,不换行 */
+.modal1 {
+    text-align: center;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 空格不换行 */
+}
+
+/* 居中 */
+.mycenter {
+    text-align: center;
+}
+
+/* 4列竖表单 */
+.mytable th:nth-child(odd), .mytable td:nth-child(odd) {
+    font-weight: bold;
+    width: 10%;
+    min-width: 100px;
+    text-align: right;
+    padding-right: 10px;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 空格不换行 */
+}
+
+.mytable th:nth-child(even), .mytable td:nth-child(even) {
+
+    min-width: 200px;
+    width: 40%;
+    word-break: break-all; /* 换行 */
+    /*white-space: pre-wrap; 空格换行 */
+}
+
+/* 大于4列竖表单 */
+.mytable1 th:nth-child(odd), .mytable1 td:nth-child(odd) {
+    font-weight: bold;
+    min-width: 100px;
+    width: 10%;
+    text-align: right;
+    padding-right: 10px;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 空格不换行 */
+}
+
+.mytable1 th:nth-child(even), .mytable1 td:nth-child(even) {
+    min-width: 100px;
+    word-break: break-all; /* 换行 */
+    /*white-space: pre-wrap; 空格换行 */
+}
+
+/* 列表css 不换行 */
+.listtable {
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 空格不换行 */
+}
+
+/* 意见表单css */
+.opinion th:nth-child(odd), .opinion td:nth-child(odd) {
+    font-weight: bold;
+    width: 10%;
+    min-width: 100px;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.opinion th:nth-child(even), .opinion td:nth-child(even) {
+    width: 40%;
+    min-width: 300px;
+}
+
+.opinion td {
+    height: 30px;
+    padding: 0;
+}
+
+.opinion td input, .opinion td select, .opinion td textarea {
+    height: 20px;
+    margin: 0;
+}
+
+.opinion td textarea {
+    width: 163px;
+    max-width: 400px;
+}
+
+/* 代理人/法人身份认证css */
+.regUserCertify {
+    text-align: center;
+    word-break: keep-all; /* 不换行 */
+    white-space: nowrap; /* 空格不换行 */
+}
+
+.mytextarea {
+    float: left;
+    width: 70%;
+    min-height: 25px;
+    height: 100%;
+    margin: 0;
+    padding: 5px;
+    resize: none;
+}
+
+/* 返回按钮css */
+.fanhui {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+}
+
+/* 标题css */
+.title {
+    text-align: center;
+}

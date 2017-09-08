@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.repayment.dao.P2pReceivePlanDao">
+
+    <sql id="p2pReceivePlanColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.user_id AS "user.id",
+        a.user_id AS "userId",
+        a.phase AS "phase",
+        a.plan_receive_date AS "planReceiveDate",
+        a.plan_receive_principal AS "planReceivePrincipal",
+        a.plan_receive_interest AS "planReceiveInterest",
+        a.plan_receive_fine AS "planReceiveFine",
+        a.receive_state AS "receiveState",
+        u3.name AS "user.name"
+    </sql>
+
+    <sql id="p2pReceivePlanJoins">
+        LEFT JOIN sys_user u3 ON u3.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pReceivePlan">
+        SELECT
+        <include refid="p2pReceivePlanColumns"/>
+        FROM p2p_receive_plan a
+        <include refid="p2pReceivePlanJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pReceivePlan">
+        SELECT
+        <include refid="p2pReceivePlanColumns"/>
+        FROM p2p_receive_plan a
+        <include refid="p2pReceivePlanJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pReceivePlan">
+        SELECT
+        <include refid="p2pReceivePlanColumns"/>
+        FROM p2p_receive_plan a
+        <include refid="p2pReceivePlanJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllCountDistinctUserId" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM (SELECT DISTINCT (a.user_id) FROM p2p_receive_plan a ) b;
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_receive_plan(
+        id,
+        financing_information_id,
+        user_id,
+        phase,
+        plan_receive_date,
+        plan_receive_principal,
+        plan_receive_interest,
+        plan_receive_fine,
+        receive_state
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{userId},
+        #{phase},
+        #{planReceiveDate},
+        #{planReceivePrincipal},
+        #{planReceiveInterest},
+        #{planReceiveFine},
+        #{receiveState}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_receive_plan SET
+        financing_information_id = #{financingInformationId},
+        user_id = #{userId},
+        phase = #{phase},
+        plan_receive_date = #{planReceiveDate},
+        plan_receive_principal = #{planReceivePrincipal},
+        plan_receive_interest = #{planReceiveInterest},
+        plan_receive_fine = #{planReceiveFine},
+        receive_state = #{receiveState}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_receive_plan
+        WHERE id = #{id}
+    </update>
+
+    <!-- 获得用户计划（实际） 收款 利息（本金/罚金） 总和 -->
+    <select id="getUserSumAmount" resultType="P2pReceivePlan">
+        SELECT
+        SUM(a.plan_receive_principal) AS "planReceivePrincipal",
+        SUM(a.plan_receive_interest) AS "planReceiveInterest",
+        SUM(a.plan_receive_fine) AS "planReceiveFine",
+        SUM(b.real_receive_principal) AS "p2pReceiveRecord.realReceivePrincipal",
+        SUM(b.real_receive_interest) AS "p2pReceiveRecord.realReceiveInterest",
+        SUM(b.real_receive_fine) AS "p2pReceiveRecord.realReceiveFine"
+        FROM
+        p2p_receive_plan a
+        LEFT JOIN p2p_receive_record b ON b.receive_plan_id = a.id
+        WHERE a.user_id = #{userId}
+    </select>
+
+    <!-- 获得用户计划（实际） 收款 利息（本金/罚金） 总和 -->
+    <select id="getUserDebtSumAmount" resultType="P2pReceivePlan">
+        SELECT
+        SUM(a.plan_receive_principal) AS "planReceivePrincipal",
+        SUM(a.plan_receive_interest) AS "planReceiveInterest",
+        SUM(a.plan_receive_fine) AS "planReceiveFine",
+        SUM(b.real_receive_principal) AS "p2pReceiveRecord.realReceivePrincipal",
+        SUM(b.real_receive_interest) AS "p2pReceiveRecord.realReceiveInterest",
+        SUM(b.real_receive_fine) AS "p2pReceiveRecord.realReceiveFine"
+        FROM
+        p2p_receive_plan a
+        LEFT JOIN p2p_receive_record b ON b.receive_plan_id = a.id
+        WHERE a.user_id = #{userId}
+        AND a.financing_information_id = #{financingInformationId}
+    </select>
+
+
+    <!-- 用户最近一笔实际收款和计划收款金钱 -->
+    <select id="getUserLatelyAmount" resultType="P2pReceivePlan">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.user_id AS "user.id",
+        a.phase AS "phase",
+        a.plan_receive_date AS "planReceiveDate",
+        a.plan_receive_principal AS "planReceivePrincipal",
+        a.plan_receive_interest AS "planReceiveInterest",
+        a.plan_receive_fine AS "planReceiveFine",
+        a.receive_state AS "receiveState",
+        b.id AS "p2pReceiveRecord.id",
+        b.receive_plan_id AS "p2pReceiveRecord.receivePlanId",
+        b.real_receive_date AS "p2pReceiveRecord.realReceiveDate",
+        b.real_receive_principal AS "p2pReceiveRecord.realReceivePrincipal",
+        b.real_receive_interest AS "p2pReceiveRecord.realReceiveInterest",
+        b.real_receive_fine AS "p2pReceiveRecord.realReceiveFine",
+        b.receive_account AS "p2pReceiveRecord.receiveAccount"
+        FROM
+        p2p_receive_plan a
+        LEFT JOIN p2p_receive_record b ON b.receive_plan_id = a.id
+        WHERE a.user_id = #{userId}
+        ORDER BY b.real_receive_date desc LIMIT 1
+    </select>
+
+    <!-- Quincy 根据还款期数查询收款人明细列表 -->
+    <select id="findIncomeDetails" parameterType="P2pReceivePlan" resultType="P2pReceivePlan">
+        SELECT
+        b.real_receive_principal AS "p2pReceiveRecord.realReceivePrincipal",
+        b.real_receive_interest AS "p2pReceiveRecord.realReceiveInterest",
+        b.real_receive_fine AS "p2pReceiveRecord.realReceiveFine",
+        b.real_receive_date AS "p2pReceiveRecord.realReceiveDate",
+        c.bankName AS "p2pUserInformation.bankname",
+        d.real_name AS "p2pRegUserCertify.realName",
+        f.role_id AS "user.role.id"
+        FROM
+        p2p_receive_plan a
+        LEFT JOIN
+        p2p_receive_record b
+        ON
+        a.id = b.receive_plan_id
+        LEFT JOIN
+        p2p_user_information c
+        ON
+        a.user_id = c.user_id
+        LEFT JOIN
+        p2p_reg_user_certify d
+        ON
+        a.user_id = d.user_id
+        LEFT JOIN
+        sys_user e
+        ON
+        a.user_id = e.id
+        LEFT JOIN
+        sys_user_role f
+        ON
+        e.id = f.user_id
+        WHERE
+        a.financing_information_id = #{financingInformationId}
+        AND
+        a.phase = #{phase}
+    </select>
+
+
+    <!-- Zeus 根据债项id和期数查询当前期数所有收款人收款信息 -->
+    <select id="getCurrentPhaseReceivePlan" resultType="P2pReceivePlan">
+        SELECT
+        *
+        FROM
+        p2p_receive_plan a
+        WHERE
+        a.financing_information_id = #{financingInformationId}
+        AND
+        a.phase = #{phase}
+    </select>
+
+
+    <!-- Quincy 根据投资人ID查询累计收益 -->
+    <select id="findIncomeSumByUid" parameterType="java.lang.String" resultType="java.lang.Double">
+        SELECT
+        SUM(b.real_receive_interest)+SUM(b.real_receive_fine)
+        FROM
+        p2p_receive_plan a
+        LEFT JOIN
+        p2p_receive_record b
+        ON
+        a.id = b.receive_plan_id
+        WHERE
+        a.user_id = #{_parameter}
+    </select>
+
+    <!-- Chace 根据投资人id查询收款计划 -->
+    <select id="findPlanByUserId" parameterType="P2pReceivePlan" resultType="P2pReceivePlan">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.user_id AS "userId",
+        a.phase AS "phase",
+        a.plan_receive_date AS "planReceiveDate",
+        a.plan_receive_principal AS "planReceivePrincipal",
+        a.plan_receive_interest AS "planReceiveInterest",
+        a.plan_receive_fine AS "planReceiveFine",
+        a.receive_state AS "receiveState"
+        FROM p2p_receive_plan a
+        <where>
+            a.user_id = #{userId}
+            <if test="receiveState != null and receiveState != ''">
+                and a.receive_state = #{receiveState}
+            </if>
+        </where>
+
+    </select>
+
+    <!-- Chace 根据债项id查询个人标每期所有人应收利息的和 -->
+    <select id="getSumByfinancingId" parameterType="String" resultType="Double">
+        SELECT
+        SUM(a.plan_receive_interest)
+        FROM p2p_receive_plan a
+        WHERE financing_information_id = #{financingInformationId}
+        GROUP BY a.phase
+    </select>
+
+    <select id="getCurrentRepaymentDetails" resultType="P2pReceivePlan">
+        SELECT
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.user_id AS "user.id",
+        a.user_id AS "userId",
+        a.phase AS "phase",
+        a.plan_receive_date AS "planReceiveDate",
+        a.plan_receive_principal AS "planReceivePrincipal",
+        a.plan_receive_interest AS "planReceiveInterest",
+        a.plan_receive_fine AS "planReceiveFine",
+        a.receive_state AS "receiveState",
+        b.id AS "p2pReceiveRecord.id",
+        b.receive_plan_id AS "p2pReceiveRecord.receivePlanId",
+        b.real_receive_date AS "p2pReceiveRecord.realReceiveDate",
+        b.real_receive_principal AS "p2pReceiveRecord.realReceivePrincipal",
+        b.real_receive_interest AS "p2pReceiveRecord.realReceiveInterest",
+        b.real_receive_fine AS "p2pReceiveRecord.realReceiveFine",
+        b.receive_account AS "p2pReceiveRecord.receiveAccount"
+        FROM
+        p2p_receive_plan a
+        LEFT JOIN p2p_receive_record b ON b.receive_plan_id = a.id
+        WHERE
+        a.financing_information_id = #{financingInformationId}
+        AND a.phase = #{phase}
+    </select>
+</mapper>

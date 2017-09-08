@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dagongsoft.p2p.financing.dao.P2pRiskControlRecordDao">
+
+    <sql id="p2pRiskControlRecordColumns">
+        a.id AS "id",
+        a.financing_information_id AS "financingInformationId",
+        a.in_raise_state AS "inRaiseState",
+        a.user_id AS "user.id",
+        a.operate_time AS "operateTime",
+        a.operate_explain AS "operateExplain",
+        u4.name AS "user.name"
+    </sql>
+
+    <sql id="p2pRiskControlRecordJoins">
+        LEFT JOIN sys_user u4 ON u4.id = a.user_id
+    </sql>
+
+    <select id="get" resultType="P2pRiskControlRecord">
+        SELECT
+        <include refid="p2pRiskControlRecordColumns"/>
+        FROM p2p_risk_control_record a
+        <include refid="p2pRiskControlRecordJoins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="P2pRiskControlRecord">
+        SELECT
+        <include refid="p2pRiskControlRecordColumns"/>
+        FROM p2p_risk_control_record a
+        <include refid="p2pRiskControlRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="findAllList" resultType="P2pRiskControlRecord">
+        SELECT
+        <include refid="p2pRiskControlRecordColumns"/>
+        FROM p2p_risk_control_record a
+        <include refid="p2pRiskControlRecordJoins"/>
+        <where>
+
+        </where>
+        <choose>
+            <when test="page !=null and page.orderBy != null and page.orderBy != ''">
+                ORDER BY ${page.orderBy}
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO p2p_risk_control_record(
+        id,
+        financing_information_id,
+        in_raise_state,
+        user_id,
+        operate_time,
+        operate_explain
+        ) VALUES (
+        #{id},
+        #{financingInformationId},
+        #{inRaiseState},
+        #{user.id},
+        #{operateTime},
+        #{operateExplain}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE p2p_risk_control_record SET
+        financing_information_id = #{financingInformationId},
+        in_raise_state = #{inRaiseState},
+        user_id = #{user.id},
+        operate_time = #{operateTime},
+        operate_explain = #{operateExplain}
+        WHERE id = #{id}
+    </update>
+
+    <update id="delete">
+        DELETE FROM p2p_risk_control_record
+        WHERE id = #{id}
+    </update>
+    <!-- 根据债项id查询 -->
+    <select id="getByFid" resultType="P2pRiskControlRecord" parameterType="P2pRiskControlRecord">
+        SELECT
+        id AS "id",
+        financing_information_id AS "financingInformationId",
+        in_raise_state AS "inRaiseState",
+        user_id AS "user.id",
+        operate_time AS "operateTime",
+        operate_explain AS "operateExplain"
+        FROM p2p_risk_control_record
+        <where>
+            financing_information_id = #{financingInformationId}
+            <if test="inRaiseState != null and inRaiseState != ''">
+                and in_raise_state = #{inRaiseState}
+            </if>
+        </where>
+        ORDER BY operate_time desc
+        LIMIT 1
+    </select>
+</mapper>
