@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/bootstrap.min.js"></script>
+    <title>会员管理</title>
+</head>
+<body>
+<!--银行卡管理页面-->
+<div class="container">
+    <div class="col-lg-offset-4 col-lg-3">
+        <div class="bankInfoInput">
+            <div class="form">
+                <form class="form">
+                    <div class="form-group">
+                        <lable for="bankName">我的银行卡号*:</lable>
+                        <input type="text" class="form-control" id="bankName" name="bankName" placeholder="请输入您的银行卡号"/>
+                    </div>
+                    <div class="form-group">
+                        <lable for="bankName">持卡人姓名:</lable>
+                        <span>何鹏(Joe)</span>
+                    </div>
+                    <div class="form-group">
+                        <lable for="bankType">开户行银行*:</lable>
+                        <select class="form-control" name="bankType" id="bankType">
+                            <option>招商银行</option>
+                            <option>北京银行</option>
+                            <option>广发银行</option>
+                            <option>交通银行</option>
+                            <option>浦发银行</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <lable for="bankAddress">开户行所在地*:</lable>
+                        <select class="form-control" name="bankAddress" id="bankAddress">
+                            <option>北京</option>
+                            <option>上海</option>
+                            <option>广州</option>
+                            <option>深圳</option>
+                            <option>成都</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <lable for="bankYuliuPhone">银行预留手机号*:</lable>
+                        <input type="text" class="form-control" id="bankYuliuPhone" name="bankYuliuPhone"
+                               placeholder="请输入您的银行预留手机号"/>
+                    </div>
+                    <div class="form-group">
+                        <lable for="vertifyCode">验证码*:</lable>
+                        <input type="text" class="form-control" id="vertifyCode" name="vertifyCode"
+                               placeholder="请输入您的验证码"/>
+                    </div>
+                    <div class="form-group">
+                        <lable for="banKNetAddress">开户行网点*</lable>
+                        <input type="text" class="form-control" id="banKNetAddress" name="banKNetAddress"
+                               placeholder="请输入您的开户行网点"/>
+                    </div>
+                    <div class="form-group">
+                        <lable for="bankClass">银行卡类型*</lable>
+                        <select class="form-control" name="bankClass" id="bankClass">
+                            <option>借记卡</option>
+                            <option>储蓄卡</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-info">绑定</button>
+                    <button class="btn btn-info">取消</button>
+                </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
